@@ -115,7 +115,8 @@ export default function AssessmentPage() {
 
       sessionStorage.setItem('the_league_results', JSON.stringify({
         ...results,
-        name: name.trim()
+        name: name.trim(),
+        assessmentId
       }));
 
       router.push('/results');
@@ -158,12 +159,11 @@ export default function AssessmentPage() {
                     Before we begin
                   </h2>
                   <div className="space-y-3 text-sm sm:text-base text-white/70 leading-relaxed font-light">
-                    <p>There are no right answers.</p>
-                    <p>There are no wrong answers.</p>
-                    <p>Answer honestly.</p>
-                    <p className="text-brand-gold font-medium">Not based on who you want to be.</p>
-                    <p className="opacity-80">Based on who you are today.</p>
-                    <p className="opacity-40 text-xs">The more honest you are, the more accurate your result will be.</p>
+                    <p>This is not a test.</p>
+                    <p>There are no good or bad scores here.</p>
+                    <p>Just choose the answer that feels closest to your daily reality.</p>
+                    <p className="text-brand-gold font-medium">Be completely honest with yourself.</p>
+                    <p className="opacity-80">Nobody else is watching.</p>
                   </div>
                 </div>
 

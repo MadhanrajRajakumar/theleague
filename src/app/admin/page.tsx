@@ -260,8 +260,11 @@ export default function AdminPage() {
                   <span>Characters</span>
                 </h3>
                 <div className="space-y-3 pt-2">
-                  {['Builder', 'Warrior', 'Strategist', 'Connector'].map((arch) => {
-                    const count = analytics.archetypeDistribution[arch] || 0;
+                  {['Builder', 'Warrior', 'Thinker', 'Connector'].map((arch) => {
+                    let count = analytics.archetypeDistribution[arch] || 0;
+                    if (arch === 'Thinker') {
+                      count += analytics.archetypeDistribution['Strategist'] || 0;
+                    }
                     const maxCount = Math.max(...Object.values(analytics.archetypeDistribution), 1);
                     const pct = Math.round((count / maxCount) * 100);
                     return (
@@ -375,8 +378,7 @@ export default function AdminPage() {
                       <th className="py-3 px-6">Email Address</th>
                       <th className="py-3 px-6">Instagram</th>
                       <th className="py-3 px-6 text-center">Character</th>
-                      <th className="py-3 px-6 text-center">League</th>
-                      <th className="py-3 px-6">Your Biggest Strength</th>
+                      <th className="py-3 px-6">Biggest Strength</th>
                       <th className="py-3 px-6">What's Holding You Back</th>
                     </tr>
                   </thead>
@@ -393,14 +395,11 @@ export default function AdminPage() {
                           <span className={`inline-block px-2 py-0.5 rounded text-[10px] uppercase font-bold ${
                             row.archetype === 'Builder' ? 'bg-purple-950/60 border border-purple-500/20 text-purple-300' :
                             row.archetype === 'Warrior' ? 'bg-yellow-950/60 border border-yellow-500/20 text-yellow-300' :
-                            row.archetype === 'Strategist' ? 'bg-indigo-950/60 border border-indigo-500/20 text-indigo-300' :
+                            row.archetype === 'Thinker' || row.archetype === 'Strategist' ? 'bg-indigo-950/60 border border-indigo-500/20 text-indigo-300' :
                             'bg-pink-950/60 border border-pink-500/20 text-pink-300'
                           }`}>
-                            {row.archetype}
+                            {row.archetype === 'Strategist' ? 'Thinker' : row.archetype}
                           </span>
-                        </td>
-                        <td className="py-3 px-6 text-center">
-                          <span className="text-[10px] font-bold text-white/80">{row.league}</span>
                         </td>
                         <td className="py-3 px-6 text-brand-purple max-w-[200px] truncate" title={row.strength}>
                           {row.strength}
@@ -412,7 +411,7 @@ export default function AdminPage() {
                     ))}
                     {analytics.waitlistEntries.length === 0 && (
                       <tr>
-                        <td colSpan={8} className="py-12 text-center text-white/20">
+                        <td colSpan={7} className="py-12 text-center text-white/20">
                           No waitlist submissions recorded. Complete assessments to generate profiles.
                         </td>
                       </tr>

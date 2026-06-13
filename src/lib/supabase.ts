@@ -143,6 +143,8 @@ export async function completeAssessment(
     strength: string;
     limiter: string;
     quest: string;
+    brutalTruth?: string;
+    killerSentence?: string;
   }
 ): Promise<void> {
   const now = new Date().toISOString();
@@ -342,4 +344,34 @@ export async function getAnalytics(): Promise<AnalyticsData> {
     limiterDistribution,
     waitlistEntries: sortedWaitlist
   };
+}
+
+// 6. Submit user accuracy feedback
+export async function submitFeedback(assessmentId: string, accuracy: string): Promise<void> {
+  const now = new Date().toISOString();
+
+  if (supabase) {
+    try {
+      const { error } = await supabase
+        .from('assessments')
+        .update({
+          accuracy_feedback: accuracy,
+          updated_at: now
+        })
+        .eq('id', assessmentId);
+      
+      if (error) throw error;
+      return;
+    } catch (e) {
+      console.warn("Supabase submitFeedback failed, updating mock storage:", e);
+    }
+  }
+
+  const assessments = getMockAssessments();
+  const index = assessments.findIndex((a) => a.id === assessmentId);
+  if (index !== -1) {
+    (assessments[index] as any).accuracy_feedback = accuracy;
+    assessments[index].updated_at = now;
+    saveMockAssessments(assessments);
+  }
 }

@@ -14,111 +14,111 @@ export interface Question {
 export const QUESTIONS: Question[] = [
   {
     id: 1,
-    text: "You planned to do something important this weekend. Now it's Sunday night. You haven't started yet. What usually happens?",
+    text: "You've been telling yourself you'll start something important \"soon.\" Months have passed. What feels most familiar?",
     options: [
       {
-        text: "I start anyway, even if it's late.",
-        scoreModifier: { action: 10, consistency: 5 }
+        text: "Life keeps getting in the way.",
+        scoreModifier: { consistency: 5 }
       },
       {
-        text: "I make a better plan for next week.",
-        scoreModifier: { consistency: 5, action: -5 }
+        text: "I'm still trying to figure out the best approach.",
+        scoreModifier: { action: 5 }
       },
       {
-        text: "I tell myself I'll do it tomorrow.",
-        scoreModifier: { action: -10 }
+        text: "I want to wait until I have more confidence.",
+        scoreModifier: { self_awareness: 5 }
       },
       {
-        text: "I leave it and move on.",
-        scoreModifier: { action: -15, consistency: -10 }
+        text: "Every week I tell myself next week will be different.",
+        scoreModifier: { discipline: 5 }
       }
     ]
   },
   {
     id: 2,
-    text: "You know someone who could help you move forward in life (a mentor, business owner, or someone successful). What usually happens?",
+    text: "Someone close to you repeatedly behaves in a way that drains you, but they are going through a tough time. What do you usually do?",
     options: [
       {
-        text: "I reach out.",
-        scoreModifier: { relationships: 10, courage: 5 }
+        text: "I say nothing to avoid adding to their burden, even if it exhausts me.",
+        scoreModifier: { relationships: 5 }
       },
       {
-        text: "I think about reaching out.",
-        scoreModifier: { relationships: 5, courage: -5 }
+        text: "I distance myself quietly without telling them why.",
+        scoreModifier: { self_awareness: 5 }
       },
       {
-        text: "I wait for the right moment.",
-        scoreModifier: { relationships: -5 }
+        text: "I drop hints hoping they will notice and change.",
+        scoreModifier: { consistency: 5 }
       },
       {
-        text: "I never contact them.",
-        scoreModifier: { relationships: -10, courage: -10 }
+        text: "I tell them directly how their behavior affects me, despite the tension.",
+        scoreModifier: { courage: 10 }
       }
     ]
   },
   {
     id: 3,
-    text: "Someone gives you honest feedback. It hurts. What usually happens?",
+    text: "A colleague or friend reviews something you worked hard on and tells you it isn't very good. What is your immediate internal reaction?",
     options: [
       {
-        text: "I listen and learn from it.",
-        scoreModifier: { self_awareness: 10, relationships: 5 }
+        text: "I feel stupid and wonder if I'm cut out for this.",
+        scoreModifier: { self_awareness: 10 }
       },
       {
-        text: "I get defensive.",
-        scoreModifier: { self_awareness: -10, relationships: -5 }
+        text: "I feel frustrated and look for flaws in their explanation.",
+        scoreModifier: { relationships: 5 }
       },
       {
-        text: "I ignore it.",
-        scoreModifier: { self_awareness: -5, consistency: 5 }
+        text: "I agree with them quickly to end the awkward conversation.",
+        scoreModifier: { courage: -5 }
       },
       {
-        text: "I lose motivation.",
-        scoreModifier: { self_awareness: -15, action: -10 }
+        text: "I dismiss their opinion, believing they don't understand the goal.",
+        scoreModifier: { ambition: 5 }
       }
     ]
   },
   {
     id: 4,
-    text: "Your alarm rings. You are exhausted from a late night. You promised yourself you would get up. What usually happens?",
+    text: "You set a rule for yourself (like sleeping earlier, exercising, or eating healthy). You break it on the third day. What goes through your mind?",
     options: [
       {
-        text: "I get up immediately.",
-        scoreModifier: { discipline: 10, consistency: 5 }
+        text: "\"I had a busy day, I'll resume when things calm down.\"",
+        scoreModifier: { consistency: 5 }
       },
       {
-        text: "I lie in bed negotiating with myself.",
-        scoreModifier: { consistency: 5, discipline: -5 }
+        text: "\"I clearly don't have enough willpower for this.\"",
+        scoreModifier: { discipline: -5 }
       },
       {
-        text: "I snooze it repeatedly.",
-        scoreModifier: { discipline: -10, consistency: -10 }
+        text: "\"I need to find a better system that actually works for me.\"",
+        scoreModifier: { action: 5 }
       },
       {
-        text: "I turn it off and go back to sleep.",
-        scoreModifier: { discipline: -15, fitness: 5 }
+        text: "\"I'll start fresh on Monday and do it perfectly.\"",
+        scoreModifier: { self_awareness: 5 }
       }
     ]
   },
   {
     id: 5,
-    text: "You realize a decision you made weeks ago is completely wrong. Fixing it means starting over and admitting your mistake. What usually happens?",
+    text: "You meet someone impressive. The conversation goes well. A week later, what usually happens?",
     options: [
       {
-        text: "I admit it immediately and start over.",
-        scoreModifier: { courage: 10, action: 10 }
+        text: "I send a follow-up message.",
+        scoreModifier: { relationships: 10, action: 5 }
       },
       {
-        text: "I try to patch it quietly without saying anything.",
-        scoreModifier: { courage: -10, action: 5 }
+        text: "I think about sending one but never do.",
+        scoreModifier: { relationships: -5 }
       },
       {
-        text: "I ignore it and hope it resolves itself.",
-        scoreModifier: { courage: -15 }
+        text: "I assume they'll remember me.",
+        scoreModifier: { self_awareness: -5 }
       },
       {
-        text: "I quit the whole thing and walk away.",
-        scoreModifier: { courage: -20, relationships: -10 }
+        text: "I wait until I have something valuable to show first.",
+        scoreModifier: { ambition: 5, courage: -5 }
       }
     ]
   },
@@ -256,22 +256,22 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 12,
-    text: "You have been working at full capacity for weeks. Your sleep is poor and you are making mistakes. What usually happens?",
+    text: "Tomorrow is a big day and you have a mountain of work to finish. You feel completely exhausted, and it's already midnight. What usually happens?",
     options: [
       {
-        text: "I take a full evening off to rest.",
-        scoreModifier: { self_awareness: 10, fitness: 10 }
-      },
-      {
-        text: "I push through and drink more coffee.",
+        text: "I push through anyway, using caffeine and sheer force of will.",
         scoreModifier: { fitness: -15, self_awareness: -10 }
       },
       {
-        text: "I slow down my work but refuse to take a break.",
-        scoreModifier: { consistency: 5, fitness: -5 }
+        text: "I shut down, doing low-quality work while feeling guilty.",
+        scoreModifier: { discipline: -5 }
       },
       {
-        text: "I get distracted and waste hours online.",
+        text: "I stop, go to sleep, and accept whatever consequences happen tomorrow.",
+        scoreModifier: { self_awareness: 10, fitness: 10 }
+      },
+      {
+        text: "I search for a distraction online to delay the decision.",
         scoreModifier: { self_awareness: -15, discipline: -15 }
       }
     ]
@@ -281,7 +281,7 @@ export const QUESTIONS: Question[] = [
 export const ARCHETYPES = {
   BUILDER: 'Builder',
   WARRIOR: 'Warrior',
-  STRATEGIST: 'Strategist',
+  THINKER: 'Thinker',
   CONNECTOR: 'Connector'
 } as const;
 
@@ -294,6 +294,8 @@ export interface CalculationResult {
   strength: string;
   limiter: string;
   quest: string;
+  brutalTruth: string;
+  killerSentence: string;
 }
 
 export function calculateResults(answers: number[]): CalculationResult {
@@ -326,23 +328,25 @@ export function calculateResults(answers: number[]): CalculationResult {
     scores[k] = Math.max(0, Math.min(100, scores[k]));
   });
 
-  // Calculate Archetypes (4 Archetypes)
-  const builderScore = (scores.ambition + scores.action) / 2;
+  // Calculate Archetypes with calibration factor for Builder (0.88 multiplier)
+  // to avoid overrepresentation in ambitious/self-improvement audiences
+  const builderScore = ((scores.ambition + scores.action) / 2) * 0.88;
+  
   const warriorScore = (scores.fitness + scores.discipline + scores.consistency) / 3;
-  const strategistScore = (scores.self_awareness + scores.courage) / 2;
+  const thinkerScore = (scores.self_awareness + scores.courage) / 2;
   const connectorScore = scores.relationships;
 
   const archScores = [
     { name: 'Builder', score: builderScore },
     { name: 'Warrior', score: warriorScore },
-    { name: 'Strategist', score: strategistScore },
+    { name: 'Thinker', score: thinkerScore },
     { name: 'Connector', score: connectorScore }
   ];
 
   archScores.sort((a, b) => b.score - a.score);
   const archetype = archScores[0].name;
 
-  // League Rank
+  // League Rank (kept in backend types to prevent db breakage, but hidden from UI)
   const totalAvg = Object.values(scores).reduce((sum, s) => sum + s, 0) / 8;
   let league = 'Bronze';
   if (totalAvg >= 90) league = 'Diamond';
@@ -350,51 +354,74 @@ export function calculateResults(answers: number[]): CalculationResult {
   else if (totalAvg >= 60) league = 'Gold';
   else if (totalAvg >= 40) league = 'Silver';
 
-  // Find highest score amongst the 8 attributes for strength
-  const attributes = Object.entries(scores).map(([name, score]) => ({ name, score }));
-  attributes.sort((a, b) => b.score - a.score);
-  const strengthAttr = attributes[0].name;
-
-  // Find lowest score amongst the 8 attributes for limiter
-  attributes.sort((a, b) => a.score - b.score);
-  const limiterAttr = attributes[0].name;
-
-  // Human strength display names
+  // Strengths Display Mapping
   const strengthDisplayNames: Record<keyof Scores, string> = {
-    discipline: 'Staying disciplined when others quit.',
-    courage: 'Taking risks when you believe in something.',
-    consistency: 'Showing up day after day.',
-    action: 'Taking action and starting quickly.',
-    self_awareness: 'Understanding yourself and learning from mistakes.',
-    fitness: 'Protecting your body and health.',
-    relationships: 'Building trust and connecting with people.',
-    ambition: 'Dreaming big and wanting more from life.'
+    discipline: "You show up and stay disciplined when others quit.",
+    courage: "You take risks when you believe in something.",
+    consistency: "You show up day after day.",
+    action: "You take action faster than most people.",
+    self_awareness: "You rarely make reckless decisions.",
+    fitness: "You protect your body and physical energy.",
+    relationships: "You build trust and connect people naturally.",
+    ambition: "You dream big and want more from life."
   };
 
-  // Human limiter display names
+  // Limiters Display Mapping
   const limiterDisplayNames: Record<keyof Scores, string> = {
-    discipline: 'Losing discipline when things get hard.',
-    courage: 'Letting fear stop you from taking risks.',
-    consistency: 'Giving up before a habit becomes automatic.',
-    action: 'Spending too much time planning and not starting.',
-    self_awareness: 'Not noticing how your own actions block you.',
-    fitness: 'Neglecting your body and physical energy.',
-    relationships: 'Trying to do everything by yourself.',
-    ambition: 'Settling for less than you are capable of.'
+    discipline: "Losing discipline when things get hard.",
+    courage: "Letting fear stop you from taking risks.",
+    consistency: "Giving up before a habit becomes automatic.",
+    action: "Using planning as a substitute for action.",
+    self_awareness: "Not noticing how your own actions block you.",
+    fitness: "Neglecting your body and physical energy.",
+    relationships: "You try to solve everything alone.",
+    ambition: "Settling for less than you are capable of."
   };
 
-  const strength = strengthDisplayNames[strengthAttr as keyof Scores];
-  const limiter = limiterDisplayNames[limiterAttr as keyof Scores];
+  // Archetype Specific Strength / Limiter Overrides to make it feel deeply personal
+  const archetypeStrength: Record<string, string> = {
+    Builder: "You take action faster than most people.",
+    Warrior: "You show up and stay disciplined when others quit.",
+    Thinker: "You rarely make reckless decisions.",
+    Connector: "You build trust and connect people naturally."
+  };
 
-  // Next Challenge mapped to the primary Archetype
+  const archetypeLimiter: Record<string, string> = {
+    Builder: "You try to solve everything alone.",
+    Warrior: "You get so focused on the routine that you lose sight of where you are going.",
+    Thinker: "Using thinking as a substitute for action.",
+    Connector: "You spend so much energy on others that you forget your own goals."
+  };
+
+  const strength = archetypeStrength[archetype] || strengthDisplayNames[strengthAttrName(scores)];
+  const limiter = archetypeLimiter[archetype] || limiterDisplayNames[limiterAttrName(scores)];
+
+  // Next Challenge
   const archetypeQuests: Record<string, string> = {
-    Builder: "Start one conversation you've been putting off.",
+    Builder: "Start one conversation you've been avoiding.",
     Warrior: "Take one full evening off this week.",
-    Strategist: "Finish something you've been avoiding.",
+    Thinker: "Finish something you've been avoiding.",
     Connector: "Keep one promise to yourself for seven days."
   };
+  const quest = archetypeQuests[archetype] || "Start one conversation you've been avoiding.";
 
-  const quest = archetypeQuests[archetype] || "Start one conversation you've been putting off.";
+  // Brutal Truth rewrites
+  const brutalTruths: Record<string, string> = {
+    Builder: "Working harder is not your problem. Working with better people is.",
+    Warrior: "You are so focused on staying busy that you've stopped asking whether you're moving in the right direction.",
+    Thinker: "You don't have an information problem. You have an avoidance problem.",
+    Connector: "Helping other people feels productive. That's why it's become your favorite distraction."
+  };
+  const brutalTruth = brutalTruths[archetype] || "";
+
+  // One Killer Sentence centerpiece
+  const killerSentences: Record<string, string> = {
+    Builder: "You don't need more effort. You need stronger allies.",
+    Warrior: "You know how to suffer. You don't always know when to stop.",
+    Thinker: "You know exactly what to do. That's why it's frustrating that you still haven't done it.",
+    Connector: "You help everyone else move forward. Who's helping you?"
+  };
+  const killerSentence = killerSentences[archetype] || "";
 
   return {
     scores,
@@ -402,6 +429,21 @@ export function calculateResults(answers: number[]): CalculationResult {
     league,
     strength,
     limiter,
-    quest
+    quest,
+    brutalTruth,
+    killerSentence
   };
+}
+
+// Helpers to extract highest/lowest attributes if fallback is needed
+function strengthAttrName(scores: Scores): keyof Scores {
+  const attributes = Object.entries(scores).map(([name, score]) => ({ name, score }));
+  attributes.sort((a, b) => b.score - a.score);
+  return attributes[0].name as keyof Scores;
+}
+
+function limiterAttrName(scores: Scores): keyof Scores {
+  const attributes = Object.entries(scores).map(([name, score]) => ({ name, score }));
+  attributes.sort((a, b) => a.score - b.score);
+  return attributes[0].name as keyof Scores;
 }

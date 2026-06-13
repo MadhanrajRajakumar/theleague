@@ -3,12 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { 
-  Sparkles, 
-  ArrowRight, 
-  HelpCircle,
-  Award
-} from 'lucide-react';
+import { Sparkles, ArrowRight, HelpCircle } from 'lucide-react';
 import Header from '@/components/Header';
 import CharacterCard from '@/components/CharacterCard';
 
@@ -59,15 +54,22 @@ export default function LandingPage() {
                 variants={fadeInUp} 
                 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.15] text-white"
               >
-                You are probably <br />
-                <span className="text-gradient-gold-full">not lazy.</span>
+                You already know <br />
+                <span className="text-gradient-gold-full">what you should do.</span>
               </motion.h1>
 
               <motion.p 
                 variants={fadeInUp} 
-                className="text-base sm:text-lg text-white/70 max-w-xl mx-auto lg:mx-0 leading-relaxed font-normal"
+                className="text-xl sm:text-2xl text-white/80 max-w-xl mx-auto lg:mx-0 leading-relaxed font-bold"
               >
-                You just haven't figured out what's holding you back. Most people work hard. Most people want more. But something keeps getting in the way. Take this 2-minute assessment and find out what it is.
+                So why aren't you doing it?
+              </motion.p>
+
+              <motion.p 
+                variants={fadeInUp} 
+                className="text-sm sm:text-base text-white/50 max-w-xl mx-auto lg:mx-0 leading-relaxed font-normal"
+              >
+                Most people don't fail because they are lazy. They fail because they are solving the wrong problem. Take the 2-minute assessment and find out what is really holding you back.
               </motion.p>
 
               <motion.div 
@@ -78,7 +80,7 @@ export default function LandingPage() {
                   href="/assessment"
                   className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-brand-purple hover:bg-purple-600 active:bg-purple-700 text-white font-semibold text-sm px-8 py-4 rounded-xl transition-all duration-300 shadow-xl shadow-purple-950/20 hover:scale-[1.02] cursor-pointer"
                 >
-                  <span>Start Assessment</span>
+                  <span>Take The 2-Minute Assessment</span>
                   <ArrowRight className="h-4 w-4" />
                 </Link>
                 <button
@@ -105,20 +107,9 @@ export default function LandingPage() {
                 <CharacterCard
                   name="Marcus"
                   archetype="Builder"
-                  league="Gold"
-                  strength="Taking action and starting quickly."
-                  limiter="Trying to do everything by yourself."
-                  quest="Start one conversation you've been putting off."
-                  scores={{
-                    discipline: 80,
-                    fitness: 60,
-                    action: 95,
-                    relationships: 45,
-                    courage: 85,
-                    consistency: 75,
-                    self_awareness: 70,
-                    ambition: 90
-                  }}
+                  strength="You take action faster than most people."
+                  limiter="You try to solve everything alone."
+                  quest="Start one conversation you've been avoiding."
                 />
               </div>
             </motion.div>
@@ -161,7 +152,7 @@ export default function LandingPage() {
               </div>
               <h4 className="text-lg font-bold text-white">See Your Results</h4>
               <p className="text-sm text-white/50 leading-relaxed">
-                Get a clean character card showing your biggest strength, what is holding you back, and a visual overview of your stats.
+                Get a clean character card showing your biggest strength, what is holding you back, and your brutal truth.
               </p>
             </div>
 
@@ -217,14 +208,14 @@ export default function LandingPage() {
               </p>
             </div>
 
-            {/* Strategist */}
+            {/* Thinker */}
             <div className="glass-card rounded-xl p-6 border border-indigo-500/10 hover:border-indigo-500/20 transition-all duration-300">
               <div className="h-8 w-8 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-400 font-bold text-xs mb-4 font-mono">
-                STR
+                THK
               </div>
-              <h4 className="text-base font-bold text-white uppercase tracking-wide">Strategist</h4>
+              <h4 className="text-base font-bold text-white uppercase tracking-wide">Thinker</h4>
               <p className="text-xs text-white/50 leading-relaxed mt-2">
-                You think before you act. You like understanding things deeply to avoid mistakes. But sometimes you spend too much time thinking and not enough time doing.
+                You rarely make reckless decisions. You understand complex situations. But sometimes you use research and planning as a way to avoid the fear of starting.
               </p>
             </div>
 
@@ -239,67 +230,6 @@ export default function LandingPage() {
               </p>
             </div>
 
-          </div>
-        </div>
-      </section>
-
-      {/* League System Preview */}
-      <section className="py-24 bg-black/30 border-b border-white/[0.04]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <h2 className="text-xs uppercase font-mono tracking-widest text-brand-purple font-bold">
-                Ranks
-              </h2>
-              <h3 className="text-3xl font-extrabold text-white">
-                The League Levels
-              </h3>
-              <p className="text-sm text-white/50 leading-relaxed">
-                Your profile is placed in a League Rank depending on your overall scores: Bronze, Silver, Gold, Platinum, or Diamond. It reflects your readiness to handle bigger challenges.
-              </p>
-              <div className="space-y-3 pt-2">
-                <div className="flex items-center space-x-3 text-xs text-white/70">
-                  <Award className="h-4 w-4 text-brand-gold" />
-                  <span>Bronze & Silver: Building stable habits and health.</span>
-                </div>
-                <div className="flex items-center space-x-3 text-xs text-white/70">
-                  <Award className="h-4 w-4 text-brand-purple" />
-                  <span>Gold & Platinum: Taking consistent action and building relationships.</span>
-                </div>
-                <div className="flex items-center space-x-3 text-xs text-white/70">
-                  <Award className="h-4 w-4 text-white" />
-                  <span>Diamond: High performance across all categories.</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="glass-card rounded-2xl p-8 border border-white/[0.04] grid grid-cols-5 gap-3 text-center font-mono">
-              {['Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond'].map((rank, i) => (
-                <div 
-                  key={rank} 
-                  className={`flex flex-col items-center justify-center p-3 rounded-xl border ${
-                    i === 2 
-                      ? 'border-brand-gold bg-yellow-500/[0.03] scale-105 shadow-[0_0_20px_rgba(251,191,36,0.08)]' 
-                      : 'border-white/[0.04] bg-white/[0.01]'
-                  }`}
-                >
-                  <span className={`text-[10px] font-bold ${
-                    rank === 'Diamond' ? 'text-white' : 
-                    rank === 'Platinum' ? 'text-purple-300' : 
-                    rank === 'Gold' ? 'text-brand-gold' : 
-                    rank === 'Silver' ? 'text-zinc-400' : 'text-amber-800'
-                  }`}>
-                    {rank[0]}
-                  </span>
-                  <span className="text-[10px] font-semibold text-white/80 mt-2">
-                    {rank}
-                  </span>
-                  <span className="text-[8px] text-white/30 mt-1">
-                    {i === 0 ? '0-39' : i === 1 ? '40-59' : i === 2 ? '60-74' : i === 3 ? '75-89' : '90+'}
-                  </span>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </section>
@@ -364,7 +294,7 @@ export default function LandingPage() {
               href="/assessment"
               className="inline-flex items-center justify-center space-x-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-sm px-10 py-4.5 rounded-xl transition-all duration-300 shadow-xl shadow-purple-950/20 hover:scale-[1.02] cursor-pointer"
             >
-              <span>Start Assessment</span>
+              <span>Take The 2-Minute Assessment</span>
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
