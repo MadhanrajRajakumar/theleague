@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, ArrowRight, ShieldAlert, Sparkles, User, Mail } from 'lucide-react';
 import Header from '@/components/Header';
+import { QUESTIONS, calculateResults } from '@/lib/questions';
+import { createAssessment, updateAssessmentProgress, submitWaitlist, completeAssessment } from '@/lib/supabase';
 
 const InstagramIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
@@ -23,8 +25,6 @@ const InstagramIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
   </svg>
 );
-import { QUESTIONS, calculateResults } from '@/lib/questions';
-import { createAssessment, updateAssessmentProgress, submitWaitlist, completeAssessment } from '@/lib/supabase';
 
 export default function AssessmentPage() {
   const router = useRouter();
@@ -58,7 +58,6 @@ export default function AssessmentPage() {
       setStep('questions');
     } catch (err) {
       console.error("Failed to start assessment:", err);
-      // Fallback in case of absolute failure
       setAssessmentId('fallback-' + Date.now());
       setStep('questions');
     }
@@ -69,9 +68,7 @@ export default function AssessmentPage() {
     newAnswers[currentIdx] = optionIndex;
     setAnswers(newAnswers);
 
-    // Save progress periodically (or immediately if needed)
     if (assessmentId) {
-      // Calculate scores dynamically at current state
       const tempResults = calculateResults(newAnswers);
       updateAssessmentProgress(assessmentId, currentIdx + 1, tempResults.scores);
     }
@@ -100,13 +97,10 @@ export default function AssessmentPage() {
     setIsSubmitting(true);
 
     try {
-      // 1. Calculate final scores and metrics
       const results = calculateResults(answers);
 
-      // 2. Complete assessment in database
       await completeAssessment(assessmentId, results);
 
-      // 3. Register user in waitlist database
       await submitWaitlist({
         assessmentId,
         name: name.trim(),
@@ -119,17 +113,15 @@ export default function AssessmentPage() {
         quest: results.quest
       });
 
-      // 4. Save results to sessionStorage for results page reveal
       sessionStorage.setItem('the_league_results', JSON.stringify({
         ...results,
         name: name.trim()
       }));
 
-      // 5. Navigate to results page
       router.push('/results');
     } catch (err) {
       console.error("Failed to complete waitlist capture:", err);
-      setFormError('An error occurred while forging your card. Please try again.');
+      setFormError('An error occurred. Please try again.');
       setIsSubmitting(false);
     }
   };
@@ -138,25 +130,24 @@ export default function AssessmentPage() {
   const progressPercent = ((currentIdx) / QUESTIONS.length) * 100;
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#030303]">
+    <div className="flex flex-col min-h-screen bg-[#030303] text-white">
       <Header />
 
       <main className="flex-1 flex flex-col justify-center items-center px-4 py-8 relative">
-        {/* Glow blur element */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-brand-purple/5 rounded-full blur-[100px] pointer-events-none" />
 
         <div className="w-full max-w-2xl relative z-10">
           <AnimatePresence mode="wait">
             
-            {/* STEP 1: INTRO DISCLAIMER */}
+            {/* STEP 1: INTRO AGREEMENT */}
             {step === 'intro' && (
               <motion.div
                 key="intro"
                 initial={{ opacity: 0, scale: 0.96 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.96 }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="glass-card border border-white/[0.06] rounded-2xl p-8 sm:p-12 text-center space-y-8"
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] as const }}
+                className="glass-card border border-white/[0.06] rounded-2xl p-8 sm:p-12 text-center space-y-8 animate-shimmer"
               >
                 <div className="mx-auto h-12 w-12 rounded-full bg-brand-purple/10 flex items-center justify-center border border-brand-purple/20 text-brand-purple">
                   <ShieldAlert className="h-6 w-6" />
@@ -164,14 +155,15 @@ export default function AssessmentPage() {
 
                 <div className="space-y-4">
                   <h2 className="text-xl sm:text-2xl font-black text-white tracking-wide uppercase font-mono">
-                    The Crucible Agreement
+                    Before we begin
                   </h2>
                   <div className="space-y-3 text-sm sm:text-base text-white/70 leading-relaxed font-light">
-                    <p>"There are no good answers.</p>
-                    <p>There are no bad answers.</p>
-                    <p>The more honest you are, the more accurate your character becomes.</p>
-                    <p className="text-brand-gold font-medium">Answer based on what you usually do.</p>
-                    <p className="opacity-40">Not what you wish you did."</p>
+                    <p>There are no right answers.</p>
+                    <p>There are no wrong answers.</p>
+                    <p>Answer honestly.</p>
+                    <p className="text-brand-gold font-medium">Not based on who you want to be.</p>
+                    <p className="opacity-80">Based on who you are today.</p>
+                    <p className="opacity-40 text-xs">The more honest you are, the more accurate your result will be.</p>
                   </div>
                 </div>
 
@@ -180,14 +172,14 @@ export default function AssessmentPage() {
                     onClick={startAssessment}
                     className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-brand-purple hover:bg-purple-600 active:bg-purple-700 text-white font-bold text-sm px-8 py-4 rounded-xl transition-all duration-200 cursor-pointer shadow-lg shadow-purple-950/20"
                   >
-                    <span>Enter the Crucible</span>
+                    <span>Start Assessment</span>
                     <Sparkles className="h-4 w-4 text-brand-gold" />
                   </button>
                 </div>
               </motion.div>
             )}
 
-            {/* STEP 2: CRUCIBLE QUESTIONS */}
+            {/* STEP 2: SCENARIOS */}
             {step === 'questions' && currentQuestion && (
               <motion.div
                 key={currentQuestion.id}
@@ -197,7 +189,7 @@ export default function AssessmentPage() {
                 transition={{ duration: 0.4, ease: 'easeInOut' }}
                 className="space-y-8"
               >
-                {/* Progress bar */}
+                {/* Progress tracker */}
                 <div className="space-y-3">
                   <div className="flex justify-between items-center text-xs font-mono text-white/40">
                     <span className="uppercase tracking-widest text-brand-purple font-semibold">
@@ -213,25 +205,25 @@ export default function AssessmentPage() {
                   </div>
                 </div>
 
-                {/* Scenario details card */}
-                <div className="glass-card border border-white/[0.05] rounded-2xl p-6 sm:p-10 space-y-6">
+                {/* Scenario details card (Short, max 3 lines) */}
+                <div className="glass-card border border-white/[0.05] rounded-2xl p-6 sm:p-10 space-y-4">
                   <span className="text-[10px] font-mono tracking-widest text-white/30 block uppercase">
-                    SCENARIO #{currentQuestion.id}
+                    SCENARIO {currentQuestion.id}
                   </span>
-                  <h2 className="text-lg sm:text-xl font-bold leading-relaxed text-white">
+                  <h2 className="text-base sm:text-lg font-semibold leading-relaxed text-white">
                     {currentQuestion.text}
                   </h2>
                 </div>
 
-                {/* Option selection cards */}
-                <div className="grid grid-cols-1 gap-4">
+                {/* Answer Options */}
+                <div className="grid grid-cols-1 gap-3.5">
                   {currentQuestion.options.map((opt, oIdx) => (
                     <button
                       key={oIdx}
                       onClick={() => handleSelectOption(oIdx)}
                       className="w-full text-left glass-card border border-white/[0.06] rounded-xl p-5 hover:border-brand-purple/40 hover:bg-brand-purple/[0.02] active:bg-brand-purple/[0.04] transition-all duration-200 group flex items-center justify-between cursor-pointer"
                     >
-                      <span className="text-xs sm:text-sm text-white/70 group-hover:text-white leading-normal pr-4">
+                      <span className="text-xs sm:text-sm text-white/70 group-hover:text-white leading-normal pr-4 font-normal">
                         {opt.text}
                       </span>
                       <ArrowRight className="h-4 w-4 text-white/20 group-hover:text-brand-purple group-hover:translate-x-1 transition-all shrink-0" />
@@ -239,7 +231,7 @@ export default function AssessmentPage() {
                   ))}
                 </div>
 
-                {/* Navigation Back button */}
+                {/* Back button */}
                 {currentIdx > 0 && (
                   <div className="flex justify-start">
                     <button
@@ -247,14 +239,14 @@ export default function AssessmentPage() {
                       className="inline-flex items-center space-x-2 text-xs font-mono text-white/40 hover:text-white transition-colors duration-200 cursor-pointer"
                     >
                       <ArrowLeft className="h-3.5 w-3.5" />
-                      <span>Back to Previous Scenario</span>
+                      <span>Back to Previous Question</span>
                     </button>
                   </div>
                 )}
               </motion.div>
             )}
 
-            {/* STEP 3: LEAD CAPTURE FORM */}
+            {/* STEP 3: LEAD CAPTURE */}
             {step === 'capture' && (
               <motion.div
                 key="capture"
@@ -264,14 +256,14 @@ export default function AssessmentPage() {
                 className="glass-card border border-white/[0.06] rounded-2xl p-8 sm:p-12 space-y-8"
               >
                 <div className="text-center space-y-2">
-                  <span className="text-[10px] font-mono tracking-widest text-brand-gold uppercase block">
+                  <span className="text-[10px] font-mono tracking-widest text-brand-gold uppercase block font-semibold">
                     Assessment Complete
                   </span>
                   <h2 className="text-2xl font-black text-white uppercase tracking-wide">
-                    Forge Your Character
+                    See Your Results
                   </h2>
-                  <p className="text-xs text-white/50 max-w-sm mx-auto">
-                    We have mapped your behaviors. Enter your founding contact details below to generate and secure your character card.
+                  <p className="text-xs text-white/50 max-w-sm mx-auto leading-relaxed">
+                    We have finished your analysis. Enter your details below to generate and secure your character card.
                   </p>
                 </div>
 
@@ -348,7 +340,7 @@ export default function AssessmentPage() {
                       disabled={isSubmitting}
                       className="w-full inline-flex items-center justify-center space-x-2 bg-brand-purple hover:bg-purple-600 active:bg-purple-700 text-white font-bold text-sm px-6 py-4 rounded-xl transition-all duration-200 cursor-pointer shadow-lg shadow-purple-950/20 disabled:opacity-50"
                     >
-                      <span>{isSubmitting ? 'Forging Profile...' : 'Reveal My Archetype'}</span>
+                      <span>{isSubmitting ? 'Generating Card...' : 'Reveal My Character'}</span>
                       <Sparkles className="h-4 w-4 text-brand-gold animate-pulse" />
                     </button>
                   </div>

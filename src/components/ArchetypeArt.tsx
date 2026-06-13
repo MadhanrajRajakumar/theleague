@@ -8,7 +8,7 @@ interface ArchetypeArtProps {
 export default function ArchetypeArt({ archetype, className = 'w-full h-full' }: ArchetypeArtProps) {
   const normalizedArch = archetype.toLowerCase().trim();
 
-  // Builder: Isometric construction grid, neon purple glow
+  // 1. Builder: Silhouette of blacksmith with hammer, anvil, sparks, purple theme
   if (normalizedArch === 'builder') {
     return (
       <svg
@@ -24,7 +24,7 @@ export default function ArchetypeArt({ archetype, className = 'w-full h-full' }:
             <stop offset="100%" stopColor="#4c1d95" />
           </linearGradient>
           <filter id="purple-glow" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="8" result="blur" />
+            <feGaussianBlur stdDeviation="10" result="blur" />
             <feMerge>
               <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
@@ -32,76 +32,55 @@ export default function ArchetypeArt({ archetype, className = 'w-full h-full' }:
           </filter>
         </defs>
 
-        {/* Outer Tech Border */}
-        <circle cx="200" cy="200" r="180" stroke="#7c3aed" strokeWidth="1" strokeDasharray="5 15" opacity="0.3" />
-        <circle cx="200" cy="200" r="160" stroke="#7c3aed" strokeWidth="2" opacity="0.1" />
+        {/* Glowing aura */}
+        <circle cx="200" cy="180" r="90" fill="#7c3aed" opacity="0.15" filter="url(#purple-glow)" />
 
-        {/* Isometric Grid Floor */}
-        <g opacity="0.15">
-          <path d="M 200,80 L 320,200 L 200,320 L 80,200 Z" stroke="#a78bfa" strokeWidth="1" />
-          <path d="M 200,140 L 260,200 L 200,260 L 140,200 Z" stroke="#a78bfa" strokeWidth="1" />
-          <line x1="200" y1="80" x2="200" y2="320" stroke="#a78bfa" strokeWidth="1" />
-          <line x1="80" y1="200" x2="320" y2="200" stroke="#a78bfa" strokeWidth="1" />
-        </g>
-
-        {/* Tech lines */}
-        <g stroke="url(#builder-grad)" strokeWidth="1.5" opacity="0.4">
-          <path d="M 200,40 L 200,140" strokeDasharray="4 4" />
-          <circle cx="200" cy="40" r="3" fill="#c084fc" />
-          <path d="M 50,200 L 140,200" strokeDasharray="4 4" />
-          <circle cx="50" cy="200" r="3" fill="#c084fc" />
-          <path d="M 350,200 L 260,200" strokeDasharray="4 4" />
-          <circle cx="350" cy="200" r="3" fill="#c084fc" />
-        </g>
-
-        {/* Isometric Prism (Builder Mindset) */}
+        {/* Sparks */}
         <g filter="url(#purple-glow)">
-          {/* Top Face */}
-          <path
-            d="M 200,100 L 270,140 L 200,180 L 130,140 Z"
-            fill="#a78bfa"
-            fillOpacity="0.25"
-            stroke="#c084fc"
-            strokeWidth="2"
-          />
-          {/* Left Face */}
-          <path
-            d="M 130,140 L 200,180 L 200,270 L 130,230 Z"
-            fill="#7c3aed"
-            fillOpacity="0.3"
-            stroke="#a78bfa"
-            strokeWidth="2"
-          />
-          {/* Right Face */}
-          <path
-            d="M 200,180 L 270,140 L 270,230 L 200,270 Z"
-            fill="#4c1d95"
-            fillOpacity="0.45"
-            stroke="#c084fc"
-            strokeWidth="2"
-          />
+          <circle cx="150" cy="120" r="2" fill="#c084fc" />
+          <circle cx="170" cy="80" r="3" fill="#ffffff" />
+          <circle cx="250" cy="110" r="2" fill="#c084fc" />
+          <circle cx="230" cy="60" r="2.5" fill="#ffffff" />
+          <circle cx="130" cy="160" r="1.5" fill="#7c3aed" />
+          <circle cx="270" cy="150" r="2" fill="#c084fc" />
         </g>
 
-        {/* Core light pillar */}
-        <line x1="200" y1="180" x2="200" y2="100" stroke="#ffffff" strokeWidth="2.5" filter="url(#purple-glow)" />
+        {/* Anvil Outline (Glowing background layer) */}
+        <path
+          d="M 120,270 L 280,270 L 270,230 C 240,230 230,220 230,200 L 170,200 C 170,220 160,230 130,230 Z"
+          fill="#4c1d95"
+          fillOpacity="0.4"
+          stroke="#7c3aed"
+          strokeWidth="1.5"
+        />
 
-        {/* Small floating structures */}
+        {/* Blacksmith / Creator Character Silhouette */}
+        <g fill="#070708" stroke="#7c3aed" strokeWidth="2.5">
+          {/* Shoulders / Body */}
+          <path d="M 100,340 C 120,290 140,220 200,220 C 260,220 280,290 300,340 Z" />
+          {/* Head & Goggles outline */}
+          <circle cx="200" cy="155" r="35" />
+          <path d="M 175,155 Q 200,165 225,155" strokeWidth="3" stroke="#c084fc" />
+          {/* Raised Hammer arm (left from spectator's view) */}
+          <path d="M 115,280 C 100,220 100,160 130,120 L 160,140 C 135,175 130,220 140,270 Z" />
+        </g>
+
+        {/* Glowing Hammer Head (glowing purple overlay) */}
         <g filter="url(#purple-glow)">
-          <path d="M 200,300 L 220,310 L 200,320 L 180,310 Z" fill="#c084fc" fillOpacity="0.3" stroke="#a78bfa" strokeWidth="1" />
-          <path d="M 270,90 L 290,100 L 270,110 L 250,100 Z" fill="#c084fc" fillOpacity="0.3" stroke="#a78bfa" strokeWidth="1" />
-          <path d="M 130,90 L 150,100 L 130,110 L 110,100 Z" fill="#c084fc" fillOpacity="0.3" stroke="#a78bfa" strokeWidth="1" />
+          {/* Hammer Handle */}
+          <line x1="120" y1="130" x2="160" y2="90" stroke="#c084fc" strokeWidth="4.5" />
+          {/* Hammer Head */}
+          <rect x="145" y="70" width="30" height="20" rx="3" fill="#ffffff" stroke="#7c3aed" strokeWidth="2.5" transform="rotate(45 160 80)" />
         </g>
 
-        {/* Data points */}
-        <circle cx="200" cy="140" r="4" fill="#ffffff" filter="url(#purple-glow)" />
-        <circle cx="270" cy="140" r="2.5" fill="#c084fc" />
-        <circle cx="130" cy="140" r="2.5" fill="#c084fc" />
-        <circle cx="200" cy="270" r="3" fill="#ffffff" />
+        {/* Anvil glowing top plane */}
+        <line x1="160" y1="200" x2="240" y2="200" stroke="#ffffff" strokeWidth="3" filter="url(#purple-glow)" />
+
       </svg>
     );
   }
 
-  // Warrior: Sharp glowing digital shield, gold accents
+  // 2. Warrior: Spartan/Knight silhouette, gold theme
   if (normalizedArch === 'warrior') {
     return (
       <svg
@@ -117,7 +96,7 @@ export default function ArchetypeArt({ archetype, className = 'w-full h-full' }:
             <stop offset="100%" stopColor="#854d0e" />
           </linearGradient>
           <filter id="gold-glow" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="8" result="blur" />
+            <feGaussianBlur stdDeviation="10" result="blur" />
             <feMerge>
               <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
@@ -125,66 +104,46 @@ export default function ArchetypeArt({ archetype, className = 'w-full h-full' }:
           </filter>
         </defs>
 
-        {/* Outer Circular Reticle */}
-        <circle cx="200" cy="200" r="175" stroke="#fbbf24" strokeWidth="1" strokeDasharray="12 12" opacity="0.2" />
-        <path d="M 200,10 L 200,25" stroke="#fbbf24" strokeWidth="2" opacity="0.6" />
-        <path d="M 200,375 L 200,390" stroke="#fbbf24" strokeWidth="2" opacity="0.6" />
-        <path d="M 10,200 L 25,200" stroke="#fbbf24" strokeWidth="2" opacity="0.6" />
-        <path d="M 375,200 L 390,200" stroke="#fbbf24" strokeWidth="2" opacity="0.6" />
+        {/* Back gold aura */}
+        <circle cx="200" cy="180" r="90" fill="#eab308" opacity="0.15" filter="url(#gold-glow)" />
 
-        {/* Tech Grid Lines */}
-        <g opacity="0.1" stroke="#fbbf24" strokeWidth="1">
-          <line x1="100" y1="100" x2="300" y2="300" />
-          <line x1="300" y1="100" x2="100" y2="300" />
-          <circle cx="200" cy="200" r="120" />
+        {/* Spartan/Knight Silhouette */}
+        <g fill="#070708" stroke="url(#warrior-grad)" strokeWidth="2.5">
+          {/* Cape / Shoulders */}
+          <path d="M 80,340 C 110,260 140,210 200,210 C 260,210 290,260 320,340 Z" />
+          {/* Plate shoulders details */}
+          <path d="M 100,280 Q 140,250 200,260" stroke="#eab308" strokeWidth="1.5" />
+          <path d="M 300,280 Q 260,250 200,260" stroke="#eab308" strokeWidth="1.5" />
+          {/* Spartan Helmet */}
+          <path d="M 160,190 C 160,110 240,110 240,190 L 225,200 L 175,200 Z" />
+          {/* Plume */}
+          <path d="M 200,110 C 210,70 240,50 260,70 Q 220,70 200,110 Z" fill="#854d0e" stroke="#fbbf24" strokeWidth="1.5" />
         </g>
 
-        {/* Glowing Geometric Warrior Shield */}
+        {/* Visor - T-Shape visor glowing gold */}
         <g filter="url(#gold-glow)">
-          {/* Shield Base Outline */}
           <path
-            d="M 200,70 
-               C 270,70 300,90 310,160 
-               C 310,240 260,300 200,340 
-               C 140,300 90,240 90,160 
-               C 100,90 130,70 200,70 Z"
-            fill="#ca8a04"
-            fillOpacity="0.15"
-            stroke="url(#warrior-grad)"
-            strokeWidth="3"
+            d="M 185,150 L 215,150 M 200,150 L 200,195"
+            stroke="#ffffff"
+            strokeWidth="3.5"
+            strokeLinecap="round"
           />
-
-          {/* Internal Blade / Chevron geometries */}
-          <path
-            d="M 200,100 L 275,155 L 255,170 L 200,130 L 145,170 L 125,155 Z"
-            fill="#fbbf24"
-            fillOpacity="0.25"
-            stroke="#fef08a"
-            strokeWidth="1.5"
-          />
-          <path
-            d="M 200,150 L 270,210 L 200,260 L 130,210 Z"
-            fill="#854d0e"
-            fillOpacity="0.4"
-            stroke="#fbbf24"
-            strokeWidth="2"
-          />
-          
-          {/* Central Core Line */}
-          <line x1="200" y1="70" x2="200" y2="340" stroke="#ffffff" strokeWidth="2.5" opacity="0.9" />
         </g>
 
-        {/* Small floating particles */}
-        <circle cx="150" cy="110" r="3" fill="#fef08a" filter="url(#gold-glow)" />
-        <circle cx="250" cy="110" r="3" fill="#fef08a" filter="url(#gold-glow)" />
-        <circle cx="110" cy="240" r="2.5" fill="#fbbf24" />
-        <circle cx="290" cy="240" r="2.5" fill="#fbbf24" />
-        <circle cx="200" cy="200" r="5" fill="#ffffff" filter="url(#gold-glow)" />
+        {/* Glowing Sword silhouette pointed down */}
+        <g filter="url(#gold-glow)">
+          {/* Blade */}
+          <polygon points="196,220 204,220 202,330 198,330" fill="#ffffff" stroke="#fbbf24" strokeWidth="1.5" />
+          {/* Crossguard */}
+          <line x1="185" y1="235" x2="215" y2="235" stroke="#fbbf24" strokeWidth="3" strokeLinecap="round" />
+          {/* Pommel */}
+          <circle cx="200" cy="213" r="3" fill="#ffffff" />
+        </g>
       </svg>
     );
   }
 
-  // Strategist: Hexagonal blueprint coordinates, indigo/blue gradients
+  // 3. Strategist: General/Tactician silhouette looking at glowing blueprint table, indigo theme
   if (normalizedArch === 'strategist') {
     return (
       <svg
@@ -200,7 +159,7 @@ export default function ArchetypeArt({ archetype, className = 'w-full h-full' }:
             <stop offset="100%" stopColor="#312e81" />
           </linearGradient>
           <filter id="indigo-glow" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="8" result="blur" />
+            <feGaussianBlur stdDeviation="10" result="blur" />
             <feMerge>
               <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
@@ -208,64 +167,39 @@ export default function ArchetypeArt({ archetype, className = 'w-full h-full' }:
           </filter>
         </defs>
 
-        {/* Outer Orbitals */}
-        <circle cx="200" cy="200" r="170" stroke="#6366f1" strokeWidth="1" strokeDasharray="3 9" opacity="0.3" />
-        <circle cx="200" cy="200" r="140" stroke="#4f46e5" strokeWidth="1.5" strokeDasharray="160 40" opacity="0.4" />
-        
-        {/* Radar grids */}
-        <g opacity="0.1" stroke="#818cf8" strokeWidth="1">
-          <circle cx="200" cy="200" r="90" />
-          <line x1="200" y1="20" x2="200" y2="380" />
-          <line x1="20" y1="200" x2="380" y2="200" />
+        {/* Back indigo aura */}
+        <circle cx="200" cy="180" r="90" fill="#4f46e5" opacity="0.15" filter="url(#indigo-glow)" />
+
+        {/* Hexagonal glowing console/map on table */}
+        <g filter="url(#indigo-glow)" opacity="0.4">
+          <polygon points="120,290 280,290 310,340 90,340" fill="#312e81" fillOpacity="0.3" stroke="#818cf8" strokeWidth="1.5" />
+          <line x1="200" y1="290" x2="200" y2="340" stroke="#818cf8" strokeWidth="0.75" />
+          <line x1="160" y1="305" x2="240" y2="305" stroke="#818cf8" strokeWidth="0.75" />
+          <line x1="140" y1="320" x2="260" y2="320" stroke="#818cf8" strokeWidth="0.75" />
         </g>
 
-        {/* Blueprint crystal maze */}
+        {/* Hooded Tactician / General Character Silhouette */}
+        <g fill="#070708" stroke="url(#strat-grad)" strokeWidth="2.5">
+          {/* Shoulders */}
+          <path d="M 110,340 C 110,270 140,210 200,210 C 260,210 290,270 290,340 Z" />
+          {/* Hood */}
+          <path d="M 165,200 C 160,140 240,140 235,200 L 210,215 L 190,215 Z" />
+          {/* Collar/Cape outlines */}
+          <path d="M 150,260 Q 200,230 250,260" stroke="#818cf8" strokeWidth="1.5" />
+        </g>
+
+        {/* Holographic glowing details floating above table */}
         <g filter="url(#indigo-glow)">
-          {/* Main Hexagon */}
-          <polygon
-            points="200,80 304,140 304,260 200,320 96,260 96,140"
-            fill="#312e81"
-            fillOpacity="0.2"
-            stroke="url(#strat-grad)"
-            strokeWidth="2.5"
-          />
-
-          {/* Internal Inner Hexagon */}
-          <polygon
-            points="200,120 269,160 269,240 200,280 131,240 131,160"
-            fill="#4f46e5"
-            fillOpacity="0.25"
-            stroke="#818cf8"
-            strokeWidth="1.5"
-          />
-
-          {/* Center Sacred Geometry / Triangle intersection */}
-          <polygon
-            points="200,140 252,230 148,230"
-            stroke="#ffffff"
-            strokeWidth="2"
-            fillOpacity="0.1"
-          />
-
-          {/* Axis connection points */}
-          <line x1="200" y1="80" x2="200" y2="120" stroke="#ffffff" strokeWidth="1.5" />
-          <line x1="304" y1="140" x2="269" y2="160" stroke="#ffffff" strokeWidth="1.5" />
-          <line x1="304" y1="260" x2="269" y2="240" stroke="#ffffff" strokeWidth="1.5" />
-          <line x1="200" y1="320" x2="200" y2="280" stroke="#ffffff" strokeWidth="1.5" />
-          <line x1="96" y1="260" x2="131" y2="240" stroke="#ffffff" strokeWidth="1.5" />
-          <line x1="96" y1="140" x2="131" y2="160" stroke="#ffffff" strokeWidth="1.5" />
+          {/* Stylized geometric blueprint projection */}
+          <circle cx="200" cy="265" r="12" stroke="#ffffff" strokeWidth="1.5" strokeDasharray="3 3" />
+          <polygon points="200,250 212,272 188,272" stroke="#818cf8" strokeWidth="1.5" />
+          <circle cx="200" cy="265" r="2" fill="#ffffff" />
         </g>
-
-        {/* Focal Core coordinates */}
-        <circle cx="200" cy="200" r="4.5" fill="#ffffff" filter="url(#indigo-glow)" />
-        <circle cx="200" cy="140" r="3" fill="#818cf8" />
-        <circle cx="252" cy="230" r="3" fill="#818cf8" />
-        <circle cx="148" cy="230" r="3" fill="#818cf8" />
       </svg>
     );
   }
 
-  // Connector: Neural galaxy, violet constellation nodes
+  // 4. Connector: Explorer/Diplomat silhouette with glowing network lines, violet/pink theme
   return (
     <svg
       viewBox="0 0 400 400"
@@ -280,7 +214,7 @@ export default function ArchetypeArt({ archetype, className = 'w-full h-full' }:
           <stop offset="100%" stopColor="#a855f7" />
         </linearGradient>
         <filter id="magenta-glow" x="-20%" y="-20%" width="140%" height="140%">
-          <feGaussianBlur stdDeviation="8" result="blur" />
+          <feGaussianBlur stdDeviation="10" result="blur" />
           <feMerge>
             <feMergeNode in="blur" />
             <feMergeNode in="SourceGraphic" />
@@ -288,50 +222,38 @@ export default function ArchetypeArt({ archetype, className = 'w-full h-full' }:
         </filter>
       </defs>
 
-      {/* Orbit Rings */}
-      <ellipse cx="200" cy="200" rx="160" ry="110" stroke="#ec4899" strokeWidth="1" strokeDasharray="6 12" transform="rotate(-15 200 200)" opacity="0.25" />
-      <ellipse cx="200" cy="200" rx="160" ry="110" stroke="#a855f7" strokeWidth="1" strokeDasharray="4 8" transform="rotate(45 200 200)" opacity="0.2" />
+      {/* Back magenta aura */}
+      <circle cx="200" cy="180" r="90" fill="#ec4899" opacity="0.15" filter="url(#magenta-glow)" />
 
-      {/* Connection Links (Lines) */}
-      <g stroke="url(#conn-grad)" strokeWidth="1.5" filter="url(#magenta-glow)" opacity="0.8">
-        {/* Core Web */}
-        <line x1="200" y1="120" x2="290" y2="170" />
-        <line x1="290" y1="170" x2="260" y2="280" />
-        <line x1="260" y1="280" x2="140" y2="280" />
-        <line x1="140" y1="280" x2="110" y2="170" />
-        <line x1="110" y1="170" x2="200" y2="120" />
-        
-        {/* Cross web links */}
-        <line x1="200" y1="120" x2="200" y2="210" />
-        <line x1="290" y1="170" x2="200" y2="210" />
-        <line x1="260" y1="280" x2="200" y2="210" />
-        <line x1="140" y1="280" x2="200" y2="210" />
-        <line x1="110" y1="170" x2="200" y2="210" />
-
-        {/* Outlier links */}
-        <line x1="200" y1="120" x2="200" y2="50" strokeWidth="0.75" strokeDasharray="3 3" />
-        <line x1="290" y1="170" x2="350" y2="190" strokeWidth="0.75" strokeDasharray="3 3" />
-        <line x1="260" y1="280" x2="310" y2="340" strokeWidth="0.75" strokeDasharray="3 3" />
-        <line x1="140" y1="280" x2="90" y2="340" strokeWidth="0.75" strokeDasharray="3 3" />
-        <line x1="110" y1="170" x2="50" y2="190" strokeWidth="0.75" strokeDasharray="3 3" />
+      {/* Network background constellation */}
+      <g stroke="#ec4899" strokeWidth="0.75" opacity="0.25">
+        <line x1="80" y1="120" x2="140" y2="160" />
+        <line x1="140" y1="160" x2="110" y2="240" />
+        <line x1="320" y1="120" x2="260" y2="160" />
+        <line x1="260" y1="160" x2="290" y2="240" />
+        <circle cx="80" cy="120" r="2" fill="#ec4899" />
+        <circle cx="320" cy="120" r="2" fill="#ec4899" />
       </g>
 
-      {/* Nodes (Circles) */}
+      {/* Diplomat/Explorer Silhouette */}
+      <g fill="#070708" stroke="url(#conn-grad)" strokeWidth="2.5">
+        {/* Pack / Shoulders */}
+        <path d="M 90,340 C 110,270 140,210 200,210 C 260,210 290,270 310,340 Z" />
+        {/* Head/Cowl profile */}
+        <path d="M 170,205 C 165,150 235,150 230,205 L 210,220 L 190,220 Z" />
+        {/* Left hand holding glowing compass/source */}
+        <path d="M 285,300 C 290,260 260,230 240,240 L 255,270 Z" />
+      </g>
+
+      {/* Glowing Lantern/Compass nodes */}
       <g filter="url(#magenta-glow)">
-        <circle cx="200" cy="210" r="14" fill="#ffffff" stroke="#ec4899" strokeWidth="3" />
-        <circle cx="200" cy="120" r="9.5" fill="#ec4899" stroke="#ffffff" strokeWidth="2" />
-        <circle cx="290" cy="170" r="9.5" fill="#a855f7" stroke="#ffffff" strokeWidth="2" />
-        <circle cx="260" cy="280" r="9.5" fill="#ec4899" stroke="#ffffff" strokeWidth="2" />
-        <circle cx="140" cy="280" r="9.5" fill="#a855f7" stroke="#ffffff" strokeWidth="2" />
-        <circle cx="110" cy="170" r="9.5" fill="#ec4899" stroke="#ffffff" strokeWidth="2" />
+        <circle cx="230" cy="245" r="9" fill="#ffffff" stroke="#ec4899" strokeWidth="2" />
+        {/* Star radiating network threads */}
+        <line x1="230" y1="245" x2="200" y2="210" stroke="#f472b6" strokeWidth="1.5" />
+        <line x1="230" y1="245" x2="260" y2="280" stroke="#f472b6" strokeWidth="1.5" />
+        <line x1="230" y1="245" x2="150" y2="250" stroke="#f472b6" strokeWidth="1.5" opacity="0.5" strokeDasharray="3 3" />
+        <line x1="230" y1="245" x2="310" y2="210" stroke="#f472b6" strokeWidth="1.5" opacity="0.5" strokeDasharray="3 3" />
       </g>
-
-      {/* Outlier Nodes */}
-      <circle cx="200" cy="50" r="4" fill="#f472b6" />
-      <circle cx="350" cy="190" r="4.5" fill="#a855f7" filter="url(#magenta-glow)" />
-      <circle cx="310" cy="340" r="4.5" fill="#f472b6" />
-      <circle cx="90" cy="340" r="4.5" fill="#a855f7" />
-      <circle cx="50" cy="190" r="4" fill="#ec4899" filter="url(#magenta-glow)" />
     </svg>
   );
 }

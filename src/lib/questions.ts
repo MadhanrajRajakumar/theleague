@@ -14,265 +14,265 @@ export interface Question {
 export const QUESTIONS: Question[] = [
   {
     id: 1,
-    text: "You planned to wake up at 5 AM. Unfortunately, your work ran late and you didn’t fall asleep until almost 1 AM. The alarm rings. You feel absolutely exhausted. What usually happens next?",
+    text: "You planned to do something important this weekend. Now it's Sunday night. You haven't started yet. What usually happens?",
     options: [
       {
-        text: "I get up anyway. My word is my contract, regardless of circumstances.",
-        scoreModifier: { discipline: 10, consistency: 5, fitness: -2 }
+        text: "I start anyway, even if it's late.",
+        scoreModifier: { action: 10, consistency: 5 }
       },
       {
-        text: "I sleep another hour to protect my physical health, then start my day.",
-        scoreModifier: { fitness: 10, learning: 5 }
+        text: "I make a better plan for next week.",
+        scoreModifier: { consistency: 5, action: -5 }
       },
       {
-        text: "I snooze it repeatedly, negotiating with myself in a half-asleep state.",
-        scoreModifier: { consistency: -5, discipline: -5 }
+        text: "I tell myself I'll do it tomorrow.",
+        scoreModifier: { action: -10 }
       },
       {
-        text: "I write off the morning, sleep in, and tell myself I'll restart tomorrow.",
-        scoreModifier: { discipline: -10, consistency: -10 }
+        text: "I leave it and move on.",
+        scoreModifier: { action: -15, consistency: -10 }
       }
     ]
   },
   {
     id: 2,
-    text: "Your product is 90% done. It functions, but the UI is slightly unpolished and there are two minor, non-breaking bugs. You promised your audience a launch today. What do you do?",
+    text: "You know someone who could help you move forward in life (a mentor, business owner, or someone successful). What usually happens?",
     options: [
       {
-        text: "I ship it exactly as it is right now. Real creators ship.",
-        scoreModifier: { execution: 10, builder_mindset: 10, courage: 5 }
+        text: "I reach out.",
+        scoreModifier: { relationships: 10, courage: 5 }
       },
       {
-        text: "I delay the launch by 48 hours to polish the UI and fix the bugs.",
-        scoreModifier: { builder_mindset: 5, consistency: 5, execution: -5 }
+        text: "I think about reaching out.",
+        scoreModifier: { relationships: 5, courage: -5 }
       },
       {
-        text: "I delay indefinitely until it is absolutely flawless, refusing to show unpolished work.",
-        scoreModifier: { execution: -10, builder_mindset: -10 }
+        text: "I wait for the right moment.",
+        scoreModifier: { relationships: -5 }
       },
       {
-        text: "I quietly release it to a tiny group of friends first to avoid public failure.",
-        scoreModifier: { courage: -5, execution: 5 }
+        text: "I never contact them.",
+        scoreModifier: { relationships: -10, courage: -10 }
       }
     ]
   },
   {
     id: 3,
-    text: "You are at a high-end startup event. You see an investor or founder whom you deeply admire standing alone near the bar. You have a project they would love, but you aren't prepared. How do you act?",
+    text: "Someone gives you honest feedback. It hurts. What usually happens?",
     options: [
       {
-        text: "I walk straight up, introduce myself, and pitch my core vision on the spot.",
-        scoreModifier: { networking: 10, courage: 10 }
+        text: "I listen and learn from it.",
+        scoreModifier: { self_awareness: 10, relationships: 5 }
       },
       {
-        text: "I observe from afar, trying to find a mutual acquaintance to introduce me later.",
-        scoreModifier: { networking: 5, courage: -5 }
+        text: "I get defensive.",
+        scoreModifier: { self_awareness: -10, relationships: -5 }
       },
       {
-        text: "I write down what I would say, intending to email them tomorrow instead.",
-        scoreModifier: { learning: 5, networking: -5 }
+        text: "I ignore it.",
+        scoreModifier: { self_awareness: -5, consistency: 5 }
       },
       {
-        text: "I convince myself they don't want to be bothered and remain with the people I know.",
-        scoreModifier: { networking: -10, courage: -10 }
+        text: "I lose motivation.",
+        scoreModifier: { self_awareness: -15, action: -10 }
       }
     ]
   },
   {
     id: 4,
-    text: "You are halfway through a grueling physical workout. Your muscles are burning, and your chest is tight. A voice in your head tells you to stop and take it easy. What do you do?",
+    text: "Your alarm rings. You are exhausted from a late night. You promised yourself you would get up. What usually happens?",
     options: [
       {
-        text: "I push through the pain. I must conquer my mind and complete the target.",
-        scoreModifier: { fitness: 10, discipline: 10 }
+        text: "I get up immediately.",
+        scoreModifier: { discipline: 10, consistency: 5 }
       },
       {
-        text: "I stop immediately. I don't want to risk any injury or overtraining.",
-        scoreModifier: { fitness: 5, consistency: 5 }
+        text: "I lie in bed negotiating with myself.",
+        scoreModifier: { consistency: 5, discipline: -5 }
       },
       {
-        text: "I slow down the intensity but commit to completing the remaining sets.",
-        scoreModifier: { consistency: 10, fitness: 5 }
+        text: "I snooze it repeatedly.",
+        scoreModifier: { discipline: -10, consistency: -10 }
       },
       {
-        text: "I cut the workout short, head home, and promise to make it up later.",
-        scoreModifier: { discipline: -10, fitness: -5 }
+        text: "I turn it off and go back to sleep.",
+        scoreModifier: { discipline: -15, fitness: 5 }
       }
     ]
   },
   {
     id: 5,
-    text: "Your close friend is also your business partner on a high-stakes project. They are underperforming, dragging down the project timeline. What is your response?",
+    text: "You realize a decision you made weeks ago is completely wrong. Fixing it means starting over and admitting your mistake. What usually happens?",
     options: [
       {
-        text: "I schedule a direct, honest, and uncomfortable conversation today to address it.",
-        scoreModifier: { courage: 10, networking: 5 }
+        text: "I admit it immediately and start over.",
+        scoreModifier: { courage: 10, action: 10 }
       },
       {
-        text: "I quietly take on their workload myself to keep the project moving without conflict.",
-        scoreModifier: { builder_mindset: 5, courage: -10, execution: 5 }
+        text: "I try to patch it quietly without saying anything.",
+        scoreModifier: { courage: -10, action: 5 }
       },
       {
-        text: "I drop subtle hints and hope they notice they need to step up.",
-        scoreModifier: { courage: -5, consistency: -5 }
+        text: "I ignore it and hope it resolves itself.",
+        scoreModifier: { courage: -15 }
       },
       {
-        text: "I wait until the milestone ends to address the relationship, fearing a blowup now.",
-        scoreModifier: { execution: -5, courage: -5 }
+        text: "I quit the whole thing and walk away.",
+        scoreModifier: { courage: -20, relationships: -10 }
       }
     ]
   },
   {
     id: 6,
-    text: "You want to learn a complex new framework for your project. You buy a highly rated 40-hour video course. What is your study strategy?",
+    text: "The excitement of your new goal is gone. Now you are left with the boring daily work. What usually happens?",
     options: [
       {
-        text: "I open an IDE immediately and start building a simple app, Googling as I hit walls.",
-        scoreModifier: { learning: 5, execution: 10, builder_mindset: 10 }
+        text: "I keep doing it anyway.",
+        scoreModifier: { consistency: 10, discipline: 10 }
       },
       {
-        text: "I watch the entire course at 1.5x speed to understand the landscape before coding.",
-        scoreModifier: { learning: 10, execution: -5 }
+        text: "I change the plan to make it fun.",
+        scoreModifier: { consistency: 5, action: 5 }
       },
       {
-        text: "I read documentation and take meticulous, structured notes before writing code.",
-        scoreModifier: { learning: 10, discipline: 5 }
+        text: "I take a break and promise to double my efforts later.",
+        scoreModifier: { consistency: -10 }
       },
       {
-        text: "I join a community of other learners to discuss the theoretical trade-offs first.",
-        scoreModifier: { networking: 10, learning: 5, execution: -10 }
+        text: "I start looking for a new goal.",
+        scoreModifier: { consistency: -20, ambition: 5 }
       }
     ]
   },
   {
     id: 7,
-    text: "You committed to writing one page of your business draft daily. Today was a disaster: you worked 14 hours, your car broke down, and it's now 11:30 PM. What do you do?",
+    text: "You have a stable opportunity. But staying means giving up on your big dream. What usually happens?",
     options: [
       {
-        text: "I sit down and write a single paragraph, no matter how bad, to keep the habit loop alive.",
-        scoreModifier: { consistency: 10, discipline: 10 }
+        text: "I choose the dream, even if it's risky.",
+        scoreModifier: { ambition: 10, courage: 10 }
       },
       {
-        text: "I force myself to write a full page, even if it means sleeping for only 4 hours.",
-        scoreModifier: { discipline: 10, fitness: -5 }
+        text: "I choose safety but work on my dream on the side.",
+        scoreModifier: { consistency: 10, ambition: 5 }
       },
       {
-        text: "I skip tonight and promise to write two pages tomorrow to catch up.",
-        scoreModifier: { consistency: -10, discipline: -5 }
+        text: "I choose safety and let the dream go.",
+        scoreModifier: { ambition: -10, courage: -10 }
       },
       {
-        text: "I tell myself my life is currently too chaotic and put the writing goal on hold.",
-        scoreModifier: { consistency: -10, builder_mindset: -10 }
+        text: "I can't decide, so I do nothing.",
+        scoreModifier: { courage: -15, action: -10 }
       }
     ]
   },
   {
     id: 8,
-    text: "You have a brilliant idea for a new product. It could have 15 different features. It will take 6 months of solo work to build. How do you begin?",
+    text: "You are tired after a long day. You planned to exercise, but the couch is calling. What usually happens?",
     options: [
       {
-        text: "I cut it down to the single most critical feature and build it in 3 days.",
-        scoreModifier: { builder_mindset: 10, execution: 10 }
+        text: "I do a short, light session just to keep going.",
+        scoreModifier: { fitness: 10, consistency: 10 }
       },
       {
-        text: "I map out a detailed 6-month product roadmap and start phase 1.",
-        scoreModifier: { builder_mindset: 10, learning: 5 }
+        text: "I force myself to do the full workout anyway.",
+        scoreModifier: { fitness: 10, discipline: 10 }
       },
       {
-        text: "I design a premium landing page to pre-sell the concept before coding anything.",
-        scoreModifier: { execution: 10, networking: 5 }
+        text: "I rest and tell myself my body needs it.",
+        scoreModifier: { fitness: 5, discipline: -10 }
       },
       {
-        text: "I spend my evenings refining the architecture diagrams and data models.",
-        scoreModifier: { learning: 10, execution: -10 }
+        text: "I skip it, eat junk food, and watch screens.",
+        scoreModifier: { fitness: -15, discipline: -15 }
       }
     ]
   },
   {
     id: 9,
-    text: "You are in the middle of a 3-hour deep work block. You get a notification: a close friend has sent a link to a drama thread about someone in your industry. What happens?",
+    text: "You finished the main part of a project. Only the boring, final details are left. What usually happens?",
     options: [
       {
-        text: "I ignore it, keep my phone face-down, and continue working without breaking flow.",
-        scoreModifier: { discipline: 10, consistency: 10 }
+        text: "I push through and finish it today.",
+        scoreModifier: { action: 10, discipline: 10 }
       },
       {
-        text: "I take a 'quick 2-minute break' to check it, which inevitably turns into 20 minutes.",
-        scoreModifier: { discipline: -10, consistency: -5 }
+        text: "I start a new project instead and leave it unfinished.",
+        scoreModifier: { action: -10, consistency: -10 }
       },
       {
-        text: "I immediately mute all notifications and put my phone in another room.",
-        scoreModifier: { discipline: 10, builder_mindset: 5 }
+        text: "I wait for someone else to help me finish it.",
+        scoreModifier: { relationships: 5, action: -5 }
       },
       {
-        text: "I immediately open the thread and join the discussion in my industry circle.",
-        scoreModifier: { networking: 5, discipline: -10 }
+        text: "I leave it, thinking the hard part is done.",
+        scoreModifier: { action: -15, consistency: -5 }
       }
     ]
   },
   {
     id: 10,
-    text: "You are on a strict clean diet. You go out to dinner with childhood friends, and they order pizzas, beer, and desserts, urging you to 'live a little' and join in. How do you respond?",
+    text: "You need to set a hard boundary with a friend or family member. You are afraid it will upset them. What usually happens?",
     options: [
       {
-        text: "I order a clean salad and stick to water, ignoring the banter.",
-        scoreModifier: { fitness: 10, discipline: 10 }
+        text: "I speak honestly and kindly.",
+        scoreModifier: { relationships: 10, courage: 10 }
       },
       {
-        text: "I eat the pizza and beer, telling myself it's a 'cheat day' and I need to fit in.",
-        scoreModifier: { fitness: -10, networking: 5 }
+        text: "I keep quiet and let resentment build.",
+        scoreModifier: { relationships: -10, courage: -10 }
       },
       {
-        text: "I eat a single small slice of pizza to be polite, but stay moderate.",
-        scoreModifier: { consistency: 5, networking: 5 }
+        text: "I drop hints instead of being direct.",
+        scoreModifier: { relationships: -5, courage: -5 }
       },
       {
-        text: "I decline the dinner invitation entirely to avoid temptation and protect my diet.",
-        scoreModifier: { fitness: 10, networking: -10 }
+        text: "I give in and let them have their way.",
+        scoreModifier: { relationships: 5, courage: -15 }
       }
     ]
   },
   {
     id: 11,
-    text: "You are stuck on a critical technical block in your project. You've spent 8 hours grinding alone and you're getting frustrated. You know someone who solved this exact problem last week. What do you do?",
+    text: "You see someone who started after you achieving huge success. What usually happens?",
     options: [
       {
-        text: "I send them a polite message asking for a 10-minute call or quick advice.",
-        scoreModifier: { networking: 10, execution: 10 }
+        text: "I learn from them and focus on my own path.",
+        scoreModifier: { self_awareness: 10, ambition: 5 }
       },
       {
-        text: "I keep grinding alone. I must figure it out myself to prove I can do it.",
-        scoreModifier: { builder_mindset: 10, networking: -10 }
+        text: "I feel jealous and think they got lucky.",
+        scoreModifier: { self_awareness: -10, ambition: -5 }
       },
       {
-        text: "I post a general question on StackOverflow or an online forum and wait.",
-        scoreModifier: { learning: 5, execution: 5 }
+        text: "I work frantically to try and beat them.",
+        scoreModifier: { ambition: 10, consistency: -5 }
       },
       {
-        text: "I walk away and hope the answer comes to me tomorrow.",
-        scoreModifier: { consistency: -5 }
+        text: "I feel discouraged and feel like quitting.",
+        scoreModifier: { self_awareness: -15, courage: -5 }
       }
     ]
   },
   {
     id: 12,
-    text: "You are offered a job at a stable company with double your current salary. However, you are 3 months into building your own startup, which is making only $500/month. What do you choose?",
+    text: "You have been working at full capacity for weeks. Your sleep is poor and you are making mistakes. What usually happens?",
     options: [
       {
-        text: "I decline the job and commit 100% to my startup, taking the financial risk.",
-        scoreModifier: { courage: 10, builder_mindset: 10 }
+        text: "I take a full evening off to rest.",
+        scoreModifier: { self_awareness: 10, fitness: 10 }
       },
       {
-        text: "I accept the job and work on my startup in the evenings and weekends.",
-        scoreModifier: { consistency: 10, courage: -5 }
+        text: "I push through and drink more coffee.",
+        scoreModifier: { fitness: -15, self_awareness: -10 }
       },
       {
-        text: "I take the job and put the startup on hold indefinitely.",
-        scoreModifier: { courage: -10, builder_mindset: -10 }
+        text: "I slow down my work but refuse to take a break.",
+        scoreModifier: { consistency: 5, fitness: -5 }
       },
       {
-        text: "I negotiate with the company to consult part-time while keeping my startup.",
-        scoreModifier: { networking: 10, builder_mindset: 5 }
+        text: "I get distracted and waste hours online.",
+        scoreModifier: { self_awareness: -15, discipline: -15 }
       }
     ]
   }
@@ -297,19 +297,17 @@ export interface CalculationResult {
 }
 
 export function calculateResults(answers: number[]): CalculationResult {
-  // Base score is 50 for all attributes
   const scores: Scores = {
     discipline: 50,
-    execution: 50,
-    consistency: 50,
-    fitness: 50,
-    networking: 50,
-    learning: 50,
     courage: 50,
-    builder_mindset: 50
+    consistency: 50,
+    action: 50,
+    self_awareness: 50,
+    fitness: 50,
+    relationships: 50,
+    ambition: 50
   };
 
-  // Apply modifiers from answer indices
   answers.forEach((optionIndex, questionIndex) => {
     const question = QUESTIONS[questionIndex];
     if (!question) return;
@@ -328,11 +326,11 @@ export function calculateResults(answers: number[]): CalculationResult {
     scores[k] = Math.max(0, Math.min(100, scores[k]));
   });
 
-  // Calculate Archetype scores
-  const builderScore = (scores.builder_mindset + scores.execution) / 2;
+  // Calculate Archetypes (4 Archetypes)
+  const builderScore = (scores.ambition + scores.action) / 2;
   const warriorScore = (scores.fitness + scores.discipline + scores.consistency) / 3;
-  const strategistScore = (scores.learning + scores.courage) / 2;
-  const connectorScore = scores.networking;
+  const strategistScore = (scores.self_awareness + scores.courage) / 2;
+  const connectorScore = scores.relationships;
 
   const archScores = [
     { name: 'Builder', score: builderScore },
@@ -341,11 +339,10 @@ export function calculateResults(answers: number[]): CalculationResult {
     { name: 'Connector', score: connectorScore }
   ];
 
-  // Primary Archetype is the highest score
   archScores.sort((a, b) => b.score - a.score);
   const archetype = archScores[0].name;
 
-  // League Rank based on average of all 8 attributes
+  // League Rank
   const totalAvg = Object.values(scores).reduce((sum, s) => sum + s, 0) / 8;
   let league = 'Bronze';
   if (totalAvg >= 90) league = 'Diamond';
@@ -353,42 +350,51 @@ export function calculateResults(answers: number[]): CalculationResult {
   else if (totalAvg >= 60) league = 'Gold';
   else if (totalAvg >= 40) league = 'Silver';
 
-  // Greatest Strength is the highest attribute score
+  // Find highest score amongst the 8 attributes for strength
   const attributes = Object.entries(scores).map(([name, score]) => ({ name, score }));
   attributes.sort((a, b) => b.score - a.score);
   const strengthAttr = attributes[0].name;
 
-  // Biggest Limiter is the lowest attribute score
+  // Find lowest score amongst the 8 attributes for limiter
   attributes.sort((a, b) => a.score - b.score);
   const limiterAttr = attributes[0].name;
 
-  const attributeDisplayNames: Record<keyof Scores, string> = {
-    discipline: 'Discipline',
-    execution: 'Execution',
-    consistency: 'Consistency',
-    fitness: 'Fitness',
-    networking: 'Networking',
-    learning: 'Learning',
-    courage: 'Courage',
-    builder_mindset: 'Builder Mindset'
+  // Human strength display names
+  const strengthDisplayNames: Record<keyof Scores, string> = {
+    discipline: 'Staying disciplined when others quit.',
+    courage: 'Taking risks when you believe in something.',
+    consistency: 'Showing up day after day.',
+    action: 'Taking action and starting quickly.',
+    self_awareness: 'Understanding yourself and learning from mistakes.',
+    fitness: 'Protecting your body and health.',
+    relationships: 'Building trust and connecting with people.',
+    ambition: 'Dreaming big and wanting more from life.'
   };
 
-  const strength = attributeDisplayNames[strengthAttr as keyof Scores];
-  const limiter = attributeDisplayNames[limiterAttr as keyof Scores];
-
-  // Quest based on lowest attribute (limiter)
-  const quests: Record<keyof Scores, string> = {
-    builder_mindset: "Build and launch a 1-day product before it's perfect.",
-    execution: "Ship a simple feature or write-up to the public in 48 hours.",
-    consistency: "Maintain a streak of 1 daily promise to yourself for 14 consecutive days.",
-    fitness: "Complete 12 physical training sessions in the next 30 days.",
-    networking: "Initiate high-value conversations with 3 ambitious people in your industry.",
-    learning: "Read 1 high-impact paper or book and write a 1-page application guide.",
-    courage: "Execute the single most uncomfortable decision or conversation you have been avoiding within 48 hours.",
-    discipline: "Wake up on the first alarm with phone in another room for 7 straight days."
+  // Human limiter display names
+  const limiterDisplayNames: Record<keyof Scores, string> = {
+    discipline: 'Losing discipline when things get hard.',
+    courage: 'Letting fear stop you from taking risks.',
+    consistency: 'Giving up before a habit becomes automatic.',
+    action: 'Spending too much time planning and not starting.',
+    self_awareness: 'Not noticing how your own actions block you.',
+    fitness: 'Neglecting your body and physical energy.',
+    relationships: 'Trying to do everything by yourself.',
+    ambition: 'Settling for less than you are capable of.'
   };
 
-  const quest = quests[limiterAttr as keyof Scores];
+  const strength = strengthDisplayNames[strengthAttr as keyof Scores];
+  const limiter = limiterDisplayNames[limiterAttr as keyof Scores];
+
+  // Next Challenge mapped to the primary Archetype
+  const archetypeQuests: Record<string, string> = {
+    Builder: "Start one conversation you've been putting off.",
+    Warrior: "Take one full evening off this week.",
+    Strategist: "Finish something you've been avoiding.",
+    Connector: "Keep one promise to yourself for seven days."
+  };
+
+  const quest = archetypeQuests[archetype] || "Start one conversation you've been putting off.";
 
   return {
     scores,

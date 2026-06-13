@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { getAnalytics, AnalyticsData, supabase } from '@/lib/supabase';
 import { WaitlistEntry } from '@/lib/types';
 import Header from '@/components/Header';
-import { Users, BarChart3, ShieldAlert, Award, FileText, Check, Database, Lock, Eye, EyeOff } from 'lucide-react';
+import { Lock, Eye, EyeOff, Database, Award, BarChart3, ShieldAlert, FileText, ChevronRight } from 'lucide-react';
 
 export default function AdminPage() {
   const [password, setPassword] = useState('');
@@ -16,7 +16,7 @@ export default function AdminPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
-  // Simple admin credentials check
+  // Simple console password check
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (password === 'admin') {
@@ -25,11 +25,10 @@ export default function AdminPage() {
         sessionStorage.setItem('the_league_admin_authed', 'true');
       }
     } else {
-      setAuthError('Invalid administrator credentials.');
+      setAuthError('Invalid administrative credentials.');
     }
   };
 
-  // Check cached auth state
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const authed = sessionStorage.getItem('the_league_admin_authed');
@@ -39,7 +38,6 @@ export default function AdminPage() {
     }
   }, []);
 
-  // Fetch analytics data
   useEffect(() => {
     if (!isAuthenticated) return;
     setIsLoading(true);
@@ -59,10 +57,9 @@ export default function AdminPage() {
     setRefreshTrigger(prev => prev + 1);
   };
 
-  // Render Authentication Gate
   if (!isAuthenticated) {
     return (
-      <div className="flex flex-col min-h-screen bg-[#030303]">
+      <div className="flex flex-col min-h-screen bg-[#030303] text-white">
         <Header />
         <main className="flex-1 flex items-center justify-center p-4">
           <div className="w-full max-w-sm glass-card border border-white/[0.06] rounded-2xl p-8 space-y-6">
@@ -74,7 +71,7 @@ export default function AdminPage() {
                 Admin Panel Access
               </h2>
               <p className="text-xs text-white/40">
-                Identity Engine administrative credentials required.
+                Identity Console credentials required.
               </p>
             </div>
 
@@ -87,7 +84,7 @@ export default function AdminPage() {
             <form onSubmit={handleLogin} className="space-y-4">
               <div className="space-y-1.5">
                 <label className="text-[10px] uppercase font-mono tracking-wider text-white/40 block">
-                  Console Password
+                  Password
                 </label>
                 <div className="relative">
                   <input
@@ -107,7 +104,7 @@ export default function AdminPage() {
                   </button>
                 </div>
                 <span className="text-[9px] text-white/20 block font-mono">
-                  Default developer bypass: admin
+                  Bypass code: admin
                 </span>
               </div>
 
@@ -115,7 +112,7 @@ export default function AdminPage() {
                 type="submit"
                 className="w-full inline-flex items-center justify-center bg-brand-purple hover:bg-purple-600 active:bg-purple-700 text-white font-bold text-xs px-5 py-3 rounded-xl transition-all cursor-pointer"
               >
-                Authenticate Console
+                Enter Console
               </button>
             </form>
           </div>
@@ -124,7 +121,6 @@ export default function AdminPage() {
     );
   }
 
-  // Calculate percentages
   const completionRate = analytics && analytics.totalAssessmentsStarted > 0 
     ? Math.round((analytics.totalAssessmentsCompleted / analytics.totalAssessmentsStarted) * 100)
     : 0;
@@ -136,20 +132,20 @@ export default function AdminPage() {
   const isSupabaseLive = !!supabase;
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#030303]">
+    <div className="flex flex-col min-h-screen bg-[#030303] text-white">
       <Header />
       
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         
-        {/* Admin Header */}
+        {/* Console Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-white/[0.06] pb-6">
           <div>
             <h1 className="text-2xl font-black text-white uppercase tracking-wide flex items-center gap-2.5">
-              <span>Identity Console</span>
+              <span>Admin Console</span>
               {isSupabaseLive ? (
                 <span className="inline-flex items-center gap-1 bg-green-950/40 border border-green-500/25 text-green-400 text-[9px] font-mono px-2 py-0.5 rounded-full">
                   <Database className="h-2.5 w-2.5" />
-                  <span>Supabase Live</span>
+                  <span>Production Live</span>
                 </span>
               ) : (
                 <span className="inline-flex items-center gap-1 bg-amber-950/40 border border-amber-500/25 text-amber-400 text-[9px] font-mono px-2 py-0.5 rounded-full">
@@ -159,7 +155,7 @@ export default function AdminPage() {
               )}
             </h1>
             <p className="text-xs text-white/40 mt-1 font-mono">
-              V1 metrics dashboard and user validation logger
+              V1 metrics overview & waitlist registry
             </p>
           </div>
 
@@ -168,7 +164,7 @@ export default function AdminPage() {
               onClick={handleRefresh}
               className="text-xs text-white/60 hover:text-white border border-white/10 hover:border-white/20 bg-white/[0.02] active:bg-white/[0.05] px-4 py-2 rounded-lg transition-all cursor-pointer font-medium"
             >
-              Force Refresh
+              Refresh Data
             </button>
             <button
               onClick={() => {
@@ -186,14 +182,13 @@ export default function AdminPage() {
         {isLoading || !analytics ? (
           <div className="flex items-center justify-center py-24">
             <div className="animate-pulse font-mono text-xs uppercase tracking-widest text-white/40">
-              Querying engine ledger...
+              Querying database registry...
             </div>
           </div>
         ) : (
           <>
-            {/* KPI Cards Grid */}
+            {/* Metrics cards */}
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-              {/* Metric 1 */}
               <div className="glass-card rounded-xl p-5 border border-white/[0.04] space-y-1">
                 <span className="text-[10px] font-mono uppercase tracking-wider text-white/40 block">
                   Started
@@ -202,11 +197,10 @@ export default function AdminPage() {
                   {analytics.totalAssessmentsStarted}
                 </h2>
                 <span className="text-[9px] font-mono text-white/30 block">
-                  Sessions initiated
+                  Assessments started
                 </span>
               </div>
 
-              {/* Metric 2 */}
               <div className="glass-card rounded-xl p-5 border border-white/[0.04] space-y-1">
                 <span className="text-[10px] font-mono uppercase tracking-wider text-white/40 block">
                   Completed
@@ -215,11 +209,10 @@ export default function AdminPage() {
                   {analytics.totalAssessmentsCompleted}
                 </h2>
                 <span className="text-[9px] font-mono text-white/30 block">
-                  Finished 12 questions
+                  Assessments completed
                 </span>
               </div>
 
-              {/* Metric 3 */}
               <div className="glass-card rounded-xl p-5 border border-white/[0.04] space-y-1">
                 <span className="text-[10px] font-mono uppercase tracking-wider text-brand-purple block">
                   Completion Rate
@@ -228,24 +221,22 @@ export default function AdminPage() {
                   {completionRate}%
                 </h2>
                 <span className="text-[9px] font-mono text-white/30 block">
-                  Friction dropoff ratio
+                  Started to finished
                 </span>
               </div>
 
-              {/* Metric 4 */}
               <div className="glass-card rounded-xl p-5 border border-white/[0.04] space-y-1">
                 <span className="text-[10px] font-mono uppercase tracking-wider text-white/40 block">
-                  Waitlist Leads
+                  Waitlist Signups
                 </span>
                 <h2 className="text-2xl font-black text-white font-mono">
                   {analytics.totalWaitlist}
                 </h2>
                 <span className="text-[9px] font-mono text-white/30 block">
-                  Forms submitted
+                  Total waitlist entries
                 </span>
               </div>
 
-              {/* Metric 5 */}
               <div className="glass-card rounded-xl p-5 border border-white/[0.04] space-y-1">
                 <span className="text-[10px] font-mono uppercase tracking-wider text-brand-gold block">
                   Conversion
@@ -254,7 +245,7 @@ export default function AdminPage() {
                   {conversionRate}%
                 </h2>
                 <span className="text-[9px] font-mono text-white/30 block">
-                  Completes to waitlist
+                  Completed to waitlist
                 </span>
               </div>
             </div>
@@ -262,11 +253,11 @@ export default function AdminPage() {
             {/* Distribution Charts */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               
-              {/* Archetypes */}
+              {/* Archetype distribution */}
               <div className="glass-card rounded-xl p-6 border border-white/[0.04] space-y-4">
                 <h3 className="text-xs font-mono uppercase tracking-widest text-white/60 font-bold flex items-center gap-2">
                   <Award className="h-4 w-4 text-brand-purple" />
-                  <span>Archetypes</span>
+                  <span>Characters</span>
                 </h3>
                 <div className="space-y-3 pt-2">
                   {['Builder', 'Warrior', 'Strategist', 'Connector'].map((arch) => {
@@ -295,9 +286,9 @@ export default function AdminPage() {
               <div className="glass-card rounded-xl p-6 border border-white/[0.04] space-y-4">
                 <h3 className="text-xs font-mono uppercase tracking-widest text-white/60 font-bold flex items-center gap-2">
                   <BarChart3 className="h-4 w-4 text-brand-gold" />
-                  <span>Top Strengths</span>
+                  <span>Biggest Strengths</span>
                 </h3>
-                <div className="space-y-3 pt-2 max-h-[200px] overflow-y-auto pr-1">
+                <div className="space-y-3 pt-2 max-h-[220px] overflow-y-auto pr-1">
                   {Object.entries(analytics.strengthDistribution)
                     .sort((a, b) => b[1] - a[1])
                     .map(([name, count]) => {
@@ -306,7 +297,7 @@ export default function AdminPage() {
                       return (
                         <div key={name} className="space-y-1">
                           <div className="flex justify-between text-xs font-mono">
-                            <span className="text-white/70">{name}</span>
+                            <span className="text-white/70 truncate max-w-[200px]">{name}</span>
                             <span className="text-white font-bold">{count}</span>
                           </div>
                           <div className="w-full h-2 bg-white/[0.02] rounded-full overflow-hidden border border-white/[0.01]">
@@ -330,9 +321,9 @@ export default function AdminPage() {
               <div className="glass-card rounded-xl p-6 border border-white/[0.04] space-y-4">
                 <h3 className="text-xs font-mono uppercase tracking-widest text-white/60 font-bold flex items-center gap-2">
                   <ShieldAlert className="h-4 w-4 text-red-400" />
-                  <span>Key Limiters</span>
+                  <span>What's Holding People Back</span>
                 </h3>
-                <div className="space-y-3 pt-2 max-h-[200px] overflow-y-auto pr-1">
+                <div className="space-y-3 pt-2 max-h-[220px] overflow-y-auto pr-1">
                   {Object.entries(analytics.limiterDistribution)
                     .sort((a, b) => b[1] - a[1])
                     .map(([name, count]) => {
@@ -341,7 +332,7 @@ export default function AdminPage() {
                       return (
                         <div key={name} className="space-y-1">
                           <div className="flex justify-between text-xs font-mono">
-                            <span className="text-white/70">{name}</span>
+                            <span className="text-white/70 truncate max-w-[200px]">{name}</span>
                             <span className="text-white font-bold">{count}</span>
                           </div>
                           <div className="w-full h-2 bg-white/[0.02] rounded-full overflow-hidden border border-white/[0.01]">
@@ -363,15 +354,15 @@ export default function AdminPage() {
 
             </div>
 
-            {/* Waitlist Log Ledger */}
+            {/* Waitlist Log Table */}
             <div className="glass-card rounded-xl border border-white/[0.05] overflow-hidden space-y-4">
               <div className="p-6 border-b border-white/[0.05] flex justify-between items-center bg-white/[0.01]">
                 <h3 className="text-xs font-mono uppercase tracking-widest text-white/70 font-bold flex items-center gap-2">
                   <FileText className="h-4 w-4 text-brand-purple" />
-                  <span>Founding Waitlist Ledger</span>
+                  <span>Waitlist Ledger</span>
                 </h3>
                 <span className="text-[10px] font-mono text-white/40">
-                  {analytics.waitlistEntries.length} RECORDS SUBMITTED
+                  {analytics.waitlistEntries.length} LEADS REGISTERED
                 </span>
               </div>
 
@@ -383,10 +374,10 @@ export default function AdminPage() {
                       <th className="py-3 px-6">Name</th>
                       <th className="py-3 px-6">Email Address</th>
                       <th className="py-3 px-6">Instagram</th>
-                      <th className="py-3 px-6 text-center">Archetype</th>
+                      <th className="py-3 px-6 text-center">Character</th>
                       <th className="py-3 px-6 text-center">League</th>
-                      <th className="py-3 px-6">Strength</th>
-                      <th className="py-3 px-6">Limiter</th>
+                      <th className="py-3 px-6">Your Biggest Strength</th>
+                      <th className="py-3 px-6">What's Holding You Back</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-white/[0.04]">
@@ -411,8 +402,12 @@ export default function AdminPage() {
                         <td className="py-3 px-6 text-center">
                           <span className="text-[10px] font-bold text-white/80">{row.league}</span>
                         </td>
-                        <td className="py-3 px-6 text-brand-purple">{row.strength}</td>
-                        <td className="py-3 px-6 text-red-400">{row.limiter}</td>
+                        <td className="py-3 px-6 text-brand-purple max-w-[200px] truncate" title={row.strength}>
+                          {row.strength}
+                        </td>
+                        <td className="py-3 px-6 text-red-400 max-w-[200px] truncate" title={row.limiter}>
+                          {row.limiter}
+                        </td>
                       </tr>
                     ))}
                     {analytics.waitlistEntries.length === 0 && (

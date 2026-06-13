@@ -45,13 +45,13 @@ export async function createAssessment(sessionId: string): Promise<string> {
   const now = new Date().toISOString();
   const baseScores: Scores = {
     discipline: 50,
-    execution: 50,
-    consistency: 50,
-    fitness: 50,
-    networking: 50,
-    learning: 50,
     courage: 50,
-    builder_mindset: 50
+    consistency: 50,
+    action: 50,
+    self_awareness: 50,
+    fitness: 50,
+    relationships: 50,
+    ambition: 50
   };
 
   const newAssessment: Assessment = {

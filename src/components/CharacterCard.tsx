@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import html2canvas from 'html2canvas';
-import { Share2, Download, RefreshCw, Check, Copy } from 'lucide-react';
+import { Share2, Download, RefreshCw, Check } from 'lucide-react';
 import ArchetypeArt from './ArchetypeArt';
 import { Scores } from '@/lib/types';
 
@@ -33,6 +33,12 @@ export default function CharacterCard({
   const [coords, setCoords] = useState({ x: 50, y: 50 });
   const [rotate, setRotate] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
+  
+  // Client-side only ID generation to fix Next.js hydration mismatch
+  const [cardId, setCardId] = useState('');
+  useEffect(() => {
+    setCardId(Math.floor(1000 + Math.random() * 9000).toString());
+  }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current || isFlipped) return;
@@ -40,11 +46,9 @@ export default function CharacterCard({
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     
-    // Normalize coordinates from -0.5 to 0.5
     const xc = x / rect.width - 0.5;
     const yc = y / rect.height - 0.5;
     
-    // 3D rotation (max 15deg)
     setRotate({
       x: -yc * 16,
       y: xc * 16
@@ -71,15 +75,12 @@ export default function CharacterCard({
     setIsDownloading(true);
 
     try {
-      // Force card to face front or capture flat
       const wasFlipped = isFlipped;
       if (wasFlipped) {
         setIsFlipped(false);
-        // Wait briefly for CSS flip transition
         await new Promise(r => setTimeout(r, 400));
       }
 
-      // Temporarily clear inline 3D styles for clean screenshot
       const cardEl = cardRef.current;
       const originalStyle = cardEl ? cardEl.style.cssText : '';
       if (cardEl) cardEl.style.cssText = 'transform: none; transition: none;';
@@ -93,7 +94,6 @@ export default function CharacterCard({
         height: containerRef.current.offsetHeight
       });
 
-      // Restore style
       if (cardEl) cardEl.style.cssText = originalStyle;
       if (wasFlipped) {
         setIsFlipped(true);
@@ -112,24 +112,24 @@ export default function CharacterCard({
   };
 
   const handleShare = async () => {
-    const text = `I just unlocked the ${archetype.toUpperCase()} Archetype in the ${league} League on THE LEAGUE: Identity Engine!
+    const text = `I just unlocked the ${archetype.toUpperCase()} character in the ${league} League!
 
-🔥 Greatest Strength: ${strength}
-⚠️ Biggest Limiter: ${limiter}
-⚔️ Active Quest: ${quest}
+💪 Your Biggest Strength: ${strength}
+⚠️ What's Holding You Back: ${limiter}
+⚔️ Your Next Challenge: ${quest}
 
-Discover yours at: https://theleague.app
-#TheLeague #IdentityEngine`;
+Find out what is holding you back at: https://theleague.app
+#TheLeague`;
 
     if (navigator.share) {
       try {
         await navigator.share({
-          title: 'THE LEAGUE | Identity Engine Card',
+          title: 'THE LEAGUE | Identity Card',
           text: text,
           url: 'https://theleague.app'
         });
       } catch (err) {
-        console.warn('Native sharing cancelled or failed, falling back to clipboard copy:', err);
+        console.warn('Native sharing failed, copying to clipboard:', err);
         await copyToClipboard(text);
       }
     } else {
@@ -147,34 +147,41 @@ Discover yours at: https://theleague.app
     }
   };
 
-  // Border theme colors
   const themeColors = {
     builder: {
       border: 'border-purple-500/30 hover:border-purple-500/60',
-      glow: 'shadow-[0_0_50px_rgba(124,58,237,0.15)]',
+      glow: 'shadow-[0_0_55px_rgba(124,58,237,0.15)]',
       text: 'text-purple-400',
       badge: 'bg-purple-950/80 border-purple-500/30 text-purple-300',
+      barBg: 'bg-purple-500/20',
+      barFill: 'bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.5)]',
       grad: 'from-purple-950/40 via-charcoal-medium to-charcoal-dark'
     },
     warrior: {
       border: 'border-yellow-500/30 hover:border-yellow-500/60',
-      glow: 'shadow-[0_0_50px_rgba(234,179,8,0.12)]',
+      glow: 'shadow-[0_0_55px_rgba(234,179,8,0.12)]',
       text: 'text-yellow-400',
       badge: 'bg-yellow-950/80 border-yellow-500/30 text-yellow-300',
+      barBg: 'bg-yellow-500/20',
+      barFill: 'bg-yellow-500 shadow-[0_0_8px_rgba(234,179,8,0.5)]',
       grad: 'from-yellow-950/30 via-charcoal-medium to-charcoal-dark'
     },
     strategist: {
       border: 'border-indigo-500/30 hover:border-indigo-500/60',
-      glow: 'shadow-[0_0_50px_rgba(99,102,241,0.15)]',
+      glow: 'shadow-[0_0_55px_rgba(99,102,241,0.15)]',
       text: 'text-indigo-400',
       badge: 'bg-indigo-950/80 border-indigo-500/30 text-indigo-300',
+      barBg: 'bg-indigo-500/20',
+      barFill: 'bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.5)]',
       grad: 'from-indigo-950/40 via-charcoal-medium to-charcoal-dark'
     },
     connector: {
       border: 'border-pink-500/30 hover:border-pink-500/60',
-      glow: 'shadow-[0_0_50px_rgba(236,72,153,0.15)]',
+      glow: 'shadow-[0_0_55px_rgba(236,72,153,0.15)]',
       text: 'text-pink-400',
       badge: 'bg-pink-950/80 border-pink-500/30 text-pink-300',
+      barBg: 'bg-pink-500/20',
+      barFill: 'bg-pink-500 shadow-[0_0_8px_rgba(236,72,153,0.5)]',
       grad: 'from-pink-950/30 via-charcoal-medium to-charcoal-dark'
     }
   };
@@ -182,9 +189,14 @@ Discover yours at: https://theleague.app
   const normArch = archetype.toLowerCase() as keyof typeof themeColors;
   const currentTheme = themeColors[normArch] || themeColors.builder;
 
+  // Stats values
+  const discValue = scores?.discipline ?? 50;
+  const fitValue = scores?.fitness ?? 50;
+  const actValue = scores?.action ?? 50;
+  const relValue = scores?.relationships ?? 50;
+
   return (
     <div className="flex flex-col items-center space-y-6">
-      {/* 3D Perspective Card Container */}
       <div 
         ref={containerRef}
         className="p-4 bg-transparent rounded-2xl flex items-center justify-center"
@@ -203,11 +215,10 @@ Discover yours at: https://theleague.app
           }}
           className={`w-[320px] h-[480px] cursor-pointer relative rounded-2xl border transition-all duration-300 select-none overflow-hidden ${currentTheme.border} ${currentTheme.glow} ${isFlipped ? 'shadow-2xl' : ''}`}
         >
-          {/* Card Shine Overlay (Holographic glare) */}
           {isHovered && !isFlipped && (
             <div 
               style={{
-                background: `radial-gradient(circle at ${coords.x}% ${coords.y}%, rgba(255,255,255,0.1) 0%, transparent 55%)`
+                background: `radial-gradient(circle at ${coords.x}% ${coords.y}%, rgba(255,255,255,0.08) 0%, transparent 55%)`
               }}
               className="absolute inset-0 z-30 pointer-events-none"
             />
@@ -222,53 +233,78 @@ Discover yours at: https://theleague.app
             <div className="flex justify-between items-start">
               <div>
                 <span className="text-[10px] font-mono tracking-widest text-white/40 block uppercase">
-                  FOUNDING MEMBER
+                  FIRST COHORT
                 </span>
                 <h3 className="text-xl font-bold text-white tracking-wide truncate max-w-[170px]">
                   {name}
                 </h3>
               </div>
-              <div className={`px-2 py-0.5 rounded text-[10px] font-mono border uppercase tracking-wider ${currentTheme.badge}`}>
+              <div className={`px-2.5 py-0.5 rounded text-[10px] font-mono border uppercase tracking-wider ${currentTheme.badge}`}>
                 {league} League
               </div>
             </div>
 
-            {/* SVG Archetype Artwork */}
+            {/* Silhouette Artwork */}
             <div className="flex-1 my-3 flex items-center justify-center relative overflow-hidden bg-black/20 rounded-xl border border-white/[0.03]">
-              <ArchetypeArt archetype={archetype} className="w-[180px] h-[180px]" />
+              <ArchetypeArt archetype={archetype} className="w-[190px] h-[190px]" />
               <div className="absolute bottom-2 text-center w-full">
-                <span className={`text-[10px] uppercase font-mono tracking-[0.2em] font-semibold opacity-60 ${currentTheme.text}`}>
+                <span className={`text-[10px] uppercase font-mono tracking-[0.22em] font-black ${currentTheme.text}`}>
                   {archetype}
                 </span>
               </div>
             </div>
 
-            {/* Footer Stats Grid */}
-            <div className="space-y-2.5">
-              <div className="grid grid-cols-2 gap-2 text-[10px] font-mono border-t border-white/[0.08] pt-3 text-white/50">
-                <div className="flex justify-between pr-2 border-r border-white/[0.08]">
-                  <span>DISC :</span>
-                  <span className="text-white font-bold">{scores?.discipline ?? 50}</span>
+            {/* Stats Progress Bars */}
+            <div className="space-y-3 border-t border-white/[0.08] pt-3.5 pb-1">
+              {/* Stat 1: Discipline */}
+              <div className="space-y-1">
+                <div className="flex justify-between text-[10px] font-mono uppercase text-white/50">
+                  <span>Discipline</span>
+                  <span className="text-white font-bold">{discValue}</span>
                 </div>
-                <div className="flex justify-between pl-2">
-                  <span>EXEC :</span>
-                  <span className="text-white font-bold">{scores?.execution ?? 50}</span>
-                </div>
-                <div className="flex justify-between pr-2 border-r border-white/[0.08]">
-                  <span>CONS :</span>
-                  <span className="text-white font-bold">{scores?.consistency ?? 50}</span>
-                </div>
-                <div className="flex justify-between pl-2">
-                  <span>FITN :</span>
-                  <span className="text-white font-bold">{scores?.fitness ?? 50}</span>
+                <div className={`w-full h-1.5 rounded-full overflow-hidden ${currentTheme.barBg}`}>
+                  <div className={`h-full rounded-full ${currentTheme.barFill}`} style={{ width: `${discValue}%` }} />
                 </div>
               </div>
 
-              {/* URL Loop */}
-              <div className="flex justify-between items-center text-[9px] font-mono text-white/30 pt-1">
-                <span>THELEAGUE.APP</span>
-                <span className="uppercase tracking-widest">v1.0 identity</span>
+              {/* Stat 2: Fitness */}
+              <div className="space-y-1">
+                <div className="flex justify-between text-[10px] font-mono uppercase text-white/50">
+                  <span>Fitness</span>
+                  <span className="text-white font-bold">{fitValue}</span>
+                </div>
+                <div className={`w-full h-1.5 rounded-full overflow-hidden ${currentTheme.barBg}`}>
+                  <div className={`h-full rounded-full ${currentTheme.barFill}`} style={{ width: `${fitValue}%` }} />
+                </div>
               </div>
+
+              {/* Stat 3: Taking Action */}
+              <div className="space-y-1">
+                <div className="flex justify-between text-[10px] font-mono uppercase text-white/50">
+                  <span>Taking Action</span>
+                  <span className="text-white font-bold">{actValue}</span>
+                </div>
+                <div className={`w-full h-1.5 rounded-full overflow-hidden ${currentTheme.barBg}`}>
+                  <div className={`h-full rounded-full ${currentTheme.barFill}`} style={{ width: `${actValue}%` }} />
+                </div>
+              </div>
+
+              {/* Stat 4: Relationships */}
+              <div className="space-y-1">
+                <div className="flex justify-between text-[10px] font-mono uppercase text-white/50">
+                  <span>Relationships</span>
+                  <span className="text-white font-bold">{relValue}</span>
+                </div>
+                <div className={`w-full h-1.5 rounded-full overflow-hidden ${currentTheme.barBg}`}>
+                  <div className={`h-full rounded-full ${currentTheme.barFill}`} style={{ width: `${relValue}%` }} />
+                </div>
+              </div>
+            </div>
+
+            {/* Card URL */}
+            <div className="flex justify-between items-center text-[9px] font-mono text-white/30 border-t border-white/[0.04] pt-2">
+              <span>THELEAGUE.APP</span>
+              <span className="uppercase tracking-widest">v1.0 character</span>
             </div>
           </div>
 
@@ -280,53 +316,47 @@ Discover yours at: https://theleague.app
             }}
             className={`absolute inset-0 flex flex-col justify-between p-6 bg-gradient-to-b ${currentTheme.grad} z-20`}
           >
-            {/* Header */}
+            {/* Back Header */}
             <div className="flex justify-between items-start border-b border-white/[0.06] pb-3">
               <div>
                 <span className="text-[10px] font-mono tracking-widest text-white/40 block uppercase">
-                  LEAGUE PROFILE
+                  CHARACTER STATS
                 </span>
                 <h3 className="text-lg font-bold text-white tracking-wide">
                   {archetype.toUpperCase()}
                 </h3>
               </div>
               <div className="text-[9px] font-mono text-white/40 uppercase pt-1 text-right">
-                ID: #{Math.floor(1000 + Math.random() * 9000)}
+                ID: #{cardId || '....'}
               </div>
             </div>
 
-            {/* Back Details Content */}
+            {/* Back Content */}
             <div className="flex-1 my-4 flex flex-col justify-center space-y-4">
               {/* Strength */}
               <div className="space-y-1">
                 <span className={`text-[10px] font-mono uppercase tracking-wider ${currentTheme.text}`}>
-                  Greatest Strength
+                  Your Biggest Strength
                 </span>
-                <p className="text-sm font-semibold text-white">
+                <p className="text-xs font-semibold text-white leading-relaxed">
                   {strength}
-                </p>
-                <p className="text-[10px] text-white/50 leading-relaxed">
-                  Your primary lever of momentum. Lean into this to solve complex friction.
                 </p>
               </div>
 
               {/* Limiter */}
               <div className="space-y-1">
                 <span className="text-[10px] font-mono uppercase tracking-wider text-red-400">
-                  Biggest Limiter
+                  What's Holding You Back
                 </span>
-                <p className="text-sm font-semibold text-white">
+                <p className="text-xs font-semibold text-white leading-relaxed">
                   {limiter}
-                </p>
-                <p className="text-[10px] text-white/50 leading-relaxed">
-                  Your key systemic bottleneck. Unblocking this yields 10x growth.
                 </p>
               </div>
 
-              {/* Active Quest */}
+              {/* Challenge */}
               <div className="bg-white/[0.02] border border-white/[0.06] rounded-lg p-3 space-y-1">
                 <span className="text-[9px] font-mono uppercase tracking-wider text-brand-gold">
-                  Active V1 Quest
+                  Your Next Challenge
                 </span>
                 <p className="text-xs font-semibold text-white leading-normal">
                   {quest}

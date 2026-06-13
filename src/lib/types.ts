@@ -1,12 +1,12 @@
 export interface Scores {
   discipline: number;
-  execution: number;
-  consistency: number;
-  fitness: number;
-  networking: number;
-  learning: number;
   courage: number;
-  builder_mindset: number;
+  consistency: number;
+  action: number;
+  self_awareness: number;
+  fitness: number;
+  relationships: number;
+  ambition: number;
 }
 
 export interface Assessment {
