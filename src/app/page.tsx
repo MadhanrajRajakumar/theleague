@@ -106,7 +106,7 @@ export default function LandingPage() {
                 </div>
                 <CharacterCard
                   name="Marcus"
-                  archetype="Builder"
+                  archetype="Creator"
                   strength="You take action faster than most people."
                   limiter="You try to solve everything alone."
                   quest="Start one conversation you've been avoiding."
@@ -196,12 +196,12 @@ export default function LandingPage() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Builder */}
+            {/* Creator */}
             <div className="glass-card rounded-xl p-6 border border-purple-500/10 hover:border-purple-500/20 transition-all duration-300">
               <div className="h-8 w-8 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400 font-bold text-xs mb-4 font-mono">
-                BLD
+                CRE
               </div>
-              <h4 className="text-base font-bold text-white uppercase tracking-wide">Builder</h4>
+              <h4 className="text-base font-bold text-white uppercase tracking-wide">Creator</h4>
               <p className="text-xs text-white/50 leading-relaxed mt-2">
                 You like taking action. You would rather start now than wait for the perfect moment. But sometimes you try to do everything alone.
               </p>

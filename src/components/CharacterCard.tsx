@@ -2,7 +2,7 @@
 
 import React, { useRef, useState, useEffect } from 'react';
 import html2canvas from 'html2canvas';
-import { Share2, Download, Check, Eye, Trophy, ShieldAlert, AlertTriangle, Target, RefreshCw } from 'lucide-react';
+import { Share2, Download, Check, Eye, Trophy, ShieldAlert, Target, RefreshCw } from 'lucide-react';
 import { Scores } from '@/lib/types';
 
 interface CharacterCardProps {
@@ -17,13 +17,14 @@ interface CharacterCardProps {
 }
 
 const archetypeDetails = {
-  builder: {
+  creator: {
     killerSentence: "You don't need more effort. You need stronger allies.",
     whatPeopleNotice: "You move faster than everyone else.",
     strength: "You take action faster than most people.",
     limiter: "You try to solve everything alone.",
     brutalTruth: "Working harder is not your problem. Working with better people is.",
     quest: "Start one conversation you've been avoiding.",
+    growthAdvice: "Focus on finding allies. Stop trying to do everything yourself.",
     themeColor: 'purple'
   },
   warrior: {
@@ -33,6 +34,7 @@ const archetypeDetails = {
     limiter: "You get so focused on the routine that you lose sight of where you are going.",
     brutalTruth: "You are so focused on staying busy that you've stopped asking whether you're moving in the right direction.",
     quest: "Take one full evening off this week.",
+    growthAdvice: "Focus on recovery and direction. You don't always need to grind to make progress.",
     themeColor: 'yellow'
   },
   architect: {
@@ -42,6 +44,7 @@ const archetypeDetails = {
     limiter: "Using thinking as a substitute for action.",
     brutalTruth: "You don't have an information problem. You have an avoidance problem.",
     quest: "Finish something you've been avoiding.",
+    growthAdvice: "Focus on execution. Stop using planning and research as a way to avoid launching.",
     themeColor: 'blue'
   },
   connector: {
@@ -51,12 +54,13 @@ const archetypeDetails = {
     limiter: "You spend so much energy on others that you forget your own goals.",
     brutalTruth: "Helping other people feels productive. That's why it's become your favorite distraction.",
     quest: "Keep one promise to yourself for seven days.",
+    growthAdvice: "Focus on personal boundary settings. Keep promises to yourself before helping everyone else.",
     themeColor: 'pink'
   }
 };
 
 const themeColors = {
-  builder: {
+  creator: {
     border: 'border-purple-500/30 hover:border-purple-500/60',
     glow: 'shadow-[0_0_55px_rgba(124,58,237,0.15)]',
     text: 'text-purple-400',
@@ -98,10 +102,10 @@ const getWhyYouGotResult = (arch: string, scores?: Scores) => {
   const s = scores || { discipline: 60, action: 75, courage: 65, relationships: 45, consistency: 70, fitness: 55 };
   const cleanArch = arch.toLowerCase().trim();
   
-  if (cleanArch === 'builder') {
+  if (cleanArch === 'creator' || cleanArch === 'builder') {
     const actionText = s.action >= 60 ? "consistently chose action over planning" : "focused heavily on immediate execution";
     const relText = s.relationships < 50 ? "scored lower on collaboration, preferring to solve problems alone" : "balanced action with team effort";
-    return `You ${actionText}. You showed a strong willingness to start and push forward. You ${relText}. This pattern typically creates a Builder profile.`;
+    return `You ${actionText}. You showed a strong willingness to start and push forward. You ${relText}. This pattern typically creates a Creator profile.`;
   } else if (cleanArch === 'warrior') {
     const discText = s.discipline >= 60 ? "consistently chose training and routine over comfort" : "maintained steady focus under pressure";
     const fitText = s.fitness >= 50 ? "showed high awareness of physical energy" : "pushed through fatigue";
@@ -119,15 +123,15 @@ const getWhyYouGotResult = (arch: string, scores?: Scores) => {
 
 const RadarChart = ({ scores, theme }: { scores: Scores; theme: any }) => {
   const cx = 150;
-  const cy = 105;
+  const cy = 100;
   const R = 60;
 
   const attributes = [
     { label: 'Discipline', value: scores.discipline ?? 50 },
-    { label: 'Taking Action', value: scores.action ?? 50 },
-    { label: 'Courage', value: scores.courage ?? 50 },
-    { label: 'Relationships', value: scores.relationships ?? 50 },
+    { label: 'Action', value: scores.action ?? 50 },
     { label: 'Consistency', value: scores.consistency ?? 50 },
+    { label: 'Relationships', value: scores.relationships ?? 50 },
+    { label: 'Courage', value: scores.courage ?? 50 },
     { label: 'Fitness', value: scores.fitness ?? 50 }
   ];
 
@@ -159,7 +163,7 @@ const RadarChart = ({ scores, theme }: { scores: Scores; theme: any }) => {
   ];
 
   return (
-    <svg width="300" height="205" className="mx-auto select-none overflow-visible">
+    <svg width="300" height="195" className="mx-auto select-none overflow-visible">
       <defs>
         <filter id="radar-glow" x="-20%" y="-20%" width="140%" height="140%">
           <feGaussianBlur stdDeviation="3" result="blur" />
@@ -284,17 +288,20 @@ export default function CharacterCard({
   const [isHovered, setIsHovered] = useState(false);
 
   // Normalize archetype name
-  let normArch = (archetype || 'builder').toLowerCase().trim();
+  let normArch = (archetype || 'creator').toLowerCase().trim();
+  if (normArch === 'builder' || normArch === 'creator') {
+    normArch = 'creator';
+  }
   if (normArch === 'strategist' || normArch === 'thinker') {
     normArch = 'architect';
   }
-  const displayArch = normArch === 'architect' ? 'Architect' : normArch.charAt(0).toUpperCase() + normArch.slice(1);
+  const displayArch = normArch === 'creator' ? 'Creator' : normArch === 'architect' ? 'Architect' : normArch.charAt(0).toUpperCase() + normArch.slice(1);
   
-  const currentTheme = themeColors[normArch as keyof typeof themeColors] || themeColors.builder;
-  const details = archetypeDetails[normArch as keyof typeof archetypeDetails] || archetypeDetails.builder;
+  const currentTheme = themeColors[normArch as keyof typeof themeColors] || themeColors.creator;
+  const details = archetypeDetails[normArch as keyof typeof archetypeDetails] || archetypeDetails.creator;
   
-  // Image key mapping (architect uses thinker.png image)
-  const imageKey = normArch === 'architect' ? 'thinker' : normArch;
+  // Image key mapping (architect uses thinker.png image; creator uses builder.png image)
+  const imageKey = normArch === 'creator' ? 'builder' : normArch === 'architect' ? 'thinker' : normArch;
 
   // Fallback scores
   const cleanScores = scores || {
@@ -333,7 +340,11 @@ export default function CharacterCard({
     setRotate({ x: 0, y: 0 });
   };
 
-  const toggleFlip = () => {
+  const toggleFlip = (e: React.MouseEvent) => {
+    // Only toggle flip if they didn't click inside waitlist or share buttons
+    const target = e.target as HTMLElement;
+    if (target.closest('button')) return;
+    
     setIsFlipped(!isFlipped);
     setRotate({ x: 0, y: 0 });
   };
@@ -425,171 +436,196 @@ Take the assessment at: https://theleague.app`;
         className="p-4 bg-transparent rounded-2xl flex items-center justify-center"
       >
         <div
-          ref={cardRef}
-          onMouseMove={handleMouseMove}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={handleMouseLeave}
-          onClick={toggleFlip}
+          className="w-[340px] h-[580px]"
           style={{
-            transform: !isFlipped 
-              ? `perspective(1000px) rotateX(${rotate.x}deg) rotateY(${rotate.y}deg) scale3d(${isHovered ? 1.02 : 1}, ${isHovered ? 1.02 : 1}, 1)`
-              : 'perspective(1000px) rotateY(180deg)',
-            transition: isHovered ? 'none' : 'transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+            perspective: '1000px',
+            transformStyle: 'preserve-3d'
           }}
-          className={`w-[340px] h-[580px] cursor-pointer relative rounded-2xl border transition-all duration-300 select-none overflow-hidden ${currentTheme.border} ${currentTheme.glow}`}
         >
-          {isHovered && !isFlipped && (
-            <div 
-              style={{
-                background: `radial-gradient(circle at ${coords.x}% ${coords.y}%, rgba(255,255,255,0.08) 0%, transparent 55%)`
-              }}
-              className="absolute inset-0 z-30 pointer-events-none"
-            />
-          )}
-
-          {/* FRONT OF CARD */}
-          <div 
-            style={{ backfaceVisibility: 'hidden' }}
-            className={`absolute inset-0 flex flex-col justify-between p-6 bg-gradient-to-b ${currentTheme.grad} z-10`}
-          >
-            {/* Header */}
-            <div className="flex justify-between items-start mb-2">
-              <div>
-                <span className="text-[10px] font-mono tracking-widest text-white/40 block uppercase">
-                  FOUNDING COHORT
-                </span>
-                <h3 className="text-xl font-bold text-white tracking-wide truncate max-w-[190px]">
-                  {name}
-                </h3>
-              </div>
-              <div className={`px-2.5 py-0.5 rounded text-[10px] font-mono border uppercase tracking-wider ${currentTheme.badge}`}>
-                {displayArch}
-              </div>
-            </div>
-
-            {/* Panda Portrait */}
-            <div className="relative w-full h-[220px] mb-2 overflow-hidden rounded-xl border border-white/[0.08] bg-black/40">
-              <img 
-                src={`/images/${imageKey}.png`} 
-                alt={`${displayArch} Panda`}
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            {/* One Killer Sentence */}
-            <div className="border-y border-white/[0.08] py-2.5 my-1 text-center">
-              <p className="text-xs sm:text-sm font-extrabold text-white leading-snug italic px-1">
-                "{details.killerSentence}"
-              </p>
-            </div>
-
-            {/* Core Traits List */}
-            <div className="space-y-3.5 text-left my-2">
-              {/* What People Notice */}
-              <div className="flex items-start space-x-2.5">
-                <Eye className={`h-3.5 w-3.5 mt-0.5 ${currentTheme.text} shrink-0`} />
-                <div>
-                  <span className="text-[9px] font-mono uppercase tracking-wider text-white/40 block">
-                    What People Notice
-                  </span>
-                  <p className="text-xs text-white/80 font-medium leading-relaxed">
-                    {details.whatPeopleNotice}
-                  </p>
-                </div>
-              </div>
-
-              {/* Strength */}
-              <div className="flex items-start space-x-2.5">
-                <Trophy className={`h-3.5 w-3.5 mt-0.5 ${currentTheme.text} shrink-0`} />
-                <div>
-                  <span className="text-[9px] font-mono uppercase tracking-wider text-white/40 block">
-                    Biggest Strength
-                  </span>
-                  <p className="text-xs text-white/80 font-medium leading-relaxed">
-                    {strength || details.strength}
-                  </p>
-                </div>
-              </div>
-
-              {/* Limiter */}
-              <div className="flex items-start space-x-2.5">
-                <ShieldAlert className="h-3.5 w-3.5 mt-0.5 text-red-400 shrink-0" />
-                <div>
-                  <span className="text-[9px] font-mono uppercase tracking-wider text-red-400/80 block">
-                    What's Holding You Back
-                  </span>
-                  <p className="text-xs text-white/80 font-medium leading-relaxed">
-                    {limiter || details.limiter}
-                  </p>
-                </div>
-              </div>
-
-              {/* Next Challenge */}
-              <div className="bg-white/[0.02] border border-white/[0.06] rounded-xl p-2.5 flex items-start space-x-2.5 mt-1">
-                <Target className="h-3.5 w-3.5 mt-0.5 text-brand-gold shrink-0" />
-                <div>
-                  <span className="text-[9px] font-mono uppercase tracking-wider text-brand-gold block font-bold">
-                    Next Challenge
-                  </span>
-                  <p className="text-xs text-white font-semibold leading-relaxed">
-                    {quest || details.quest}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Footer */}
-            <div className="flex justify-between items-center text-[8px] font-mono text-white/30 border-t border-white/[0.04] pt-2.5">
-              <span>THELEAGUE.APP</span>
-              <span className="uppercase tracking-widest">Click to Flip</span>
-            </div>
-          </div>
-
-          {/* BACK OF CARD */}
-          <div 
-            style={{ 
-              backfaceVisibility: 'hidden',
-              transform: 'rotateY(180deg)'
+          <div
+            ref={cardRef}
+            onMouseMove={handleMouseMove}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={handleMouseLeave}
+            onClick={toggleFlip}
+            style={{
+              width: '100%',
+              height: '100%',
+              position: 'relative',
+              transformStyle: 'preserve-3d',
+              transform: !isFlipped 
+                ? `rotateX(${rotate.x}deg) rotateY(${rotate.y}deg) scale3d(${isHovered ? 1.02 : 1}, ${isHovered ? 1.02 : 1}, 1)`
+                : 'rotateY(180deg)',
+              transition: isHovered ? 'none' : 'transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
             }}
-            className={`absolute inset-0 flex flex-col justify-between p-6 bg-gradient-to-b ${currentTheme.grad} z-20`}
+            className={`rounded-2xl transition-all duration-300 select-none ${currentTheme.glow}`}
           >
-            {/* Header */}
-            <div className="flex justify-between items-start mb-2 border-b border-white/[0.06] pb-2">
-              <div>
-                <span className="text-[9px] font-mono tracking-widest text-white/40 block uppercase">
-                  PSYCHOMETRICS
+            {/* FRONT OF CARD */}
+            <div 
+              style={{ 
+                backfaceVisibility: 'hidden',
+                WebkitBackfaceVisibility: 'hidden',
+                position: 'absolute',
+                inset: 0,
+                borderRadius: '1rem',
+                borderWidth: '1px'
+              }}
+              className={`flex flex-col justify-between p-6 bg-gradient-to-b ${currentTheme.grad} ${currentTheme.border} z-10`}
+            >
+              {/* Header */}
+              <div className="flex justify-between items-start mb-2">
+                <div>
+                  <span className="text-[10px] font-mono tracking-widest text-white/40 block uppercase">
+                    FOUNDING COHORT
+                  </span>
+                  <h3 className="text-xl font-bold text-white tracking-wide truncate max-w-[190px]">
+                    {name}
+                  </h3>
+                </div>
+                <div className={`px-2.5 py-0.5 rounded text-[10px] font-mono border uppercase tracking-wider ${currentTheme.badge}`}>
+                  {displayArch}
+                </div>
+              </div>
+
+              {/* Panda Portrait */}
+              <div className="relative w-full h-[220px] mb-2 overflow-hidden rounded-xl border border-white/[0.08] bg-black/40">
+                <img 
+                  src={`/images/${imageKey}.png`} 
+                  alt={`${displayArch} Panda`}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              {/* One Killer Sentence */}
+              <div className="border-y border-white/[0.08] py-2.5 my-1 text-center">
+                <p className="text-xs sm:text-sm font-extrabold text-white leading-snug italic px-1">
+                  "{details.killerSentence}"
+                </p>
+              </div>
+
+              {/* Core Traits List */}
+              <div className="space-y-3.5 text-left my-2">
+                {/* What People Notice */}
+                <div className="flex items-start space-x-2.5">
+                  <Eye className={`h-3.5 w-3.5 mt-0.5 ${currentTheme.text} shrink-0`} />
+                  <div>
+                    <span className="text-[9px] font-mono uppercase tracking-wider text-white/40 block">
+                      What People Notice
+                    </span>
+                    <p className="text-xs text-white/80 font-medium leading-relaxed">
+                      {details.whatPeopleNotice}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Strength */}
+                <div className="flex items-start space-x-2.5">
+                  <Trophy className={`h-3.5 w-3.5 mt-0.5 ${currentTheme.text} shrink-0`} />
+                  <div>
+                    <span className="text-[9px] font-mono uppercase tracking-wider text-white/40 block">
+                      Biggest Strength
+                    </span>
+                    <p className="text-xs text-white/80 font-medium leading-relaxed">
+                      {strength || details.strength}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Limiter */}
+                <div className="flex items-start space-x-2.5">
+                  <ShieldAlert className="h-3.5 w-3.5 mt-0.5 text-red-400 shrink-0" />
+                  <div>
+                    <span className="text-[9px] font-mono uppercase tracking-wider text-red-400/80 block">
+                      What's Holding You Back
+                    </span>
+                    <p className="text-xs text-white/80 font-medium leading-relaxed">
+                      {limiter || details.limiter}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Next Challenge */}
+                <div className="bg-white/[0.02] border border-white/[0.06] rounded-xl p-2.5 flex items-start space-x-2.5 mt-1">
+                  <Target className="h-3.5 w-3.5 mt-0.5 text-brand-gold shrink-0" />
+                  <div>
+                    <span className="text-[9px] font-mono uppercase tracking-wider text-brand-gold block font-bold">
+                      Next Challenge
+                    </span>
+                    <p className="text-xs text-white font-semibold leading-relaxed">
+                      {quest || details.quest}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Footer */}
+              <div className="flex justify-between items-center text-[8px] font-mono text-white/30 border-t border-white/[0.04] pt-2.5">
+                <span>THELEAGUE.APP</span>
+                <span className="uppercase tracking-widest animate-pulse">Click Card to Flip</span>
+              </div>
+            </div>
+
+            {/* BACK OF CARD */}
+            <div 
+              style={{ 
+                backfaceVisibility: 'hidden',
+                WebkitBackfaceVisibility: 'hidden',
+                position: 'absolute',
+                inset: 0,
+                transform: 'rotateY(180deg)',
+                borderRadius: '1rem',
+                borderWidth: '1px'
+              }}
+              className={`flex flex-col justify-between p-6 bg-gradient-to-b ${currentTheme.grad} ${currentTheme.border} z-20`}
+            >
+              {/* Header */}
+              <div className="flex justify-between items-start mb-2 border-b border-white/[0.06] pb-2">
+                <div>
+                  <span className="text-[9px] font-mono tracking-widest text-white/40 block uppercase">
+                    ANALYSIS CARD
+                  </span>
+                  <h3 className="text-base font-bold text-white tracking-wide uppercase">
+                    {displayArch} INSIGHT
+                  </h3>
+                </div>
+                <div className={`px-2 py-0.5 rounded text-[8px] font-mono border uppercase tracking-wider ${currentTheme.badge}`}>
+                  Back
+                </div>
+              </div>
+
+              {/* Why You Got This Result */}
+              <div className="text-left space-y-1 my-1">
+                <span className="text-[9px] font-mono uppercase tracking-wider text-brand-gold block font-bold">
+                  Why you got this archetype
                 </span>
-                <h3 className="text-base font-bold text-white tracking-wide uppercase">
-                  {displayArch} Blueprint
-                </h3>
+                <p className="text-[11px] text-white/80 leading-relaxed font-normal">
+                  {getWhyYouGotResult(normArch, cleanScores)}
+                </p>
               </div>
-              <div className={`px-2 py-0.5 rounded text-[8px] font-mono border uppercase tracking-wider ${currentTheme.badge}`}>
-                Back
+
+              {/* SVG Radar Chart */}
+              <div className="flex items-center justify-center my-1">
+                <RadarChart scores={cleanScores} theme={currentTheme} />
+              </div>
+
+              {/* Personalized Growth Advice */}
+              <div className="border-t border-white/[0.06] pt-2 text-left space-y-0.5">
+                <span className="text-[9px] font-mono uppercase tracking-wider text-purple-400 block font-bold">
+                  Growth Advice
+                </span>
+                <p className="text-[11px] text-white font-medium leading-relaxed italic">
+                  "{details.growthAdvice}"
+                </p>
+              </div>
+
+              {/* Footer */}
+              <div className="flex justify-between items-center text-[8px] font-mono text-white/30 border-t border-white/[0.04] pt-2.5">
+                <span>THELEAGUE.APP</span>
+                <span className="uppercase tracking-widest animate-pulse">Click Card to Flip</span>
               </div>
             </div>
 
-            {/* SVG Radar Chart */}
-            <div className="flex-1 flex items-center justify-center min-h-[205px]">
-              <RadarChart scores={cleanScores} theme={currentTheme} />
-            </div>
-
-            {/* Why You Got This Result */}
-            <div className="border-t border-white/[0.06] pt-3.5 my-2 text-left space-y-1">
-              <span className="text-[9px] font-mono uppercase tracking-wider text-brand-gold block font-bold">
-                Why you got this result
-              </span>
-              <p className="text-xs text-white/70 leading-relaxed font-light font-sans max-h-[120px] overflow-y-auto">
-                {getWhyYouGotResult(normArch, cleanScores)}
-              </p>
-            </div>
-
-            {/* Footer */}
-            <div className="flex justify-between items-center text-[8px] font-mono text-white/30 border-t border-white/[0.04] pt-2.5">
-              <span>THELEAGUE.APP</span>
-              <span className="uppercase tracking-widest">Click to Flip</span>
-            </div>
           </div>
-
         </div>
       </div>
 
@@ -597,7 +633,7 @@ Take the assessment at: https://theleague.app`;
       <div className="flex flex-col items-center space-y-2">
         <div className="flex items-center space-x-3">
           <button
-            onClick={toggleFlip}
+            onClick={() => setIsFlipped(!isFlipped)}
             className="flex items-center justify-center space-x-2 text-xs text-white/70 hover:text-white border border-white/10 hover:border-white/20 bg-white/[0.02] active:bg-white/[0.06] rounded-lg px-4 py-2.5 transition-all duration-200 cursor-pointer"
           >
             <RefreshCw className="h-3.5 w-3.5" />

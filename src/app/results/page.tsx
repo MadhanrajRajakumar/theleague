@@ -25,6 +25,10 @@ interface ResultData {
 }
 
 const archetypeDetails = {
+  creator: {
+    killerSentence: "You don't need more effort. You need stronger allies.",
+    brutalTruth: "Working harder is not your problem. Working with better people is."
+  },
   builder: {
     killerSentence: "You don't need more effort. You need stronger allies.",
     brutalTruth: "Working harder is not your problem. Working with better people is."
@@ -48,6 +52,10 @@ const archetypeDetails = {
 };
 
 const archetypeGoodBad = {
+  creator: {
+    goodNews: "You take action when most people hesitate.",
+    badNews: "You often isolate yourself when things become difficult."
+  },
   builder: {
     goodNews: "You take action when most people hesitate.",
     badNews: "You often isolate yourself when things become difficult."
@@ -166,23 +174,26 @@ export default function ResultsPage() {
   }
 
   // Normalize archetype key
-  let normArch = (results.archetype || 'builder').toLowerCase().trim();
+  let normArch = (results.archetype || 'creator').toLowerCase().trim();
+  if (normArch === 'builder' || normArch === 'creator') {
+    normArch = 'creator';
+  }
   if (normArch === 'strategist' || normArch === 'thinker') {
     normArch = 'architect';
   }
-  const displayArch = normArch === 'architect' ? 'Architect' : normArch.charAt(0).toUpperCase() + normArch.slice(1);
+  const displayArch = normArch === 'creator' ? 'Creator' : normArch === 'architect' ? 'Architect' : normArch.charAt(0).toUpperCase() + normArch.slice(1);
 
   // Color configurations for dramatic text
   const archColors: Record<string, string> = {
-    builder: 'text-purple-400 shadow-purple-950/40',
+    creator: 'text-purple-400 shadow-purple-950/40',
     warrior: 'text-brand-gold shadow-yellow-950/40',
     architect: 'text-blue-400 shadow-blue-950/40',
     connector: 'text-pink-400 shadow-pink-950/40'
   };
 
   const currentArchColorClass = archColors[normArch] || 'text-brand-purple';
-  const details = archetypeDetails[normArch as keyof typeof archetypeDetails] || archetypeDetails.builder;
-  const goodBad = archetypeGoodBad[normArch as keyof typeof archetypeGoodBad] || archetypeGoodBad.builder;
+  const details = archetypeDetails[normArch as keyof typeof archetypeDetails] || archetypeDetails.creator;
+  const goodBad = archetypeGoodBad[normArch as keyof typeof archetypeGoodBad] || archetypeGoodBad.creator;
 
   return (
     <div className="flex flex-col min-h-screen bg-[#030303] text-white">
