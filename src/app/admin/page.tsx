@@ -260,10 +260,10 @@ export default function AdminPage() {
                   <span>Characters</span>
                 </h3>
                 <div className="space-y-3 pt-2">
-                  {['Builder', 'Warrior', 'Thinker', 'Connector'].map((arch) => {
+                  {['Builder', 'Warrior', 'Architect', 'Connector'].map((arch) => {
                     let count = analytics.archetypeDistribution[arch] || 0;
-                    if (arch === 'Thinker') {
-                      count += analytics.archetypeDistribution['Strategist'] || 0;
+                    if (arch === 'Architect') {
+                      count += (analytics.archetypeDistribution['Strategist'] || 0) + (analytics.archetypeDistribution['Thinker'] || 0);
                     }
                     const maxCount = Math.max(...Object.values(analytics.archetypeDistribution), 1);
                     const pct = Math.round((count / maxCount) * 100);
@@ -395,10 +395,10 @@ export default function AdminPage() {
                           <span className={`inline-block px-2 py-0.5 rounded text-[10px] uppercase font-bold ${
                             row.archetype === 'Builder' ? 'bg-purple-950/60 border border-purple-500/20 text-purple-300' :
                             row.archetype === 'Warrior' ? 'bg-yellow-950/60 border border-yellow-500/20 text-yellow-300' :
-                            row.archetype === 'Thinker' || row.archetype === 'Strategist' ? 'bg-indigo-950/60 border border-indigo-500/20 text-indigo-300' :
+                            row.archetype === 'Architect' || row.archetype === 'Thinker' || row.archetype === 'Strategist' ? 'bg-blue-950/60 border border-blue-500/20 text-blue-300' :
                             'bg-pink-950/60 border border-pink-500/20 text-pink-300'
                           }`}>
-                            {row.archetype === 'Strategist' ? 'Thinker' : row.archetype}
+                            {row.archetype === 'Strategist' || row.archetype === 'Thinker' ? 'Architect' : row.archetype}
                           </span>
                         </td>
                         <td className="py-3 px-6 text-brand-purple max-w-[200px] truncate" title={row.strength}>

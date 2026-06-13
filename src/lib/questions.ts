@@ -281,7 +281,7 @@ export const QUESTIONS: Question[] = [
 export const ARCHETYPES = {
   BUILDER: 'Builder',
   WARRIOR: 'Warrior',
-  THINKER: 'Thinker',
+  ARCHITECT: 'Architect',
   CONNECTOR: 'Connector'
 } as const;
 
@@ -339,7 +339,7 @@ export function calculateResults(answers: number[]): CalculationResult {
   const archScores = [
     { name: 'Builder', score: builderScore },
     { name: 'Warrior', score: warriorScore },
-    { name: 'Thinker', score: thinkerScore },
+    { name: 'Architect', score: thinkerScore },
     { name: 'Connector', score: connectorScore }
   ];
 
@@ -382,14 +382,14 @@ export function calculateResults(answers: number[]): CalculationResult {
   const archetypeStrength: Record<string, string> = {
     Builder: "You take action faster than most people.",
     Warrior: "You show up and stay disciplined when others quit.",
-    Thinker: "You rarely make reckless decisions.",
+    Architect: "You rarely make reckless decisions.",
     Connector: "You build trust and connect people naturally."
   };
 
   const archetypeLimiter: Record<string, string> = {
     Builder: "You try to solve everything alone.",
     Warrior: "You get so focused on the routine that you lose sight of where you are going.",
-    Thinker: "Using thinking as a substitute for action.",
+    Architect: "Using thinking as a substitute for action.",
     Connector: "You spend so much energy on others that you forget your own goals."
   };
 
@@ -400,7 +400,7 @@ export function calculateResults(answers: number[]): CalculationResult {
   const archetypeQuests: Record<string, string> = {
     Builder: "Start one conversation you've been avoiding.",
     Warrior: "Take one full evening off this week.",
-    Thinker: "Finish something you've been avoiding.",
+    Architect: "Finish something you've been avoiding.",
     Connector: "Keep one promise to yourself for seven days."
   };
   const quest = archetypeQuests[archetype] || "Start one conversation you've been avoiding.";
@@ -409,7 +409,7 @@ export function calculateResults(answers: number[]): CalculationResult {
   const brutalTruths: Record<string, string> = {
     Builder: "Working harder is not your problem. Working with better people is.",
     Warrior: "You are so focused on staying busy that you've stopped asking whether you're moving in the right direction.",
-    Thinker: "You don't have an information problem. You have an avoidance problem.",
+    Architect: "You don't have an information problem. You have an avoidance problem.",
     Connector: "Helping other people feels productive. That's why it's become your favorite distraction."
   };
   const brutalTruth = brutalTruths[archetype] || "";
@@ -418,7 +418,7 @@ export function calculateResults(answers: number[]): CalculationResult {
   const killerSentences: Record<string, string> = {
     Builder: "You don't need more effort. You need stronger allies.",
     Warrior: "You know how to suffer. You don't always know when to stop.",
-    Thinker: "You know exactly what to do. That's why it's frustrating that you still haven't done it.",
+    Architect: "You know exactly what to do. That's why it's frustrating that you still haven't done it.",
     Connector: "You help everyone else move forward. Who's helping you?"
   };
   const killerSentence = killerSentences[archetype] || "";

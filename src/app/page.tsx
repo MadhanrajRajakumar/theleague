@@ -110,6 +110,16 @@ export default function LandingPage() {
                   strength="You take action faster than most people."
                   limiter="You try to solve everything alone."
                   quest="Start one conversation you've been avoiding."
+                  scores={{
+                    discipline: 75,
+                    action: 90,
+                    courage: 80,
+                    relationships: 40,
+                    consistency: 70,
+                    fitness: 65,
+                    self_awareness: 60,
+                    ambition: 85
+                  }}
                 />
               </div>
             </motion.div>
@@ -208,12 +218,12 @@ export default function LandingPage() {
               </p>
             </div>
 
-            {/* Thinker */}
-            <div className="glass-card rounded-xl p-6 border border-indigo-500/10 hover:border-indigo-500/20 transition-all duration-300">
-              <div className="h-8 w-8 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-400 font-bold text-xs mb-4 font-mono">
-                THK
+            {/* Architect */}
+            <div className="glass-card rounded-xl p-6 border border-blue-500/10 hover:border-blue-500/20 transition-all duration-300">
+              <div className="h-8 w-8 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-400 font-bold text-xs mb-4 font-mono">
+                ARC
               </div>
-              <h4 className="text-base font-bold text-white uppercase tracking-wide">Thinker</h4>
+              <h4 className="text-base font-bold text-white uppercase tracking-wide">Architect</h4>
               <p className="text-xs text-white/50 leading-relaxed mt-2">
                 You rarely make reckless decisions. You understand complex situations. But sometimes you use research and planning as a way to avoid the fear of starting.
               </p>

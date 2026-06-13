@@ -33,6 +33,10 @@ const archetypeDetails = {
     killerSentence: "You know how to suffer. You don't always know when to stop.",
     brutalTruth: "You are so focused on staying busy that you've stopped asking whether you're moving in the right direction."
   },
+  architect: {
+    killerSentence: "You know exactly what to do. That's why it's frustrating that you still haven't done it.",
+    brutalTruth: "You don't have an information problem. You have an avoidance problem."
+  },
   thinker: {
     killerSentence: "You know exactly what to do. That's why it's frustrating that you still haven't done it.",
     brutalTruth: "You don't have an information problem. You have an avoidance problem."
@@ -51,6 +55,10 @@ const archetypeGoodBad = {
   warrior: {
     goodNews: "You commit to your routines and show up even when you are exhausted.",
     badNews: "You put your head down and grind blindly, even when you are heading in the wrong direction."
+  },
+  architect: {
+    goodNews: "You understand complex situations and avoid costly mistakes.",
+    badNews: "You use research and planning as a way to avoid the fear of launching."
   },
   thinker: {
     goodNews: "You understand complex situations and avoid costly mistakes.",
@@ -159,16 +167,16 @@ export default function ResultsPage() {
 
   // Normalize archetype key
   let normArch = (results.archetype || 'builder').toLowerCase().trim();
-  if (normArch === 'strategist') {
-    normArch = 'thinker';
+  if (normArch === 'strategist' || normArch === 'thinker') {
+    normArch = 'architect';
   }
-  const displayArch = normArch.charAt(0).toUpperCase() + normArch.slice(1);
+  const displayArch = normArch === 'architect' ? 'Architect' : normArch.charAt(0).toUpperCase() + normArch.slice(1);
 
   // Color configurations for dramatic text
   const archColors: Record<string, string> = {
     builder: 'text-purple-400 shadow-purple-950/40',
     warrior: 'text-brand-gold shadow-yellow-950/40',
-    thinker: 'text-indigo-400 shadow-indigo-950/40',
+    architect: 'text-blue-400 shadow-blue-950/40',
     connector: 'text-pink-400 shadow-pink-950/40'
   };
 
