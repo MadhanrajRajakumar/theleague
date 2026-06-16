@@ -296,6 +296,8 @@ export interface CalculationResult {
   quest: string;
   brutalTruth: string;
   killerSentence: string;
+  leagueReadiness: string;
+  readinessText: string;
 }
 
 export function calculateResults(answers: number[]): CalculationResult {
@@ -414,14 +416,26 @@ export function calculateResults(answers: number[]): CalculationResult {
   };
   const brutalTruth = brutalTruths[archetype] || "";
 
-  // One Killer Sentence centerpiece
   const killerSentences: Record<string, string> = {
-    Creator: "You don't need more effort. You need stronger allies.",
-    Warrior: "You know how to suffer. You don't always know when to stop.",
-    Architect: "You know exactly what to do. That's why it's frustrating that you still haven't done it.",
-    Connector: "You help everyone else move forward. Who's helping you?"
+    Creator: "You don't need another idea. You need people who won't let you quit this one.",
+    Warrior: "You don't need more discipline. You need people who tell you when you're fighting the wrong battle.",
+    Architect: "You don't need more information. You need people who make action impossible to avoid.",
+    Connector: "You don't need more connections. You need people whose standards challenge your own."
   };
   const killerSentence = killerSentences[archetype] || "";
+
+  // Calculate qualitative League Readiness
+  const avgReadiness = (scores.discipline + scores.consistency + scores.action + scores.self_awareness) / 4;
+  let leagueReadiness = 'NEEDS WORK';
+  let readinessText = 'You have ambition. Your consistency is currently your bottleneck. Before joining a high-performance cohort, you need to prove you can keep promises to yourself.';
+
+  if (avgReadiness >= 75) {
+    leagueReadiness = 'READY';
+    readinessText = 'Your discipline is strong. Your next challenge is scaling your leverage and surrounding yourself with peers who operate at your level.';
+  } else if (avgReadiness >= 55) {
+    leagueReadiness = 'ALMOST READY';
+    readinessText = 'You are taking action. Your main bottleneck is focus and alignment. You need to verify you are executing on the right goals rather than staying busy.';
+  }
 
   return {
     scores,
@@ -431,7 +445,9 @@ export function calculateResults(answers: number[]): CalculationResult {
     limiter,
     quest,
     brutalTruth,
-    killerSentence
+    killerSentence,
+    leagueReadiness,
+    readinessText
   };
 }
 

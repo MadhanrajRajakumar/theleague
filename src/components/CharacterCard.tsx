@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import html2canvas from 'html2canvas';
 import { Share2, Download, Check, Eye, Trophy, ShieldAlert, Target, RefreshCw } from 'lucide-react';
 import { Scores } from '@/lib/types';
+import { logAnalyticsEvent } from '@/lib/supabase';
 
 interface CharacterCardProps {
   name: string;
@@ -14,11 +15,12 @@ interface CharacterCardProps {
   quest: string;
   scores?: Scores;
   isLocked?: boolean;
+  assessmentId?: string;
 }
 
 const archetypeDetails = {
   creator: {
-    killerSentence: "You don't need more effort. You need stronger allies.",
+    killerSentence: "You don't need another idea. You need people who won't let you quit this one.",
     whatPeopleNotice: "You move faster than everyone else.",
     strength: "You take action faster than most people.",
     limiter: "You try to solve everything alone.",
@@ -28,7 +30,7 @@ const archetypeDetails = {
     themeColor: 'purple'
   },
   warrior: {
-    killerSentence: "You know how to suffer. You don't always know when to stop.",
+    killerSentence: "You don't need more discipline. You need people who tell you when you're fighting the wrong battle.",
     whatPeopleNotice: "You do what you say you'll do.",
     strength: "You show up and stay disciplined when others quit.",
     limiter: "You get so focused on the routine that you lose sight of where you are going.",
@@ -38,7 +40,7 @@ const archetypeDetails = {
     themeColor: 'yellow'
   },
   architect: {
-    killerSentence: "You know exactly what to do. That's why it's frustrating that you still haven't done it.",
+    killerSentence: "You don't need more information. You need people who make action impossible to avoid.",
     whatPeopleNotice: "You see things others miss.",
     strength: "You rarely make reckless decisions.",
     limiter: "Using thinking as a substitute for action.",
@@ -48,7 +50,7 @@ const archetypeDetails = {
     themeColor: 'blue'
   },
   connector: {
-    killerSentence: "You help everyone else move forward. Who's helping you?",
+    killerSentence: "You don't need more connections. You need people whose standards challenge your own.",
     whatPeopleNotice: "People trust you quickly.",
     strength: "You build trust and connect people naturally.",
     limiter: "You spend so much energy on others that you forget your own goals.",
@@ -61,39 +63,39 @@ const archetypeDetails = {
 
 const themeColors = {
   creator: {
-    border: 'border-purple-500/30 hover:border-purple-500/60',
-    glow: 'shadow-[0_0_55px_rgba(124,58,237,0.15)]',
-    text: 'text-purple-400',
-    badge: 'bg-purple-950/80 border-purple-500/30 text-purple-300',
-    grad: 'from-purple-950/40 via-charcoal-medium to-charcoal-dark',
-    radarFill: 'rgba(168,85,247,0.15)',
-    radarStroke: '#a855f7'
+    border: 'border-brand-purple/20 hover:border-brand-purple/40',
+    glow: 'shadow-sm',
+    text: 'text-brand-purple',
+    badge: 'bg-brand-purple/10 border-brand-purple/20 text-brand-purple',
+    grad: 'from-white via-[#FAFAF8] to-purple-50/20',
+    radarFill: 'rgba(95, 46, 234, 0.08)',
+    radarStroke: '#5F2EEA'
   },
   warrior: {
-    border: 'border-yellow-500/30 hover:border-yellow-500/60',
-    glow: 'shadow-[0_0_55px_rgba(234,179,8,0.12)]',
-    text: 'text-yellow-400',
-    badge: 'bg-yellow-950/80 border-yellow-500/30 text-yellow-300',
-    grad: 'from-yellow-950/30 via-charcoal-medium to-charcoal-dark',
-    radarFill: 'rgba(234,179,8,0.15)',
-    radarStroke: '#eab308'
+    border: 'border-brand-gold/20 hover:border-brand-gold/40',
+    glow: 'shadow-sm',
+    text: 'text-brand-gold',
+    badge: 'bg-brand-gold/10 border-brand-gold/20 text-brand-gold',
+    grad: 'from-white via-[#FAFAF8] to-yellow-50/10',
+    radarFill: 'rgba(197, 168, 90, 0.08)',
+    radarStroke: '#C5A85A'
   },
   architect: {
-    border: 'border-blue-500/30 hover:border-blue-500/60',
-    glow: 'shadow-[0_0_55px_rgba(59,130,246,0.15)]',
-    text: 'text-blue-400',
-    badge: 'bg-blue-950/80 border-blue-500/30 text-blue-300',
-    grad: 'from-blue-950/40 via-charcoal-medium to-charcoal-dark',
-    radarFill: 'rgba(59,130,246,0.15)',
+    border: 'border-blue-500/20 hover:border-blue-500/40',
+    glow: 'shadow-sm',
+    text: 'text-blue-600',
+    badge: 'bg-blue-50 border-blue-200 text-blue-700',
+    grad: 'from-white via-[#FAFAF8] to-blue-50/10',
+    radarFill: 'rgba(59, 130, 246, 0.08)',
     radarStroke: '#3b82f6'
   },
   connector: {
-    border: 'border-pink-500/30 hover:border-pink-500/60',
-    glow: 'shadow-[0_0_55px_rgba(236,72,153,0.15)]',
-    text: 'text-pink-400',
-    badge: 'bg-pink-950/80 border-pink-500/30 text-pink-300',
-    grad: 'from-pink-950/30 via-charcoal-medium to-charcoal-dark',
-    radarFill: 'rgba(236,72,153,0.15)',
+    border: 'border-pink-500/20 hover:border-pink-500/40',
+    glow: 'shadow-sm',
+    text: 'text-pink-600',
+    badge: 'bg-pink-50 border-pink-200 text-pink-700',
+    grad: 'from-white via-[#FAFAF8] to-pink-50/10',
+    radarFill: 'rgba(236, 72, 153, 0.08)',
     radarStroke: '#ec4899'
   }
 };
@@ -164,23 +166,13 @@ const RadarChart = ({ scores, theme }: { scores: Scores; theme: any }) => {
 
   return (
     <svg width="300" height="195" className="mx-auto select-none overflow-visible">
-      <defs>
-        <filter id="radar-glow" x="-20%" y="-20%" width="140%" height="140%">
-          <feGaussianBlur stdDeviation="3" result="blur" />
-          <feMerge>
-            <feMergeNode in="blur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
-      </defs>
-
       {/* Grid rings */}
       {[0.25, 0.5, 0.75, 1.0].map((scale, idx) => (
         <polygon
           key={idx}
           points={getHexagonPoints(R * scale)}
           fill="none"
-          stroke="rgba(255,255,255,0.06)"
+          stroke="rgba(0,0,0,0.06)"
           strokeWidth="1"
         />
       ))}
@@ -197,7 +189,7 @@ const RadarChart = ({ scores, theme }: { scores: Scores; theme: any }) => {
             y1={cy}
             x2={x2}
             y2={y2}
-            stroke="rgba(255,255,255,0.06)"
+            stroke="rgba(0,0,0,0.06)"
             strokeWidth="1"
             strokeDasharray="2 2"
           />
@@ -210,7 +202,6 @@ const RadarChart = ({ scores, theme }: { scores: Scores; theme: any }) => {
         fill={theme.radarFill}
         stroke={theme.radarStroke}
         strokeWidth="2"
-        filter="url(#radar-glow)"
       />
 
       {/* Vertices */}
@@ -225,10 +216,10 @@ const RadarChart = ({ scores, theme }: { scores: Scores; theme: any }) => {
             key={i}
             cx={x}
             cy={y}
-            r="3"
+            r="3.5"
             fill="#ffffff"
             stroke={theme.radarStroke}
-            strokeWidth="1.5"
+            strokeWidth="2"
           />
         );
       })}
@@ -241,7 +232,7 @@ const RadarChart = ({ scores, theme }: { scores: Scores; theme: any }) => {
             <text
               x={pos.x}
               y={pos.y}
-              fill="rgba(255,255,255,0.4)"
+              fill="rgba(0,0,0,0.5)"
               fontSize="9"
               fontFamily="monospace"
               fontWeight="bold"
@@ -254,7 +245,7 @@ const RadarChart = ({ scores, theme }: { scores: Scores; theme: any }) => {
             <text
               x={pos.x}
               y={pos.y + (i === 0 ? -11 : i === 3 ? 10 : 8)}
-              fill="#ffffff"
+              fill="#111111"
               fontSize="9"
               fontFamily="monospace"
               fontWeight="bold"
@@ -276,7 +267,8 @@ export default function CharacterCard({
   limiter,
   quest,
   scores,
-  isLocked = false
+  isLocked = false,
+  assessmentId
 }: CharacterCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -295,13 +287,16 @@ export default function CharacterCard({
   if (normArch === 'strategist' || normArch === 'thinker') {
     normArch = 'architect';
   }
-  const displayArch = normArch === 'creator' ? 'Creator' : normArch === 'architect' ? 'Architect' : normArch.charAt(0).toUpperCase() + normArch.slice(1);
+  const displayArch = normArch === 'creator' ? 'Creator' : normArch === 'architect' ? 'Thinker' : normArch.charAt(0).toUpperCase() + normArch.slice(1);
   
   const currentTheme = themeColors[normArch as keyof typeof themeColors] || themeColors.creator;
   const details = archetypeDetails[normArch as keyof typeof archetypeDetails] || archetypeDetails.creator;
   
-  // Image key mapping (architect uses thinker.png image; creator uses builder.png image)
-  const imageKey = normArch === 'creator' ? 'builder' : normArch === 'architect' ? 'thinker' : normArch;
+  // Image key mapping (architect uses thinker.png image; creator uses creator.png image)
+  const imageKey = normArch === 'creator' ? 'creator' : normArch === 'architect' ? 'thinker' : normArch;
+
+  // Safe display name fallback
+  const displayName = name && name.trim() ? name.trim() : 'Anonymous';
 
   // Fallback scores
   const cleanScores = scores || {
@@ -325,8 +320,8 @@ export default function CharacterCard({
     const yc = y / rect.height - 0.5;
     
     setRotate({
-      x: -yc * 12,
-      y: xc * 12
+      x: -yc * 8,
+      y: xc * 8
     });
     
     setCoords({
@@ -349,9 +344,25 @@ export default function CharacterCard({
     setRotate({ x: 0, y: 0 });
   };
 
+  const dataURLtoFile = (dataurl: string, filename: string): File => {
+    const arr = dataurl.split(',');
+    const mime = arr[0].match(/:(.*?);/)?.[1] || 'image/png';
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+  };
+
   const handleDownload = async () => {
     if (!containerRef.current) return;
     setIsDownloading(true);
+
+    const sId = typeof window !== 'undefined' ? localStorage.getItem('the_league_session_id') || 'unknown' : 'unknown';
+    const assId = assessmentId || null;
+    logAnalyticsEvent(sId, assId, 'download_card_clicked', { archetype: normArch });
 
     try {
       const wasFlipped = isFlipped;
@@ -362,11 +373,18 @@ export default function CharacterCard({
 
       const cardEl = cardRef.current;
       const originalStyle = cardEl ? cardEl.style.cssText : '';
-      if (cardEl) cardEl.style.cssText = 'transform: none; transition: none;';
+      if (cardEl) {
+        cardEl.style.transform = 'none';
+        cardEl.style.transition = 'none';
+      }
+      
+      // Force layout recalculation and wait repaint frames
+      if (cardEl) cardEl.offsetHeight;
+      await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
 
       const canvas = await html2canvas(containerRef.current, {
         scale: 2,
-        backgroundColor: '#030303',
+        backgroundColor: '#FAFAF8',
         useCORS: true,
         logging: false,
         width: containerRef.current.offsetWidth,
@@ -381,9 +399,12 @@ export default function CharacterCard({
 
       const image = canvas.toDataURL('image/png');
       const link = document.createElement('a');
-      link.download = `the-league-${name.toLowerCase().replace(/\s+/g, '-')}-${normArch}-card.png`;
+      const safeName = displayName.toLowerCase().replace(/\s+/g, '-');
+      link.download = `the-league-${safeName}-${normArch}-card.png`;
       link.href = image;
       link.click();
+
+      logAnalyticsEvent(sId, assId, 'download_card_success', { archetype: normArch });
     } catch (err) {
       console.error('Failed to export character card image:', err);
     } finally {
@@ -392,40 +413,114 @@ export default function CharacterCard({
   };
 
   const handleShare = async () => {
-    const text = `I just unlocked my ${displayArch.toUpperCase()} character card on The League!
-    
-"Marcus Aurelius"
-⚡ ${details.killerSentence}
+    const sId = typeof window !== 'undefined' ? localStorage.getItem('the_league_session_id') || 'unknown' : 'unknown';
+    const assId = assessmentId || null;
+    logAnalyticsEvent(sId, assId, 'share_card_clicked', { archetype: normArch });
 
-💪 Biggest Strength: ${strength || details.strength}
-⚠️ What's Holding Me Back: ${limiter || details.limiter}
-🎯 Next Challenge: ${quest || details.quest}
+    const shareText = `I just unlocked my ${displayArch.toUpperCase()} character card on The League!\n\n⚡ ${details.killerSentence}\n\nTake the assessment at: https://theleague.app`;
 
-Take the assessment at: https://theleague.app`;
+    // Try native file sharing with generated image first
+    if (containerRef.current) {
+      try {
+        const wasFlipped = isFlipped;
+        if (wasFlipped) {
+          setIsFlipped(false);
+          await new Promise(r => setTimeout(r, 400));
+        }
 
+        const cardEl = cardRef.current;
+        const originalStyle = cardEl ? cardEl.style.cssText : '';
+        if (cardEl) {
+          cardEl.style.transform = 'none';
+          cardEl.style.transition = 'none';
+        }
+        if (cardEl) cardEl.offsetHeight; // force reflow
+        await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+
+        const canvas = await html2canvas(containerRef.current, {
+          scale: 2,
+          backgroundColor: '#FAFAF8',
+          useCORS: true,
+          logging: false,
+          width: containerRef.current.offsetWidth,
+          height: containerRef.current.offsetHeight
+        });
+
+        if (cardEl) cardEl.style.cssText = originalStyle;
+        if (wasFlipped) {
+          setIsFlipped(true);
+        }
+
+        const imgDataUrl = canvas.toDataURL('image/png');
+        const safeName = displayName.toLowerCase().replace(/\s+/g, '-');
+        const file = dataURLtoFile(imgDataUrl, `the-league-${safeName}-${normArch}.png`);
+
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          await navigator.share({
+            files: [file],
+            title: 'THE LEAGUE | Character Card',
+            text: shareText
+          });
+          logAnalyticsEvent(sId, assId, 'share_card_success', { archetype: normArch, method: 'image_file' });
+          return;
+        }
+      } catch (err) {
+        console.warn('Native card file share failed, falling back to text:', err);
+      }
+    }
+
+    // Fallback 1: Native text share
     if (navigator.share) {
       try {
         await navigator.share({
           title: 'THE LEAGUE | Character Diagnosis',
-          text: text,
+          text: shareText,
           url: 'https://theleague.app'
         });
+        logAnalyticsEvent(sId, assId, 'share_card_success', { archetype: normArch, method: 'text_share' });
+        return;
       } catch (err) {
-        console.warn('Native sharing failed, copying to clipboard:', err);
-        await copyToClipboard(text);
+        console.warn('Native text share failed, falling back to copy:', err);
       }
-    } else {
-      await copyToClipboard(text);
     }
+
+    // Fallback 2: Clipboard copy
+    await copyToClipboard(`${shareText}\n\nhttps://theleague.app`);
+    logAnalyticsEvent(sId, assId, 'share_card_success', { archetype: normArch, method: 'clipboard_copy' });
   };
 
   const copyToClipboard = async (text: string) => {
     try {
-      await navigator.clipboard.writeText(text);
-      setIsShared(true);
-      setTimeout(() => setIsShared(false), 3000);
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(text);
+        setIsShared(true);
+        setTimeout(() => setIsShared(false), 3000);
+        return;
+      }
     } catch (err) {
-      console.error('Failed to copy text:', err);
+      console.warn('navigator.clipboard failed, using fallback:', err);
+    }
+
+    // Old-school element fallback
+    try {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.top = '0';
+      textArea.style.left = '0';
+      textArea.style.position = 'fixed';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      const successful = document.execCommand('copy');
+      document.body.removeChild(textArea);
+      if (successful) {
+        setIsShared(true);
+        setTimeout(() => setIsShared(false), 3000);
+      } else {
+        console.error('execCommand copy failed');
+      }
+    } catch (err) {
+      console.error('Clipboard fallback copy failed:', err);
     }
   };
 
@@ -454,11 +549,11 @@ Take the assessment at: https://theleague.app`;
               position: 'relative',
               transformStyle: 'preserve-3d',
               transform: !isFlipped 
-                ? `rotateX(${rotate.x}deg) rotateY(${rotate.y}deg) scale3d(${isHovered ? 1.02 : 1}, ${isHovered ? 1.02 : 1}, 1)`
+                ? `rotateX(${rotate.x}deg) rotateY(${rotate.y}deg) scale3d(${isHovered ? 1.01 : 1}, ${isHovered ? 1.01 : 1}, 1)`
                 : 'rotateY(180deg)',
-              transition: isHovered ? 'none' : 'transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+              transition: isHovered ? 'none' : 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
             }}
-            className={`rounded-2xl transition-all duration-300 select-none ${currentTheme.glow}`}
+            className={`rounded-2xl transition-all duration-300 select-none bg-white border border-border-gray ${currentTheme.glow}`}
           >
             {/* FRONT OF CARD */}
             <div 
@@ -468,37 +563,37 @@ Take the assessment at: https://theleague.app`;
                 position: 'absolute',
                 inset: 0,
                 borderRadius: '1rem',
-                borderWidth: '1px'
               }}
-              className={`flex flex-col justify-between p-6 bg-gradient-to-b ${currentTheme.grad} ${currentTheme.border} z-10`}
+              className={`flex flex-col justify-between p-6 bg-gradient-to-b ${currentTheme.grad} z-10`}
             >
               {/* Header */}
               <div className="flex justify-between items-start mb-2">
                 <div>
-                  <span className="text-[10px] font-mono tracking-widest text-white/40 block uppercase">
+                  <span className="text-[10px] font-mono tracking-widest text-foreground/40 block uppercase">
                     FOUNDING COHORT
                   </span>
-                  <h3 className="text-xl font-bold text-white tracking-wide truncate max-w-[190px]">
-                    {name}
+                  <h3 className="text-xl font-semibold text-foreground tracking-tight truncate max-w-[190px]">
+                    {displayName}
                   </h3>
                 </div>
-                <div className={`px-2.5 py-0.5 rounded text-[10px] font-mono border uppercase tracking-wider ${currentTheme.badge}`}>
+                <div className={`px-2.5 py-0.5 rounded text-[10px] font-mono border uppercase tracking-wider font-bold ${currentTheme.badge}`}>
                   {displayArch}
                 </div>
               </div>
 
-              {/* Panda Portrait */}
-              <div className="relative w-full h-[220px] mb-2 overflow-hidden rounded-xl border border-white/[0.08] bg-black/40">
+              {/* Character Portrait Mascot */}
+              <div className="relative w-full h-[200px] mb-2 overflow-hidden rounded-xl border border-border-gray bg-[#FAFAF8] flex items-center justify-center p-3">
                 <img 
                   src={`/images/${imageKey}.png`} 
-                  alt={`${displayArch} Panda`}
-                  className="w-full h-full object-cover"
+                  alt={`${displayArch} Mascot`}
+                  crossOrigin="anonymous"
+                  className="max-w-full max-h-full object-contain"
                 />
               </div>
 
               {/* One Killer Sentence */}
-              <div className="border-y border-white/[0.08] py-2.5 my-1 text-center">
-                <p className="text-xs sm:text-sm font-extrabold text-white leading-snug italic px-1">
+              <div className="border-y border-border-gray py-2.5 my-1 text-center">
+                <p className="text-xs sm:text-sm font-semibold text-foreground leading-snug italic px-1">
                   "{details.killerSentence}"
                 </p>
               </div>
@@ -509,10 +604,10 @@ Take the assessment at: https://theleague.app`;
                 <div className="flex items-start space-x-2.5">
                   <Eye className={`h-3.5 w-3.5 mt-0.5 ${currentTheme.text} shrink-0`} />
                   <div>
-                    <span className="text-[9px] font-mono uppercase tracking-wider text-white/40 block">
+                    <span className="text-[9px] font-mono uppercase tracking-wider text-foreground/40 block">
                       What People Notice
                     </span>
-                    <p className="text-xs text-white/80 font-medium leading-relaxed">
+                    <p className="text-xs text-foreground/80 font-semibold leading-relaxed">
                       {details.whatPeopleNotice}
                     </p>
                   </div>
@@ -522,10 +617,10 @@ Take the assessment at: https://theleague.app`;
                 <div className="flex items-start space-x-2.5">
                   <Trophy className={`h-3.5 w-3.5 mt-0.5 ${currentTheme.text} shrink-0`} />
                   <div>
-                    <span className="text-[9px] font-mono uppercase tracking-wider text-white/40 block">
+                    <span className="text-[9px] font-mono uppercase tracking-wider text-foreground/40 block">
                       Biggest Strength
                     </span>
-                    <p className="text-xs text-white/80 font-medium leading-relaxed">
+                    <p className="text-xs text-foreground/80 font-semibold leading-relaxed">
                       {strength || details.strength}
                     </p>
                   </div>
@@ -533,25 +628,25 @@ Take the assessment at: https://theleague.app`;
 
                 {/* Limiter */}
                 <div className="flex items-start space-x-2.5">
-                  <ShieldAlert className="h-3.5 w-3.5 mt-0.5 text-red-400 shrink-0" />
+                  <ShieldAlert className="h-3.5 w-3.5 mt-0.5 text-red-500 shrink-0" />
                   <div>
-                    <span className="text-[9px] font-mono uppercase tracking-wider text-red-400/80 block">
+                    <span className="text-[9px] font-mono uppercase tracking-wider text-red-500/80 block">
                       What's Holding You Back
                     </span>
-                    <p className="text-xs text-white/80 font-medium leading-relaxed">
+                    <p className="text-xs text-foreground/80 font-semibold leading-relaxed">
                       {limiter || details.limiter}
                     </p>
                   </div>
                 </div>
 
                 {/* Next Challenge */}
-                <div className="bg-white/[0.02] border border-white/[0.06] rounded-xl p-2.5 flex items-start space-x-2.5 mt-1">
-                  <Target className="h-3.5 w-3.5 mt-0.5 text-brand-gold shrink-0" />
+                <div className="bg-brand-purple/5 border border-brand-purple/10 rounded-xl p-2.5 flex items-start space-x-2.5 mt-1">
+                  <Target className="h-3.5 w-3.5 mt-0.5 text-brand-purple shrink-0" />
                   <div>
-                    <span className="text-[9px] font-mono uppercase tracking-wider text-brand-gold block font-bold">
+                    <span className="text-[9px] font-mono uppercase tracking-wider text-brand-purple block font-bold">
                       Next Challenge
                     </span>
-                    <p className="text-xs text-white font-semibold leading-relaxed">
+                    <p className="text-xs text-foreground font-semibold leading-relaxed">
                       {quest || details.quest}
                     </p>
                   </div>
@@ -559,14 +654,15 @@ Take the assessment at: https://theleague.app`;
               </div>
 
               {/* Footer */}
-              <div className="flex justify-between items-center text-[8px] font-mono text-white/30 border-t border-white/[0.04] pt-2.5">
+              <div className="flex justify-between items-center text-[8px] font-mono text-foreground/30 border-t border-border-gray pt-2.5">
                 <span>THELEAGUE.APP</span>
-                <span className="uppercase tracking-widest animate-pulse">Click Card to Flip</span>
+                <span className="uppercase tracking-widest">Flip Card</span>
               </div>
             </div>
 
             {/* BACK OF CARD */}
             <div 
+              data-html2canvas-ignore="true"
               style={{ 
                 backfaceVisibility: 'hidden',
                 WebkitBackfaceVisibility: 'hidden',
@@ -574,21 +670,20 @@ Take the assessment at: https://theleague.app`;
                 inset: 0,
                 transform: 'rotateY(180deg)',
                 borderRadius: '1rem',
-                borderWidth: '1px'
               }}
-              className={`flex flex-col justify-between p-6 bg-gradient-to-b ${currentTheme.grad} ${currentTheme.border} z-20`}
+              className={`flex flex-col justify-between p-6 bg-gradient-to-b ${currentTheme.grad} z-20`}
             >
               {/* Header */}
-              <div className="flex justify-between items-start mb-2 border-b border-white/[0.06] pb-2">
+              <div className="flex justify-between items-start mb-2 border-b border-border-gray pb-2">
                 <div>
-                  <span className="text-[9px] font-mono tracking-widest text-white/40 block uppercase">
+                  <span className="text-[9px] font-mono tracking-widest text-foreground/40 block uppercase">
                     ANALYSIS CARD
                   </span>
-                  <h3 className="text-base font-bold text-white tracking-wide uppercase">
+                  <h3 className="text-base font-semibold text-foreground tracking-wide uppercase">
                     {displayArch} INSIGHT
                   </h3>
                 </div>
-                <div className={`px-2 py-0.5 rounded text-[8px] font-mono border uppercase tracking-wider ${currentTheme.badge}`}>
+                <div className={`px-2 py-0.5 rounded text-[8px] font-mono border uppercase tracking-wider font-bold ${currentTheme.badge}`}>
                   Back
                 </div>
               </div>
@@ -598,30 +693,30 @@ Take the assessment at: https://theleague.app`;
                 <span className="text-[9px] font-mono uppercase tracking-wider text-brand-gold block font-bold">
                   Why you got this archetype
                 </span>
-                <p className="text-[11px] text-white/80 leading-relaxed font-normal">
+                <p className="text-[11px] text-foreground/80 leading-relaxed font-normal">
                   {getWhyYouGotResult(normArch, cleanScores)}
                 </p>
               </div>
 
               {/* SVG Radar Chart */}
-              <div className="flex items-center justify-center my-1">
+              <div className="flex items-center justify-center my-1 bg-white/50 rounded-xl py-2 border border-border-gray">
                 <RadarChart scores={cleanScores} theme={currentTheme} />
               </div>
 
               {/* Personalized Growth Advice */}
-              <div className="border-t border-white/[0.06] pt-2 text-left space-y-0.5">
-                <span className="text-[9px] font-mono uppercase tracking-wider text-purple-400 block font-bold">
+              <div className="border-t border-border-gray pt-2 text-left space-y-0.5">
+                <span className="text-[9px] font-mono uppercase tracking-wider text-brand-purple block font-bold">
                   Growth Advice
                 </span>
-                <p className="text-[11px] text-white font-medium leading-relaxed italic">
+                <p className="text-[11px] text-foreground font-semibold leading-relaxed italic">
                   "{details.growthAdvice}"
                 </p>
               </div>
 
               {/* Footer */}
-              <div className="flex justify-between items-center text-[8px] font-mono text-white/30 border-t border-white/[0.04] pt-2.5">
+              <div className="flex justify-between items-center text-[8px] font-mono text-foreground/30 border-t border-border-gray pt-2.5">
                 <span>THELEAGUE.APP</span>
-                <span className="uppercase tracking-widest animate-pulse">Click Card to Flip</span>
+                <span className="uppercase tracking-widest">Flip Card</span>
               </div>
             </div>
 
@@ -634,7 +729,7 @@ Take the assessment at: https://theleague.app`;
         <div className="flex items-center space-x-3">
           <button
             onClick={() => setIsFlipped(!isFlipped)}
-            className="flex items-center justify-center space-x-2 text-xs text-white/70 hover:text-white border border-white/10 hover:border-white/20 bg-white/[0.02] active:bg-white/[0.06] rounded-lg px-4 py-2.5 transition-all duration-200 cursor-pointer"
+            className="flex items-center justify-center space-x-2 text-xs text-foreground/75 hover:text-foreground border border-border-gray bg-white hover:bg-gray-50 active:bg-gray-100 rounded-lg px-4 py-2.5 transition-all duration-200 cursor-pointer font-semibold"
           >
             <RefreshCw className="h-3.5 w-3.5" />
             <span>Flip Card</span>
@@ -643,7 +738,7 @@ Take the assessment at: https://theleague.app`;
           <button
             onClick={handleDownload}
             disabled={isDownloading || isLocked}
-            className="flex items-center justify-center space-x-2 text-xs text-white/70 hover:text-white border border-white/10 hover:border-white/20 bg-white/[0.02] active:bg-white/[0.06] rounded-lg px-4 py-2.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+            className="flex items-center justify-center space-x-2 text-xs text-foreground/75 hover:text-foreground border border-border-gray bg-white hover:bg-gray-50 active:bg-gray-100 rounded-lg px-4 py-2.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer font-semibold"
           >
             <Download className="h-3.5 w-3.5" />
             <span>{isDownloading ? 'Exporting...' : 'Download PNG'}</span>
@@ -652,7 +747,7 @@ Take the assessment at: https://theleague.app`;
           <button
             onClick={handleShare}
             disabled={isLocked}
-            className="flex items-center justify-center space-x-2 text-xs text-white rounded-lg bg-brand-purple hover:bg-purple-600 active:bg-purple-700 px-5 py-2.5 transition-all duration-200 shadow-lg shadow-purple-950/20 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+            className="flex items-center justify-center space-x-2 text-xs text-white rounded-lg bg-brand-purple hover:bg-purple-700 active:bg-purple-800 px-5 py-2.5 transition-all duration-200 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer font-bold"
           >
             {isShared ? (
               <>
@@ -668,7 +763,7 @@ Take the assessment at: https://theleague.app`;
           </button>
         </div>
         {isLocked && (
-          <p className="text-[10px] text-amber-500/80 font-mono animate-pulse">
+          <p className="text-[10px] text-amber-600 font-mono font-semibold">
             Rate the assessment accuracy below to unlock card download & share
           </p>
         )}
