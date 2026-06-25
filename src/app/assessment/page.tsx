@@ -179,7 +179,7 @@ export default function AssessmentPage() {
   const progressPercent = ((currentIdx) / QUESTIONS.length) * 100;
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#FAFAF8] text-[#111111] antialiased">
+    <div className="flex flex-col min-h-screen bg-[#0D0D0D] text-[#8A8880] antialiased">
       <Header />
 
       <main className="flex-1 flex flex-col justify-center px-4 py-12">
@@ -194,28 +194,28 @@ export default function AssessmentPage() {
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
-                className="bg-white border border-[#E5E7EB] rounded-2xl p-8 sm:p-12 text-center space-y-8 shadow-sm"
+                className="bg-[#161616] border border-[#2A2A2A] rounded-[8px] p-8 sm:p-12 text-center space-y-8"
               >
-                <div className="mx-auto h-12 w-12 rounded-full bg-brand-purple/10 flex items-center justify-center text-brand-purple">
+                <div className="mx-auto h-12 w-12 rounded-full bg-[#C9A84C]/10 flex items-center justify-center text-[#C9A84C]">
                   <ShieldAlert className="h-6 w-6" />
                 </div>
 
                 <div className="space-y-4">
-                  <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-foreground">
+                  <h1 className="font-barlow font-extrabold text-3xl sm:text-4xl tracking-tight text-[#F2F0EB] uppercase">
                     Be completely honest with yourself.
                   </h1>
-                  <div className="space-y-3 text-base text-[#6B7280] leading-relaxed font-normal max-w-md mx-auto">
+                  <div className="space-y-3 text-base text-[#8A8880] leading-relaxed font-normal max-w-md mx-auto">
                     <p>This is not a personality test.</p>
                     <p>There are no good or bad scores here.</p>
                     <p>Just choose the answer that feels closest to your daily reality.</p>
-                    <p className="text-[#111111] font-semibold">Nobody else is watching.</p>
+                    <p className="text-[#C9A84C] font-semibold">Nobody else is watching.</p>
                   </div>
                 </div>
 
                 <div className="pt-4">
                   <button
                     onClick={startAssessment}
-                    className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-brand-purple hover:bg-purple-700 active:bg-purple-800 text-white font-semibold text-sm px-8 py-3.5 rounded-xl transition-colors cursor-pointer"
+                    className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-[#C9A84C] hover:bg-[#b0913c] text-[#0D0D0D] font-sans font-semibold text-sm px-8 py-3.5 rounded-[6px] transition-colors cursor-pointer"
                   >
                     <span>Start Fit Check</span>
                     <Sparkles className="h-4 w-4" />
@@ -236,23 +236,23 @@ export default function AssessmentPage() {
               >
                 {/* Progress tracker metadata (Locked top alignment) */}
                 <div className="space-y-3">
-                  <div className="flex justify-between items-center text-xs font-mono text-[#6B7280]">
-                    <span className="uppercase tracking-widest font-bold">
+                  <div className="flex justify-between items-center text-xs font-mono text-[#555]">
+                    <span className="uppercase tracking-[2px] font-bold text-[#C9A84C]">
                       FIT CHECK {currentQuestion.id} OF {QUESTIONS.length}
                     </span>
                     <span className="font-bold">{Math.round(progressPercent)}% COMPLETE</span>
                   </div>
-                  <div className="w-full h-1 bg-[#E5E7EB] rounded-full overflow-hidden">
+                  <div className="w-full h-1 bg-[#2A2A2A] rounded-full overflow-hidden">
                     <div 
                       style={{ width: `${progressPercent}%` }}
-                      className="h-full bg-brand-purple rounded-full transition-all duration-300"
+                      className="h-full bg-[#C9A84C] rounded-full transition-all duration-300"
                     />
                   </div>
                 </div>
 
                 {/* Scenario details title (Introspective, raw text) */}
                 <div className="py-2">
-                  <h2 className="text-2xl sm:text-3xl font-semibold leading-snug text-foreground">
+                  <h2 className="font-barlow font-extrabold text-2xl sm:text-3xl leading-snug text-[#F2F0EB] uppercase">
                     {currentQuestion.text}
                   </h2>
                 </div>
@@ -263,12 +263,12 @@ export default function AssessmentPage() {
                     <button
                       key={oIdx}
                       onClick={() => handleSelectOption(oIdx)}
-                      className="w-full text-left bg-white border border-[#E5E7EB] hover:border-brand-purple hover:bg-brand-purple/[0.02] active:bg-brand-purple/5 rounded-2xl p-5 transition-all duration-200 group flex items-center justify-between cursor-pointer"
+                      className="w-full text-left bg-[#161616] border border-[#2A2A2A] hover:border-[#C9A84C] hover:bg-[#C9A84C]/[0.02] active:bg-[#C9A84C]/5 rounded-[6px] p-5 transition-all duration-200 group flex items-center justify-between cursor-pointer"
                     >
-                      <span className="text-base sm:text-lg text-foreground font-semibold leading-relaxed pr-4">
+                      <span className="text-base sm:text-lg text-[#F2F0EB] font-sans font-normal leading-relaxed pr-4">
                         {opt.text}
                       </span>
-                      <ArrowRight className="h-4 w-4 text-[#6B7280] group-hover:text-brand-purple group-hover:translate-x-1 transition-all shrink-0" />
+                      <ArrowRight className="h-4 w-4 text-[#8A8880] group-hover:text-[#C9A84C] group-hover:translate-x-1 transition-all shrink-0" />
                     </button>
                   ))}
                 </div>
@@ -278,7 +278,7 @@ export default function AssessmentPage() {
                   <div className="flex justify-start">
                     <button
                       onClick={handleBack}
-                      className="inline-flex items-center space-x-2 text-xs font-mono text-[#6B7280] hover:text-[#111111] transition-colors duration-200 cursor-pointer"
+                      className="inline-flex items-center space-x-2 text-xs font-mono text-[#8A8880] hover:text-[#F2F0EB] transition-colors duration-200 cursor-pointer"
                     >
                       <ArrowLeft className="h-3.5 w-3.5" />
                       <span>Back to Previous Question</span>
@@ -295,22 +295,22 @@ export default function AssessmentPage() {
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
-                className="bg-white border border-[#E5E7EB] rounded-2xl p-8 sm:p-12 space-y-8 shadow-sm"
+                className="bg-[#161616] border border-[#2A2A2A] rounded-[8px] p-8 sm:p-12 space-y-8"
               >
                 <div className="text-center space-y-2">
-                  <span className="text-[10px] font-mono tracking-widest text-[#C5A85A] uppercase block font-bold">
+                  <span className="text-[10px] font-mono tracking-[2px] text-[#C9A84C] uppercase block font-bold">
                     Screening Complete
                   </span>
-                  <h2 className="text-2xl sm:text-3xl font-semibold text-foreground tracking-tight uppercase">
+                  <h2 className="font-barlow font-extrabold text-2xl sm:text-3xl text-[#F2F0EB] tracking-tight uppercase">
                     Founding Cohort Application
                   </h2>
-                  <p className="text-sm text-[#6B7280] max-w-sm mx-auto leading-relaxed">
+                  <p className="font-sans text-sm text-[#8A8880] max-w-sm mx-auto leading-relaxed">
                     We manually review every entry. The goal isn't to build the biggest community. It's to build the strongest one.
                   </p>
                 </div>
 
                 {formError && (
-                  <div className="bg-red-50 border border-red-200 text-red-700 text-xs p-3.5 rounded-lg text-center font-mono font-bold">
+                  <div className="bg-[#A33B3B]/10 border border-[#A33B3B]/30 text-[#F2F0EB] text-xs p-3.5 rounded-[6px] text-center font-mono font-bold">
                     {formError}
                   </div>
                 )}
@@ -318,11 +318,11 @@ export default function AssessmentPage() {
                 <form onSubmit={handleFormSubmit} className="space-y-5">
                   {/* Name field (optional) */}
                   <div className="space-y-1.5">
-                    <label className="text-[10px] uppercase font-mono tracking-wider text-[#6B7280] block font-bold">
-                      Name <span className="text-[#6B7280]/60 font-normal">(Optional)</span>
+                    <label className="text-[10px] uppercase font-mono tracking-[2px] text-[#C9A84C] block font-bold">
+                      Name <span className="text-[#8A8880]/60 font-normal">(Optional)</span>
                     </label>
                     <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#6B7280]">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#555]">
                         <User className="h-4 w-4" />
                       </div>
                       <input
@@ -330,18 +330,18 @@ export default function AssessmentPage() {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         placeholder="Marcus Aurelius"
-                        className="w-full h-12 bg-white border border-[#E5E7EB] hover:border-[#6B7280]/30 focus:border-brand-purple focus:ring-1 focus:ring-brand-purple rounded-xl pl-10 pr-4 text-sm text-[#111111] placeholder-[#6B7280]/40 outline-none transition-all"
+                        className="w-full h-12 bg-[#0D0D0D] border border-[#2A2A2A] hover:border-[#8A8880]/30 focus:border-[#C9A84C] focus:ring-1 focus:ring-[#C9A84C] rounded-[6px] pl-10 pr-4 text-sm text-[#F2F0EB] placeholder-[#555] outline-none transition-all"
                       />
                     </div>
                   </div>
 
                   {/* Email field (required) */}
                   <div className="space-y-1.5">
-                    <label className="text-[10px] uppercase font-mono tracking-wider text-[#6B7280] block font-bold">
-                      Email Address <span className="text-red-500 font-bold">*</span>
+                    <label className="text-[10px] uppercase font-mono tracking-[2px] text-[#C9A84C] block font-bold">
+                      Email Address <span className="text-[#A33B3B] font-bold">*</span>
                     </label>
                     <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#6B7280]">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#555]">
                         <Mail className="h-4 w-4" />
                       </div>
                       <input
@@ -350,18 +350,18 @@ export default function AssessmentPage() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="marcus@philosophy.edu"
-                        className="w-full h-12 bg-white border border-[#E5E7EB] hover:border-[#6B7280]/30 focus:border-brand-purple focus:ring-1 focus:ring-brand-purple rounded-xl pl-10 pr-4 text-sm text-[#111111] placeholder-[#6B7280]/40 outline-none transition-all"
+                        className="w-full h-12 bg-[#0D0D0D] border border-[#2A2A2A] hover:border-[#8A8880]/30 focus:border-[#C9A84C] focus:ring-1 focus:ring-[#C9A84C] rounded-[6px] pl-10 pr-4 text-sm text-[#F2F0EB] placeholder-[#555] outline-none transition-all"
                       />
                     </div>
                   </div>
 
                   {/* Instagram Username (optional) */}
                   <div className="space-y-1.5">
-                    <label className="text-[10px] uppercase font-mono tracking-wider text-[#6B7280] block font-bold">
-                      Instagram Username <span className="text-[#6B7280]/60 font-normal">(Optional)</span>
+                    <label className="text-[10px] uppercase font-mono tracking-[2px] text-[#C9A84C] block font-bold">
+                      Instagram Username <span className="text-[#8A8880]/60 font-normal">(Optional)</span>
                     </label>
                     <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#6B7280]">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#555]">
                         <InstagramIcon className="h-4 w-4" />
                       </div>
                       <input
@@ -369,7 +369,7 @@ export default function AssessmentPage() {
                         value={instagram}
                         onChange={(e) => setInstagram(e.target.value)}
                         placeholder="marcus_aurelius"
-                        className="w-full h-12 bg-white border border-[#E5E7EB] hover:border-[#6B7280]/30 focus:border-brand-purple focus:ring-1 focus:ring-brand-purple rounded-xl pl-10 pr-4 text-sm text-[#111111] placeholder-[#6B7280]/40 outline-none transition-all"
+                        className="w-full h-12 bg-[#0D0D0D] border border-[#2A2A2A] hover:border-[#8A8880]/30 focus:border-[#C9A84C] focus:ring-1 focus:ring-[#C9A84C] rounded-[6px] pl-10 pr-4 text-sm text-[#F2F0EB] placeholder-[#555] outline-none transition-all"
                       />
                     </div>
                   </div>
@@ -377,7 +377,7 @@ export default function AssessmentPage() {
                   <div className="pt-4">
                     <button
                       type="submit"
-                      className="w-full inline-flex items-center justify-center space-x-2 bg-brand-purple hover:bg-purple-700 active:bg-purple-800 text-white font-semibold text-sm px-6 py-3.5 rounded-xl transition-colors cursor-pointer"
+                      className="w-full inline-flex items-center justify-center space-x-2 bg-[#C9A84C] hover:bg-[#b0913c] text-[#0D0D0D] font-sans font-semibold text-sm px-6 py-3.5 rounded-[6px] transition-colors cursor-pointer"
                     >
                       <span>Next Step</span>
                       <ArrowRight className="h-4 w-4" />
@@ -394,35 +394,35 @@ export default function AssessmentPage() {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
-                className="bg-white border border-[#E5E7EB] rounded-2xl p-8 sm:p-12 space-y-6 shadow-sm"
+                className="bg-[#161616] border border-[#2A2A2A] rounded-[8px] p-8 sm:p-12 space-y-6"
               >
                 <div className="text-center space-y-2">
-                  <span className="text-[10px] font-mono tracking-widest text-[#C5A85A] uppercase block font-bold">
+                  <span className="text-[10px] font-mono tracking-[2px] text-[#C9A84C] uppercase block font-bold">
                     Survey Step 1 of 2
                   </span>
-                  <h2 className="text-xl sm:text-2xl font-semibold text-foreground uppercase tracking-tight">
+                  <h2 className="font-barlow font-extrabold text-xl sm:text-2xl text-[#F2F0EB] uppercase tracking-tight">
                     What is your biggest reason for applying?
                   </h2>
                 </div>
 
                 <div className="grid grid-cols-1 gap-4">
                   {[
-                    "I struggle to stay consistent",
-                    "I don't have ambitious people around me",
-                    "I want accountability",
-                    "I want faster career/business growth",
-                    "I feel like I'm doing everything alone",
+                    "I struggle to stay consistent with my workouts",
+                    "I don't have dedicated training partners around me",
+                    "I want strict fitness accountability",
+                    "I want faster athletic and fitness progression",
+                    "I feel like I'm training and planning in isolation",
                     "Other"
                   ].map((reasonOption, idx) => (
                     <button
                       key={idx}
                       onClick={() => handleReasonSelect(reasonOption)}
-                      className="w-full text-left bg-white border border-[#E5E7EB] hover:border-brand-purple hover:bg-brand-purple/[0.02] active:bg-brand-purple/5 rounded-2xl p-4 transition-all duration-200 group flex items-center justify-between cursor-pointer"
+                      className="w-full text-left bg-[#161616] border border-[#2A2A2A] hover:border-[#C9A84C] hover:bg-[#C9A84C]/[0.02] active:bg-[#C9A84C]/5 rounded-[6px] p-4 transition-all duration-200 group flex items-center justify-between cursor-pointer"
                     >
-                      <span className="text-sm sm:text-base text-foreground font-semibold">
+                      <span className="text-sm sm:text-base text-[#F2F0EB] font-sans font-semibold">
                         {reasonOption}
                       </span>
-                      <ArrowRight className="h-4 w-4 text-[#6B7280] group-hover:text-brand-purple group-hover:translate-x-1 transition-all shrink-0" />
+                      <ArrowRight className="h-4 w-4 text-[#8A8880] group-hover:text-[#C9A84C] group-hover:translate-x-1 transition-all shrink-0" />
                     </button>
                   ))}
                 </div>
@@ -436,39 +436,39 @@ export default function AssessmentPage() {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
-                className="bg-white border border-[#E5E7EB] rounded-2xl p-8 sm:p-12 space-y-6 shadow-sm"
+                className="bg-[#161616] border border-[#2A2A2A] rounded-[8px] p-8 sm:p-12 space-y-6"
               >
                 <div className="text-center space-y-2">
-                  <span className="text-[10px] font-mono tracking-widest text-[#C5A85A] uppercase block font-bold">
+                  <span className="text-[10px] font-mono tracking-[2px] text-[#C9A84C] uppercase block font-bold">
                     Founding Cohort Application
                   </span>
-                  <h2 className="text-xl sm:text-2xl font-semibold text-foreground uppercase tracking-tight">
+                  <h2 className="font-barlow font-extrabold text-xl sm:text-2xl text-[#F2F0EB] uppercase tracking-tight">
                     Before submitting, answer one question:
                   </h2>
-                  <p className="text-xs text-[#6B7280] leading-relaxed max-w-md mx-auto font-medium">
+                  <p className="font-sans text-xs text-[#8A8880] leading-relaxed max-w-md mx-auto font-medium">
                     What is the biggest goal you're actively working toward right now?
                   </p>
                 </div>
 
                 {formError && (
-                  <div className="bg-red-50 border border-red-200 text-red-700 text-xs p-3.5 rounded-lg text-center font-mono font-bold">
+                  <div className="bg-[#A33B3B]/10 border border-[#A33B3B]/30 text-[#F2F0EB] text-xs p-3.5 rounded-[6px] text-center font-mono font-bold">
                     {formError}
                   </div>
                 )}
 
                 {isSubmitting ? (
                   <div className="flex flex-col items-center justify-center py-12 space-y-4">
-                    <div className="animate-spin h-8 w-8 border-2 border-brand-purple border-t-transparent rounded-full" />
-                    <span className="font-mono text-xs uppercase text-[#6B7280] tracking-wider font-bold">Submitting Application...</span>
+                    <div className="animate-spin h-8 w-8 border-2 border-[#C9A84C] border-t-transparent rounded-full" />
+                    <span className="font-mono text-xs uppercase text-[#8A8880] tracking-wider font-bold">Submitting Application...</span>
                   </div>
                 ) : (
                   <form onSubmit={handleGoalSubmit} className="space-y-6">
-                    {/* Examples Helper Block (Tinted callout card style) */}
-                    <div className="bg-brand-purple/5 border border-brand-purple/10 rounded-2xl p-5 space-y-2 shadow-sm">
-                      <span className="text-[9px] font-mono text-[#6B7280] uppercase tracking-widest block font-bold">Examples:</span>
+                    {/* Examples Helper Block */}
+                    <div className="bg-[#C9A84C]/5 border border-[#C9A84C]/10 rounded-[8px] p-5 space-y-2">
+                      <span className="text-[9px] font-mono text-[#C9A84C] uppercase tracking-widest block font-bold">Examples:</span>
                       <div className="flex flex-wrap gap-2">
-                        {["Lose 15 kg", "Crack UPSC", "Get promoted", "Start a business", "Reach ₹5 lakh/month", "Build an app", "Improve my social life"].map((ex, i) => (
-                          <span key={i} className="text-[10px] font-mono bg-white border border-[#E5E7EB] text-[#6B7280] px-2 py-0.5 rounded">
+                        {["Lose 10 kg", "Run a sub-22min 5k", "Bench press bodyweight", "Log 4 workouts/week", "Limit sugar intake", "Consistency for 90 days"].map((ex, i) => (
+                          <span key={i} className="text-[10px] font-mono bg-[#0D0D0D] border border-[#2A2A2A] text-[#8A8880] px-2 py-0.5 rounded">
                             {ex}
                           </span>
                         ))}
@@ -482,19 +482,19 @@ export default function AssessmentPage() {
                         required
                         value={primaryGoalInput}
                         onChange={(e) => setPrimaryGoalInput(e.target.value)}
-                        placeholder="e.g. Build and launch my SaaS product to 100 paying customers..."
-                        className="w-full bg-white border border-[#E5E7EB] hover:border-[#6B7280]/30 focus:border-brand-purple focus:ring-1 focus:ring-brand-purple rounded-xl p-4 text-sm text-[#111111] placeholder-[#6B7280]/40 outline-none transition-all resize-none"
+                        placeholder="e.g. Run a sub-22min 5k by the end of this season..."
+                        className="w-full bg-[#0D0D0D] border border-[#2A2A2A] hover:border-[#8A8880]/30 focus:border-[#C9A84C] focus:ring-1 focus:ring-[#C9A84C] rounded-[6px] p-4 text-sm text-[#F2F0EB] placeholder-[#555] outline-none transition-all resize-none"
                       />
                     </div>
 
-                    <p className="text-[10px] text-[#6B7280] text-center italic font-mono font-medium">
+                    <p className="text-[10px] text-[#555] text-center italic font-mono font-medium">
                       This helps us understand who should be grouped together.
                     </p>
 
                     <div>
                       <button
                         type="submit"
-                        className="w-full inline-flex items-center justify-center space-x-2 bg-brand-purple hover:bg-purple-700 active:bg-purple-800 text-white font-semibold text-sm px-6 py-3.5 rounded-xl transition-colors cursor-pointer"
+                        className="w-full inline-flex items-center justify-center space-x-2 bg-[#C9A84C] hover:bg-[#b0913c] text-[#0D0D0D] font-sans font-semibold text-sm px-6 py-3.5 rounded-[6px] transition-colors cursor-pointer"
                       >
                         <span>Submit Application</span>
                         <ArrowRight className="h-4 w-4" />

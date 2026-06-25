@@ -20,113 +20,113 @@ interface CharacterCardProps {
 
 const archetypeDetails = {
   creator: {
-    killerSentence: "You don't need another idea. You need people who won't let you quit this one.",
-    whatPeopleNotice: "You move faster than everyone else.",
-    strength: "You take action faster than most people.",
-    limiter: "You try to solve everything alone.",
-    brutalTruth: "Working harder is not your problem. Working with better people is.",
-    quest: "Start one conversation you've been avoiding.",
-    growthAdvice: "Focus on finding allies. Stop trying to do everything yourself.",
+    killerSentence: "You don't need another fitness plan. You need people who won't let you quit the one you have.",
+    whatPeopleNotice: "You start training plans with high initial energy.",
+    strength: "You start new routines quickly and with excitement.",
+    limiter: "You quit workouts and plans once the novelty fades.",
+    brutalTruth: "Having the perfect fitness program is not your problem. Sticking to it past week three is.",
+    quest: "Complete 1 full workout program without changing it.",
+    growthAdvice: "Commit to one simple routine for 30 days. Don't add new exercises, just build consistency.",
     themeColor: 'purple'
   },
   warrior: {
-    killerSentence: "You don't need more discipline. You need people who tell you when you're fighting the wrong battle.",
-    whatPeopleNotice: "You do what you say you'll do.",
-    strength: "You show up and stay disciplined when others quit.",
-    limiter: "You get so focused on the routine that you lose sight of where you are going.",
-    brutalTruth: "You are so focused on staying busy that you've stopped asking whether you're moving in the right direction.",
-    quest: "Take one full evening off this week.",
-    growthAdvice: "Focus on recovery and direction. You don't always need to grind to make progress.",
+    killerSentence: "You don't need more grit. You need people who force you to recover so you can grow.",
+    whatPeopleNotice: "You show up for every workout, no matter what.",
+    strength: "You push through the hardest training sessions consistently.",
+    limiter: "You overtrain and burn out by ignoring rest and recovery.",
+    brutalTruth: "Running yourself into the ground is not progress. It is how you mask a lack of recovery.",
+    quest: "Schedule 2 consecutive active recovery days this week.",
+    growthAdvice: "Treat recovery as part of your training. Sleep and nutrition are what actually rebuild you.",
     themeColor: 'yellow'
   },
   architect: {
-    killerSentence: "You don't need more information. You need people who make action impossible to avoid.",
-    whatPeopleNotice: "You see things others miss.",
-    strength: "You rarely make reckless decisions.",
-    limiter: "Using thinking as a substitute for action.",
-    brutalTruth: "You don't have an information problem. You have an avoidance problem.",
-    quest: "Finish something you've been avoiding.",
-    growthAdvice: "Focus on execution. Stop using planning and research as a way to avoid launching.",
+    killerSentence: "You don't need more research. You need an environment where execution is the only metric.",
+    whatPeopleNotice: "You understand the mechanics of training and recovery.",
+    strength: "You analyze your physical limits and plan recovery logically.",
+    limiter: "You analyze training splits to avoid executing them with effort.",
+    brutalTruth: "You don't need a better nutrition spreadsheet. You need to lift heavy weights with effort today.",
+    quest: "Execute your next scheduled workout at high intensity today.",
+    growthAdvice: "Pick a simple plan and execute it today. Stop researching better alternatives or reading reviews.",
     themeColor: 'blue'
   },
   connector: {
-    killerSentence: "You don't need more connections. You need people whose standards challenge your own.",
-    whatPeopleNotice: "People trust you quickly.",
-    strength: "You build trust and connect people naturally.",
-    limiter: "You spend so much energy on others that you forget your own goals.",
-    brutalTruth: "Helping other people feels productive. That's why it's become your favorite distraction.",
-    quest: "Keep one promise to yourself for seven days.",
-    growthAdvice: "Focus on personal boundary settings. Keep promises to yourself before helping everyone else.",
+    killerSentence: "You don't need more gym buddies. You need people whose standards challenge your consistency.",
+    whatPeopleNotice: "You bring people together and build workout momentum.",
+    strength: "You build trust and pull people into consistent routines.",
+    limiter: "You prioritize social workouts over hitting your personal benchmarks.",
+    brutalTruth: "Running in clubs and doing group classes is productive. Using them to avoid personal discipline is your favorite distraction.",
+    quest: "Complete one solo training session and hit your own targets.",
+    growthAdvice: "Set your own individual fitness benchmarks and hit them. Don't rely on group energy to do the hard work.",
     themeColor: 'pink'
   }
 };
 
 const themeColors = {
   creator: {
-    border: 'border-brand-purple/20 hover:border-brand-purple/40',
-    glow: 'shadow-sm',
-    text: 'text-brand-purple',
-    badge: 'bg-brand-purple/10 border-brand-purple/20 text-brand-purple',
-    grad: 'from-white via-[#FAFAF8] to-purple-50/20',
-    radarFill: 'rgba(95, 46, 234, 0.08)',
-    radarStroke: '#5F2EEA'
+    border: 'border-[#2A2A2A] hover:border-[#C9A84C]',
+    glow: '',
+    text: 'text-[#C9A84C]',
+    badge: 'bg-[#C9A84C]/10 border-[#C9A84C]/20 text-[#C9A84C]',
+    grad: 'from-[#161616] to-[#161616]',
+    radarFill: 'rgba(201, 168, 76, 0.08)',
+    radarStroke: '#C9A84C'
   },
   warrior: {
-    border: 'border-brand-gold/20 hover:border-brand-gold/40',
-    glow: 'shadow-sm',
-    text: 'text-brand-gold',
-    badge: 'bg-brand-gold/10 border-brand-gold/20 text-brand-gold',
-    grad: 'from-white via-[#FAFAF8] to-yellow-50/10',
-    radarFill: 'rgba(197, 168, 90, 0.08)',
-    radarStroke: '#C5A85A'
+    border: 'border-[#2A2A2A] hover:border-[#C9A84C]',
+    glow: '',
+    text: 'text-[#C9A84C]',
+    badge: 'bg-[#C9A84C]/10 border-[#C9A84C]/20 text-[#C9A84C]',
+    grad: 'from-[#161616] to-[#161616]',
+    radarFill: 'rgba(201, 168, 76, 0.08)',
+    radarStroke: '#C9A84C'
   },
   architect: {
-    border: 'border-blue-500/20 hover:border-blue-500/40',
-    glow: 'shadow-sm',
-    text: 'text-blue-600',
-    badge: 'bg-blue-50 border-blue-200 text-blue-700',
-    grad: 'from-white via-[#FAFAF8] to-blue-50/10',
-    radarFill: 'rgba(59, 130, 246, 0.08)',
-    radarStroke: '#3b82f6'
+    border: 'border-[#2A2A2A] hover:border-[#C9A84C]',
+    glow: '',
+    text: 'text-[#C9A84C]',
+    badge: 'bg-[#C9A84C]/10 border-[#C9A84C]/20 text-[#C9A84C]',
+    grad: 'from-[#161616] to-[#161616]',
+    radarFill: 'rgba(201, 168, 76, 0.08)',
+    radarStroke: '#C9A84C'
   },
   connector: {
-    border: 'border-pink-500/20 hover:border-pink-500/40',
-    glow: 'shadow-sm',
-    text: 'text-pink-600',
-    badge: 'bg-pink-50 border-pink-200 text-pink-700',
-    grad: 'from-white via-[#FAFAF8] to-pink-50/10',
-    radarFill: 'rgba(236, 72, 153, 0.08)',
-    radarStroke: '#ec4899'
+    border: 'border-[#2A2A2A] hover:border-[#C9A84C]',
+    glow: '',
+    text: 'text-[#C9A84C]',
+    badge: 'bg-[#C9A84C]/10 border-[#C9A84C]/20 text-[#C9A84C]',
+    grad: 'from-[#161616] to-[#161616]',
+    radarFill: 'rgba(201, 168, 76, 0.08)',
+    radarStroke: '#C9A84C'
   }
 };
 
 const getWhyYouGotResult = (arch: string, scores?: Scores) => {
-  const s = scores || { discipline: 60, action: 75, courage: 65, relationships: 45, consistency: 70, fitness: 55 };
+  const s = scores || { discipline: 60, action: 75, courage: 65, relationships: 45, consistency: 70, fitness: 55, self_awareness: 50, ambition: 50 };
   const cleanArch = arch.toLowerCase().trim();
   
   if (cleanArch === 'creator' || cleanArch === 'builder') {
     const actionText = s.action >= 60 ? "consistently chose action over planning" : "focused heavily on immediate execution";
-    const relText = s.relationships < 50 ? "scored lower on collaboration, preferring to solve problems alone" : "balanced action with team effort";
-    return `You ${actionText}. You showed a strong willingness to start and push forward. You ${relText}. This pattern typically creates a Creator profile.`;
+    const ambitionText = s.ambition >= 50 ? "paired with high personal ambition" : "aiming to break out of comfort zones";
+    return `You ${actionText}, ${ambitionText}. In the fitness context, this means you are quick to commit to new programs and start strong, though you struggle when the early momentum fades.`;
   } else if (cleanArch === 'warrior') {
     const discText = s.discipline >= 60 ? "consistently chose training and routine over comfort" : "maintained steady focus under pressure";
     const fitText = s.fitness >= 50 ? "showed high awareness of physical energy" : "pushed through fatigue";
-    return `You ${discText}. You ${fitText} and kept promises to yourself day after day. This pattern of high discipline and daily training typically creates a Warrior profile.`;
+    return `You ${discText} and ${fitText}. Your scores show an exceptional capability to push through grueling workouts and hold yourself to daily habits. However, you risk overtraining without proper recovery.`;
   } else if (cleanArch === 'architect' || cleanArch === 'thinker') {
     const actionText = s.action < 50 ? "consistently chose research and analysis over immediate action" : "analyzed risks before taking steps";
-    const selfText = s.courage >= 60 ? "showed high courage to plan long-term" : "focused heavily on detail-oriented planning";
-    return `You ${actionText}. You ${selfText} and looked for patterns others missed. This pattern of high analysis and risk prevention typically creates an Architect profile.`;
+    const selfText = s.self_awareness >= 60 ? "showed high self-awareness of your patterns" : "focused on systemizing your schedule";
+    return `You ${actionText} and ${selfText}. You prefer to understand the mechanics of training, nutrition, and recovery before jumping in. The danger is that planning becomes a sophisticated substitute for sweating.`;
   } else { // connector
     const relText = s.relationships >= 60 ? "consistently chose social connection and empathy over solo work" : "placed high value on trust and community";
-    const actionText = s.action < 50 ? "spent less energy on your own personal projects" : "helped others move forward";
-    return `You ${relText}. You showed a natural ability to build trust. However, you ${actionText} to support the group. This pattern typically creates a Connector profile.`;
+    const consistencyText = s.consistency < 55 ? "rely on others to keep you consistent" : "thrive when training with peers";
+    return `You ${relText} and ${consistencyText}. You find energy in community, group runs, or training partners. While social support builds consistency, you must ensure your progress doesn't depend entirely on external check-ins.`;
   }
 };
 
 const RadarChart = ({ scores, theme }: { scores: Scores; theme: any }) => {
   const cx = 150;
   const cy = 100;
-  const R = 60;
+  const R = 55;
 
   const attributes = [
     { label: 'Discipline', value: scores.discipline ?? 50 },
@@ -134,12 +134,14 @@ const RadarChart = ({ scores, theme }: { scores: Scores; theme: any }) => {
     { label: 'Consistency', value: scores.consistency ?? 50 },
     { label: 'Relationships', value: scores.relationships ?? 50 },
     { label: 'Courage', value: scores.courage ?? 50 },
-    { label: 'Fitness', value: scores.fitness ?? 50 }
+    { label: 'Fitness', value: scores.fitness ?? 50 },
+    { label: 'Awareness', value: scores.self_awareness ?? 50 },
+    { label: 'Ambition', value: scores.ambition ?? 50 }
   ];
 
-  const getHexagonPoints = (radius: number) => {
-    return Array.from({ length: 6 }).map((_, i) => {
-      const angle = (i * 60 - 90) * (Math.PI / 180);
+  const getOctagonPoints = (radius: number) => {
+    return Array.from({ length: 8 }).map((_, i) => {
+      const angle = (i * 45 - 90) * (Math.PI / 180);
       const x = cx + radius * Math.cos(angle);
       const y = cy + radius * Math.sin(angle);
       return `${x},${y}`;
@@ -147,7 +149,7 @@ const RadarChart = ({ scores, theme }: { scores: Scores; theme: any }) => {
   };
 
   const userPoints = attributes.map((attr, i) => {
-    const angle = (i * 60 - 90) * (Math.PI / 180);
+    const angle = (i * 45 - 90) * (Math.PI / 180);
     const val = Math.max(0, Math.min(100, attr.value));
     const r = (val / 100) * R;
     const x = cx + r * Math.cos(angle);
@@ -156,12 +158,14 @@ const RadarChart = ({ scores, theme }: { scores: Scores; theme: any }) => {
   }).join(' ');
 
   const labelPositions = [
-    { x: cx, y: cy - R - 8, anchor: 'middle', baseline: 'auto' }, // top
-    { x: cx + R + 6, y: cy - R / 2 + 2, anchor: 'start', baseline: 'middle' }, // top-right
-    { x: cx + R + 6, y: cy + R / 2 + 4, anchor: 'start', baseline: 'middle' }, // bottom-right
-    { x: cx, y: cy + R + 14, anchor: 'middle', baseline: 'hanging' }, // bottom
-    { x: cx - R - 6, y: cy + R / 2 + 4, anchor: 'end', baseline: 'middle' }, // bottom-left
-    { x: cx - R - 6, y: cy - R / 2 + 2, anchor: 'end', baseline: 'middle' }  // top-left
+    { x: cx, y: cy - R - 8, anchor: 'middle', baseline: 'auto' }, // top (Discipline)
+    { x: cx + R * 0.707 + 6, y: cy - R * 0.707 - 2, anchor: 'start', baseline: 'middle' }, // top-right (Action)
+    { x: cx + R + 6, y: cy, anchor: 'start', baseline: 'middle' }, // right (Consistency)
+    { x: cx + R * 0.707 + 6, y: cy + R * 0.707 + 2, anchor: 'start', baseline: 'middle' }, // bottom-right (Relationships)
+    { x: cx, y: cy + R + 14, anchor: 'middle', baseline: 'hanging' }, // bottom (Courage)
+    { x: cx - R * 0.707 - 6, y: cy + R * 0.707 + 2, anchor: 'end', baseline: 'middle' }, // bottom-left (Fitness)
+    { x: cx - R - 6, y: cy, anchor: 'end', baseline: 'middle' }, // left (Awareness)
+    { x: cx - R * 0.707 - 6, y: cy - R * 0.707 - 2, anchor: 'end', baseline: 'middle' }  // top-left (Ambition)
   ];
 
   return (
@@ -170,16 +174,16 @@ const RadarChart = ({ scores, theme }: { scores: Scores; theme: any }) => {
       {[0.25, 0.5, 0.75, 1.0].map((scale, idx) => (
         <polygon
           key={idx}
-          points={getHexagonPoints(R * scale)}
+          points={getOctagonPoints(R * scale)}
           fill="none"
-          stroke="rgba(0,0,0,0.06)"
+          stroke="rgba(255,255,255,0.08)"
           strokeWidth="1"
         />
       ))}
 
       {/* Axis lines */}
-      {Array.from({ length: 6 }).map((_, i) => {
-        const angle = (i * 60 - 90) * (Math.PI / 180);
+      {Array.from({ length: 8 }).map((_, i) => {
+        const angle = (i * 45 - 90) * (Math.PI / 180);
         const x2 = cx + R * Math.cos(angle);
         const y2 = cy + R * Math.sin(angle);
         return (
@@ -189,7 +193,7 @@ const RadarChart = ({ scores, theme }: { scores: Scores; theme: any }) => {
             y1={cy}
             x2={x2}
             y2={y2}
-            stroke="rgba(0,0,0,0.06)"
+            stroke="rgba(255,255,255,0.08)"
             strokeWidth="1"
             strokeDasharray="2 2"
           />
@@ -206,7 +210,7 @@ const RadarChart = ({ scores, theme }: { scores: Scores; theme: any }) => {
 
       {/* Vertices */}
       {attributes.map((attr, i) => {
-        const angle = (i * 60 - 90) * (Math.PI / 180);
+        const angle = (i * 45 - 90) * (Math.PI / 180);
         const val = Math.max(0, Math.min(100, attr.value));
         const r = (val / 100) * R;
         const x = cx + r * Math.cos(angle);
@@ -217,7 +221,7 @@ const RadarChart = ({ scores, theme }: { scores: Scores; theme: any }) => {
             cx={x}
             cy={y}
             r="3.5"
-            fill="#ffffff"
+            fill="#161616"
             stroke={theme.radarStroke}
             strokeWidth="2"
           />
@@ -232,7 +236,7 @@ const RadarChart = ({ scores, theme }: { scores: Scores; theme: any }) => {
             <text
               x={pos.x}
               y={pos.y}
-              fill="rgba(0,0,0,0.5)"
+              fill="#8A8880"
               fontSize="9"
               fontFamily="monospace"
               fontWeight="bold"
@@ -244,8 +248,8 @@ const RadarChart = ({ scores, theme }: { scores: Scores; theme: any }) => {
             </text>
             <text
               x={pos.x}
-              y={pos.y + (i === 0 ? -11 : i === 3 ? 10 : 8)}
-              fill="#111111"
+              y={pos.y + (i === 0 ? -11 : i === 4 ? 10 : 8)}
+              fill="#F2F0EB"
               fontSize="9"
               fontFamily="monospace"
               fontWeight="bold"
@@ -384,7 +388,7 @@ export default function CharacterCard({
 
       const canvas = await html2canvas(containerRef.current, {
         scale: 2,
-        backgroundColor: '#FAFAF8',
+        backgroundColor: '#0D0D0D',
         useCORS: true,
         logging: false,
         width: containerRef.current.offsetWidth,
@@ -439,7 +443,7 @@ export default function CharacterCard({
 
         const canvas = await html2canvas(containerRef.current, {
           scale: 2,
-          backgroundColor: '#FAFAF8',
+          backgroundColor: '#0D0D0D',
           useCORS: true,
           logging: false,
           width: containerRef.current.offsetWidth,
@@ -553,7 +557,7 @@ export default function CharacterCard({
                 : 'rotateY(180deg)',
               transition: isHovered ? 'none' : 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
             }}
-            className={`rounded-2xl transition-all duration-300 select-none bg-white border border-border-gray ${currentTheme.glow}`}
+            className="rounded-[8px] select-none bg-[#161616] border border-[#2A2A2A]"
           >
             {/* FRONT OF CARD */}
             <div 
@@ -562,38 +566,38 @@ export default function CharacterCard({
                 WebkitBackfaceVisibility: 'hidden',
                 position: 'absolute',
                 inset: 0,
-                borderRadius: '1rem',
+                borderRadius: '8px',
               }}
-              className={`flex flex-col justify-between p-6 bg-gradient-to-b ${currentTheme.grad} z-10`}
+              className="flex flex-col justify-between p-6 bg-[#161616] z-10"
             >
               {/* Header */}
               <div className="flex justify-between items-start mb-2">
                 <div>
-                  <span className="text-[10px] font-mono tracking-widest text-foreground/40 block uppercase">
+                  <span className="text-[10px] font-mono tracking-[2px] text-[#8A8880]/60 block uppercase">
                     FOUNDING COHORT
                   </span>
-                  <h3 className="text-xl font-semibold text-foreground tracking-tight truncate max-w-[190px]">
+                  <h3 className="text-xl font-semibold text-[#F2F0EB] tracking-tight truncate max-w-[190px]">
                     {displayName}
                   </h3>
                 </div>
-                <div className={`px-2.5 py-0.5 rounded text-[10px] font-mono border uppercase tracking-wider font-bold ${currentTheme.badge}`}>
+                <div className="px-2.5 py-0.5 rounded-[4px] text-[10px] font-mono border uppercase tracking-wider font-bold bg-[#C9A84C]/10 border-[#C9A84C]/20 text-[#C9A84C]">
                   {displayArch}
                 </div>
               </div>
 
               {/* Character Portrait Mascot */}
-              <div className="relative w-full h-[200px] mb-2 overflow-hidden rounded-xl border border-border-gray bg-[#FAFAF8] flex items-center justify-center p-3">
+              <div className="relative w-full h-[200px] mb-2 overflow-hidden rounded-[6px] border border-[#2A2A2A] bg-[#0D0D0D] flex items-center justify-center p-3">
                 <img 
                   src={`/images/${imageKey}.png`} 
                   alt={`${displayArch} Mascot`}
                   crossOrigin="anonymous"
-                  className="max-w-full max-h-full object-contain"
+                  className="max-w-full max-h-full object-contain filter grayscale contrast-125"
                 />
               </div>
 
               {/* One Killer Sentence */}
-              <div className="border-y border-border-gray py-2.5 my-1 text-center">
-                <p className="text-xs sm:text-sm font-semibold text-foreground leading-snug italic px-1">
+              <div className="border-y border-[#2A2A2A] py-2.5 my-1 text-center">
+                <p className="text-xs sm:text-sm font-semibold text-[#F2F0EB] leading-snug italic px-1">
                   "{details.killerSentence}"
                 </p>
               </div>
@@ -602,12 +606,12 @@ export default function CharacterCard({
               <div className="space-y-3.5 text-left my-2">
                 {/* What People Notice */}
                 <div className="flex items-start space-x-2.5">
-                  <Eye className={`h-3.5 w-3.5 mt-0.5 ${currentTheme.text} shrink-0`} />
+                  <Eye className="h-3.5 w-3.5 mt-0.5 text-[#C9A84C] shrink-0" />
                   <div>
-                    <span className="text-[9px] font-mono uppercase tracking-wider text-foreground/40 block">
+                    <span className="text-[9px] font-mono uppercase tracking-[1px] text-[#8A8880]/60 block">
                       What People Notice
                     </span>
-                    <p className="text-xs text-foreground/80 font-semibold leading-relaxed">
+                    <p className="text-xs text-[#F2F0EB] font-semibold leading-relaxed">
                       {details.whatPeopleNotice}
                     </p>
                   </div>
@@ -615,12 +619,12 @@ export default function CharacterCard({
 
                 {/* Strength */}
                 <div className="flex items-start space-x-2.5">
-                  <Trophy className={`h-3.5 w-3.5 mt-0.5 ${currentTheme.text} shrink-0`} />
+                  <Trophy className="h-3.5 w-3.5 mt-0.5 text-[#C9A84C] shrink-0" />
                   <div>
-                    <span className="text-[9px] font-mono uppercase tracking-wider text-foreground/40 block">
+                    <span className="text-[9px] font-mono uppercase tracking-[1px] text-[#8A8880]/60 block">
                       Biggest Strength
                     </span>
-                    <p className="text-xs text-foreground/80 font-semibold leading-relaxed">
+                    <p className="text-xs text-[#F2F0EB] font-semibold leading-relaxed">
                       {strength || details.strength}
                     </p>
                   </div>
@@ -628,25 +632,25 @@ export default function CharacterCard({
 
                 {/* Limiter */}
                 <div className="flex items-start space-x-2.5">
-                  <ShieldAlert className="h-3.5 w-3.5 mt-0.5 text-red-500 shrink-0" />
+                  <ShieldAlert className="h-3.5 w-3.5 mt-0.5 text-[#A33B3B] shrink-0" />
                   <div>
-                    <span className="text-[9px] font-mono uppercase tracking-wider text-red-500/80 block">
+                    <span className="text-[9px] font-mono uppercase tracking-[1px] text-[#A33B3B] block">
                       What's Holding You Back
                     </span>
-                    <p className="text-xs text-foreground/80 font-semibold leading-relaxed">
+                    <p className="text-xs text-[#F2F0EB] font-semibold leading-relaxed">
                       {limiter || details.limiter}
                     </p>
                   </div>
                 </div>
 
                 {/* Next Challenge */}
-                <div className="bg-brand-purple/5 border border-brand-purple/10 rounded-xl p-2.5 flex items-start space-x-2.5 mt-1">
-                  <Target className="h-3.5 w-3.5 mt-0.5 text-brand-purple shrink-0" />
+                <div className="bg-[#C9A84C]/5 border border-[#C9A84C]/10 rounded-[6px] p-2.5 flex items-start space-x-2.5 mt-1">
+                  <Target className="h-3.5 w-3.5 mt-0.5 text-[#C9A84C] shrink-0" />
                   <div>
-                    <span className="text-[9px] font-mono uppercase tracking-wider text-brand-purple block font-bold">
+                    <span className="text-[9px] font-mono uppercase tracking-[1px] text-[#C9A84C] block font-bold">
                       Next Challenge
                     </span>
-                    <p className="text-xs text-foreground font-semibold leading-relaxed">
+                    <p className="text-xs text-[#F2F0EB] font-semibold leading-relaxed">
                       {quest || details.quest}
                     </p>
                   </div>
@@ -654,7 +658,7 @@ export default function CharacterCard({
               </div>
 
               {/* Footer */}
-              <div className="flex justify-between items-center text-[8px] font-mono text-foreground/30 border-t border-border-gray pt-2.5">
+              <div className="flex justify-between items-center text-[8px] font-mono text-[#555] border-t border-[#2A2A2A] pt-2.5">
                 <span>THELEAGUE.APP</span>
                 <span className="uppercase tracking-widest">Flip Card</span>
               </div>
@@ -669,52 +673,52 @@ export default function CharacterCard({
                 position: 'absolute',
                 inset: 0,
                 transform: 'rotateY(180deg)',
-                borderRadius: '1rem',
+                borderRadius: '8px',
               }}
-              className={`flex flex-col justify-between p-6 bg-gradient-to-b ${currentTheme.grad} z-20`}
+              className="flex flex-col justify-between p-6 bg-[#161616] z-20"
             >
               {/* Header */}
-              <div className="flex justify-between items-start mb-2 border-b border-border-gray pb-2">
+              <div className="flex justify-between items-start mb-2 border-b border-[#2A2A2A] pb-2">
                 <div>
-                  <span className="text-[9px] font-mono tracking-widest text-foreground/40 block uppercase">
+                  <span className="text-[9px] font-mono tracking-[2px] text-[#8A8880]/60 block uppercase">
                     ANALYSIS CARD
                   </span>
-                  <h3 className="text-base font-semibold text-foreground tracking-wide uppercase">
+                  <h3 className="text-base font-semibold text-[#F2F0EB] tracking-wide uppercase">
                     {displayArch} INSIGHT
                   </h3>
                 </div>
-                <div className={`px-2 py-0.5 rounded text-[8px] font-mono border uppercase tracking-wider font-bold ${currentTheme.badge}`}>
+                <div className="px-2 py-0.5 rounded-[4px] text-[8px] font-mono border uppercase tracking-wider font-bold bg-[#C9A84C]/10 border-[#C9A84C]/20 text-[#C9A84C]">
                   Back
                 </div>
               </div>
 
               {/* Why You Got This Result */}
               <div className="text-left space-y-1 my-1">
-                <span className="text-[9px] font-mono uppercase tracking-wider text-brand-gold block font-bold">
+                <span className="text-[9px] font-mono uppercase tracking-[1px] text-[#C9A84C] block font-bold">
                   Why you got this archetype
                 </span>
-                <p className="text-[11px] text-foreground/80 leading-relaxed font-normal">
+                <p className="text-[11px] text-[#8A8880] leading-relaxed font-normal">
                   {getWhyYouGotResult(normArch, cleanScores)}
                 </p>
               </div>
 
               {/* SVG Radar Chart */}
-              <div className="flex items-center justify-center my-1 bg-white/50 rounded-xl py-2 border border-border-gray">
+              <div className="flex items-center justify-center my-1 bg-[#0D0D0D]/50 rounded-[6px] py-2 border border-[#2A2A2A]">
                 <RadarChart scores={cleanScores} theme={currentTheme} />
               </div>
 
               {/* Personalized Growth Advice */}
-              <div className="border-t border-border-gray pt-2 text-left space-y-0.5">
-                <span className="text-[9px] font-mono uppercase tracking-wider text-brand-purple block font-bold">
+              <div className="border-t border-[#2A2A2A] pt-2 text-left space-y-0.5">
+                <span className="text-[9px] font-mono uppercase tracking-[1px] text-[#C9A84C] block font-bold">
                   Growth Advice
                 </span>
-                <p className="text-[11px] text-foreground font-semibold leading-relaxed italic">
+                <p className="text-[11px] text-[#F2F0EB] font-semibold leading-relaxed italic">
                   "{details.growthAdvice}"
                 </p>
               </div>
 
               {/* Footer */}
-              <div className="flex justify-between items-center text-[8px] font-mono text-foreground/30 border-t border-border-gray pt-2.5">
+              <div className="flex justify-between items-center text-[8px] font-mono text-[#555] border-t border-[#2A2A2A] pt-2.5">
                 <span>THELEAGUE.APP</span>
                 <span className="uppercase tracking-widest">Flip Card</span>
               </div>
@@ -729,7 +733,7 @@ export default function CharacterCard({
         <div className="flex items-center space-x-3">
           <button
             onClick={() => setIsFlipped(!isFlipped)}
-            className="flex items-center justify-center space-x-2 text-xs text-foreground/75 hover:text-foreground border border-border-gray bg-white hover:bg-gray-50 active:bg-gray-100 rounded-lg px-4 py-2.5 transition-all duration-200 cursor-pointer font-semibold"
+            className="flex items-center justify-center space-x-2 text-xs text-[#8A8880] hover:text-[#F2F0EB] border border-[#2A2A2A] bg-[#161616] hover:bg-[#0D0D0D]/50 rounded-[6px] px-4 py-2.5 transition-all duration-200 cursor-pointer font-semibold"
           >
             <RefreshCw className="h-3.5 w-3.5" />
             <span>Flip Card</span>
@@ -738,7 +742,7 @@ export default function CharacterCard({
           <button
             onClick={handleDownload}
             disabled={isDownloading || isLocked}
-            className="flex items-center justify-center space-x-2 text-xs text-foreground/75 hover:text-foreground border border-border-gray bg-white hover:bg-gray-50 active:bg-gray-100 rounded-lg px-4 py-2.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer font-semibold"
+            className="flex items-center justify-center space-x-2 text-xs text-[#8A8880] hover:text-[#F2F0EB] border border-[#2A2A2A] bg-[#161616] hover:bg-[#0D0D0D]/50 rounded-[6px] px-4 py-2.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer font-semibold"
           >
             <Download className="h-3.5 w-3.5" />
             <span>{isDownloading ? 'Exporting...' : 'Download PNG'}</span>
@@ -747,11 +751,11 @@ export default function CharacterCard({
           <button
             onClick={handleShare}
             disabled={isLocked}
-            className="flex items-center justify-center space-x-2 text-xs text-white rounded-lg bg-brand-purple hover:bg-purple-700 active:bg-purple-800 px-5 py-2.5 transition-all duration-200 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer font-bold"
+            className="flex items-center justify-center space-x-2 text-xs text-[#0D0D0D] bg-[#C9A84C] hover:bg-[#b0913c] rounded-[6px] px-5 py-2.5 transition-all duration-200 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer font-bold"
           >
             {isShared ? (
               <>
-                <Check className="h-3.5 w-3.5 text-green-400" />
+                <Check className="h-3.5 w-3.5 text-green-800" />
                 <span>Copied!</span>
               </>
             ) : (
@@ -763,7 +767,7 @@ export default function CharacterCard({
           </button>
         </div>
         {isLocked && (
-          <p className="text-[10px] text-amber-600 font-mono font-semibold">
+          <p className="text-[10px] text-[#C9A84C] font-mono font-semibold">
             Rate the assessment accuracy below to unlock card download & share
           </p>
         )}

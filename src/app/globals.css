@@ -1,51 +1,49 @@
 @import "tailwindcss";
 
 :root {
-  --background: #FAFAF8;
-  --foreground: #111111;
+  --background: #0D0D0D;
+  --foreground: #F2F0EB;
   
-  --brand-purple: #5F2EEA;
-  --brand-purple-rgb: 95, 46, 234;
-  --brand-gold: #C5A85A;
-  --brand-gold-rgb: 197, 168, 90;
+  --brand-gold: #C9A84C;
+  --brand-gold-rgb: 201, 168, 76;
   
-  --border-gray: #E5E7EB;
-  --border-dark: #111111;
+  --border-gray: #2A2A2A;
+  --border-dark: #2A2A2A;
 }
 
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-brand-purple: var(--brand-purple);
   --color-brand-gold: var(--brand-gold);
   --color-border-gray: var(--border-gray);
   --color-border-dark: var(--border-dark);
   
   --font-sans: var(--font-inter), "Inter", system-ui, -apple-system, sans-serif;
   --font-mono: var(--font-mono), "JetBrains Mono", monospace;
+  --font-barlow: var(--font-barlow-condensed), "Barlow Condensed", sans-serif;
 }
 
 body {
   background-color: var(--background);
-  color: var(--foreground);
+  color: #8A8880;
   overflow-x: hidden;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }
 
 /* Responsive Editorial Hero Overlay */
 .hero-overlay {
-  background: linear-gradient(to bottom, #FAFAF8 0%, #FAFAF8 20%, rgba(250, 250, 248, 0) 45%, rgba(250, 250, 248, 0) 100%);
+  background: linear-gradient(to bottom, #0D0D0D 0%, #0D0D0D 20%, rgba(13, 13, 13, 0) 45%, rgba(13, 13, 13, 0) 100%);
 }
 
 @media (min-width: 1024px) {
   .hero-overlay {
-    background: linear-gradient(to right, #FAFAF8 0%, #FAFAF8 45%, rgba(250, 250, 248, 0) 60%, rgba(250, 250, 248, 0) 100%);
+    background: linear-gradient(to right, #0D0D0D 0%, #0D0D0D 45%, rgba(13, 13, 13, 0) 60%, rgba(13, 13, 13, 0) 100%);
   }
 }
 
 /* Premium Editorial Card Utilities */
 .glass-card {
-  background: #FFFFFF;
+  background: #161616;
   border: 1px solid var(--border-gray);
 }
 
@@ -54,7 +52,7 @@ body {
 }
 
 .glass-card-hover:hover {
-  border-color: var(--brand-purple);
+  border-color: var(--brand-gold);
   transform: translateY(-1px);
 }
 
@@ -63,16 +61,16 @@ body {
 }
 
 .border-accent {
-  border: 1px solid var(--brand-purple);
+  border: 1px solid var(--brand-gold);
 }
 
 /* Typography Gradients - replaced with clean solid colors or subtle dark text fills */
 .text-gradient-purple {
-  color: var(--brand-purple);
+  color: var(--brand-gold);
 }
 
 .text-gradient-purple-full {
-  color: var(--brand-purple);
+  color: var(--brand-gold);
 }
 
 .text-gradient-gold {
@@ -90,15 +88,15 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #FAFAF8;
+  background: #0D0D0D;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #E5E7EB;
+  background: #2A2A2A;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #D1D5DB;
+  background: #C9A84C;
 }
 

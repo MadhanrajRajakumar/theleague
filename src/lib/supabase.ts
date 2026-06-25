@@ -30,6 +30,20 @@ const setStorageItem = <T>(key: string, data: T) => {
   localStorage.setItem(key, JSON.stringify(data));
 };
 
+// Error logging utility helper for Supabase errors
+function logSupabaseError(contextMessage: string, e: any) {
+  console.error(contextMessage);
+  console.error("Error object:", e);
+  console.error("JSON:", JSON.stringify(e, null, 2));
+  if (e && typeof e === 'object') {
+    if ('error' in e) console.error("Field 'error':", (e as any).error);
+    if ('message' in e) console.error("Field 'message':", (e as any).message);
+    if ('details' in e) console.error("Field 'details':", (e as any).details);
+    if ('hint' in e) console.error("Field 'hint':", (e as any).hint);
+    if ('code' in e) console.error("Field 'code':", (e as any).code);
+  }
+}
+
 // 1. Create a new assessment session (Fit Check)
 export async function createAssessment(
   sessionId: string,
@@ -90,7 +104,7 @@ export async function createAssessment(
       await logAnalyticsEvent(sessionId, newId, 'assessment_started', {}, utmParams, referrer, deviceType, contentId);
       return newId;
     } catch (e) {
-      console.warn("Supabase createAssessment failed, writing to mock storage:", e);
+      logSupabaseError("Supabase createAssessment failed", e);
     }
   }
 
@@ -139,7 +153,7 @@ export async function saveAnswer(
       );
       return;
     } catch (e) {
-      console.warn("Supabase saveAnswer failed, updating mock storage:", e);
+      logSupabaseError("Supabase saveAnswer failed", e);
     }
   }
 
@@ -207,7 +221,7 @@ export async function completeAssessment(
       await logAnalyticsEvent(sessionId, assessmentId, 'assessment_completed', { archetype_id: cleanArchetypeId });
       return;
     } catch (e) {
-      console.warn("Supabase completeAssessment failed, updating mock storage:", e);
+      logSupabaseError("Supabase completeAssessment failed", e);
     }
   }
 
@@ -307,7 +321,7 @@ export async function submitWaitlist(entry: {
       await logAnalyticsEvent(sessionId, entry.assessmentId, 'waitlist_joined', { user_id: userId });
       return;
     } catch (e) {
-      console.warn("Supabase submitWaitlist failed, adding to mock storage:", e);
+      logSupabaseError("Supabase submitWaitlist failed", e);
     }
   }
 
@@ -377,7 +391,7 @@ export async function submitFeedback(assessmentId: string, ratingVal: number): P
       if (error) throw error;
       return;
     } catch (e) {
-      console.warn("Supabase submitFeedback failed, updating mock storage:", e);
+      logSupabaseError("Supabase submitFeedback failed", e);
     }
   }
 
@@ -407,7 +421,7 @@ export async function submitOpenFeedback(assessmentId: string, feedbackText: str
       if (error) throw error;
       return;
     } catch (e) {
-      console.warn("Supabase submitOpenFeedback failed, writing to mock storage:", e);
+      logSupabaseError("Supabase submitOpenFeedback failed", e);
     }
   }
 
@@ -462,7 +476,7 @@ export async function logAnalyticsEvent(
       if (error) throw error;
       return;
     } catch (e) {
-      console.warn("Supabase logAnalyticsEvent failed, writing to mock storage:", e);
+      logSupabaseError("Supabase logAnalyticsEvent failed", e);
     }
   }
 
@@ -551,7 +565,7 @@ export async function getAnalytics(): Promise<DashboardMetrics> {
       dbAnswers = ans || [];
       dbAnalytics = ana || [];
     } catch (e) {
-      console.warn("Supabase analytics query failed, reading local fallback:", e);
+      logSupabaseError("Supabase analytics query failed", e);
       dbAssessments = getStorageItem<any[]>(STORAGE_ASSESSMENTS, []);
       dbWaitlist = getStorageItem<any[]>(STORAGE_WAITLIST, []);
       dbUsers = getStorageItem<any[]>(STORAGE_USERS, []);
@@ -573,15 +587,15 @@ export async function getAnalytics(): Promise<DashboardMetrics> {
   const totalWaitlist = dbWaitlist.length;
   const signupRate = totalCompletions > 0 ? Math.round((totalWaitlist / totalCompletions) * 100) : 0;
 
-  // 2. Question Drop-off (count of distinct assessments answering each question 1-12)
+  // 2. Question Drop-off (count of distinct assessments answering each question 1-10)
   const questionDropOffMap: Record<number, Set<string>> = {};
-  for (let q = 1; q <= 12; q++) {
+  for (let q = 1; q <= 10; q++) {
     questionDropOffMap[q] = new Set<string>();
   }
 
   dbAnswers.forEach(ans => {
     const qId = Number(ans.question_id);
-    if (qId >= 1 && qId <= 12 && ans.assessment_id) {
+    if (qId >= 1 && qId <= 10 && ans.assessment_id) {
       questionDropOffMap[qId].add(ans.assessment_id);
     }
   });

@@ -10,16 +10,12 @@ export default function Header() {
   const isAdmin = pathname === '/admin';
 
   return (
-    <header className="w-full border-b border-border-gray bg-background/90 backdrop-blur-md sticky top-0 z-50 transition-all duration-300">
+    <header className="w-full border-b border-[#2A2A2A] bg-[#0D0D0D] sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
-        <div className="flex items-center space-x-3">
-          <Link href="/" className="group flex items-center space-x-2 text-[#111111] hover:text-[#111111] active:text-[#111111] visited:text-[#111111]">
-            <span className="font-semibold text-sm tracking-wider transition-colors duration-300">
+        <div className="flex items-center">
+          <Link href="/" className="group flex items-center text-[#C9A84C] hover:text-[#C9A84C] active:text-[#C9A84C]">
+            <span className="font-barlow font-extrabold text-sm uppercase tracking-[3px]">
               THE LEAGUE
-            </span>
-            <span className="h-1.5 w-1.5 rounded-full bg-brand-gold group-hover:scale-125 transition-transform duration-300" />
-            <span className="hidden sm:inline-block text-[9px] uppercase tracking-widest text-[#111111]/35 font-mono pt-0.5">
-              Identity Engine v1
             </span>
           </Link>
         </div>
@@ -28,7 +24,7 @@ export default function Header() {
           {isAdmin && (
             <Link 
               href="/"
-              className="text-xs text-foreground/60 hover:text-foreground transition-colors duration-200"
+              className="text-xs text-[#8A8880] hover:text-[#F2F0EB] transition-colors duration-200"
             >
               Back to App
             </Link>
@@ -38,21 +34,21 @@ export default function Header() {
             <>
               <Link 
                 href="/admin"
-                className="text-xs text-foreground/40 hover:text-foreground/80 transition-colors duration-200"
+                className="text-xs text-[#8A8880]/60 hover:text-[#F2F0EB]/80 transition-colors duration-200"
               >
                 Admin Panel
               </Link>
               <Link 
                 href="/assessment" 
-                className="inline-flex items-center justify-center text-xs font-semibold text-white bg-brand-purple hover:bg-purple-700 active:bg-purple-800 rounded-xl px-3.5 py-1.5 transition-all duration-200 cursor-pointer"
+                className="inline-flex items-center justify-center text-xs font-semibold text-[#0D0D0D] bg-[#C9A84C] hover:bg-[#b0913c] rounded-[6px] px-3.5 py-1.5 transition-colors duration-200 cursor-pointer"
               >
-                Take Fit Check
+                Take Fit Check &rarr;
               </Link>
             </>
           )}
 
           {isAssessment && (
-            <div className="text-xs text-foreground/50 font-mono tracking-widest">
+            <div className="text-xs text-[#8A8880] font-mono tracking-widest">
               CRUCIBLE MODE
             </div>
           )}
@@ -60,7 +56,7 @@ export default function Header() {
           {isResults && (
             <Link
               href="/"
-              className="text-xs text-foreground/60 hover:text-foreground border border-border-gray hover:border-foreground/20 bg-white rounded-xl px-3 py-1.5 transition-all duration-200 font-semibold"
+              className="text-xs text-[#8A8880] hover:text-[#F2F0EB] border border-[#2A2A2A] hover:border-[#C9A84C] bg-[#161616] rounded-[6px] px-3 py-1.5 transition-colors duration-200 font-semibold"
             >
               Restart
             </Link>
