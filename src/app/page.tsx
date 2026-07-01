@@ -36,7 +36,7 @@ export default function LandingPage() {
 
             {/* Sub-headline */}
             <p className="font-sans font-normal text-[16px] text-[#8A8880] leading-[1.7] max-w-[400px]">
-              A private team of 5 people who notice when you don't show up. Who check in when you go quiet. Who refuse to let you quit — because when you miss, the whole team feels it.
+              5 people. Real money. One rule: the team that shows up gets paid by the team that doesn't.
             </p>
 
             {/* Social Proof Line */}
@@ -138,47 +138,72 @@ export default function LandingPage() {
       {/* How It Works Section */}
       <section id="how-it-works" className="bg-[#0D0D0D] py-16 md:py-24 px-6 sm:px-12 border-b border-[#2A2A2A]">
         <div className="max-w-7xl mx-auto space-y-12">
-          <div className="space-y-3">
+          <div className="space-y-4">
             <div className="font-sans font-medium text-[11px] tracking-[3px] text-[#C9A84C] uppercase">
               HOW IT WORKS
             </div>
-            <h2 className="font-barlow font-extrabold text-[36px] sm:text-[40px] text-[#F2F0EB] uppercase leading-none">
-              SIMPLE RULES. REAL CONSEQUENCES.
+            <h2 className="font-barlow font-extrabold text-[36px] sm:text-[48px] text-[#F2F0EB] uppercase leading-tight tracking-tight">
+              QUITTING ISN'T PRIVATE ANYMORE.
             </h2>
+            <p className="font-sans font-normal text-[16px] sm:text-[18px] text-[#8A8880] max-w-[600px] leading-relaxed">
+              For the first time, your excuses affect more than just you.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {/* Card 1 */}
-            <div className="bg-[#161616] border border-[#2A2A2A] rounded-[8px] p-5 space-y-4">
-              <div className="font-barlow font-extrabold text-[32px] text-[#C9A84C] leading-none">01</div>
-              <h4 className="font-barlow font-extrabold text-[20px] text-[#F2F0EB] uppercase">TAKE THE ASSESSMENT</h4>
-              <p className="font-sans font-normal text-[13px] text-[#8A8880] leading-relaxed">
-                10 questions that reveal exactly how you fail — and which team structure will keep you consistent.
-              </p>
+            <div className="bg-[#161616] border border-[#2A2A2A] rounded-[8px] p-6 hover:border-[#C9A84C] transition-all duration-300 group">
+              <div className="space-y-4">
+                <div className="font-barlow font-extrabold text-[32px] text-[#C9A84C] leading-none group-hover:scale-105 transition-transform duration-300 origin-left">01</div>
+                <h4 className="font-barlow font-extrabold text-[20px] text-[#F2F0EB] uppercase tracking-wide">
+                  FIND OUT WHY YOU KEEP STARTING OVER
+                </h4>
+                <p className="font-sans font-normal text-[13px] text-[#8A8880] leading-relaxed">
+                  10 questions. Your consistency pattern. The exact team structure that stops it.
+                </p>
+              </div>
             </div>
+
             {/* Card 2 */}
-            <div className="bg-[#161616] border border-[#2A2A2A] rounded-[8px] p-5 space-y-4">
-              <div className="font-barlow font-extrabold text-[32px] text-[#C9A84C] leading-none">02</div>
-              <h4 className="font-barlow font-extrabold text-[20px] text-[#F2F0EB] uppercase">JOIN YOUR TEAM</h4>
-              <p className="font-sans font-normal text-[13px] text-[#8A8880] leading-relaxed">
-                Matched with 4 people at your level. People who will notice when you disappear. People you won't want to let down.
-              </p>
+            <div className="bg-[#161616] border border-[#2A2A2A] rounded-[8px] p-6 hover:border-[#C9A84C] transition-all duration-300 group">
+              <div className="space-y-4">
+                <div className="font-barlow font-extrabold text-[32px] text-[#C9A84C] leading-none group-hover:scale-105 transition-transform duration-300 origin-left">02</div>
+                <h4 className="font-barlow font-extrabold text-[20px] text-[#F2F0EB] uppercase tracking-wide">
+                  JOIN A TEAM OF FIVE
+                </h4>
+                <div className="font-sans font-normal text-[13px] text-[#8A8880] leading-relaxed space-y-2">
+                  <p>Matched by ambition level. Small enough that disappearing is impossible.</p>
+                  <p className="font-bold text-[#F2F0EB]">Nobody quits quietly here.</p>
+                </div>
+              </div>
             </div>
+
             {/* Card 3 */}
-            <div className="bg-[#161616] border border-[#2A2A2A] rounded-[8px] p-5 space-y-4">
-              <div className="font-barlow font-extrabold text-[32px] text-[#C9A84C] leading-none">03</div>
-              <h4 className="font-barlow font-extrabold text-[20px] text-[#F2F0EB] uppercase">HIT THE WEEKLY TARGET</h4>
-              <p className="font-sans font-normal text-[13px] text-[#8A8880] leading-relaxed">
-                Every week has a target. Every Sunday has a reckoning. Submit your proof — or your team pays for your absence.
-              </p>
+            <div className="bg-[#161616] border border-[#2A2A2A] rounded-[8px] p-6 hover:border-[#C9A84C] transition-all duration-300 group">
+              <div className="space-y-4">
+                <div className="font-barlow font-extrabold text-[32px] text-[#C9A84C] leading-none group-hover:scale-105 transition-transform duration-300 origin-left">03</div>
+                <h4 className="font-barlow font-extrabold text-[20px] text-[#F2F0EB] uppercase tracking-wide">
+                  HIT YOUR WEEKLY TARGET
+                </h4>
+                <div className="font-sans font-normal text-[13px] text-[#8A8880] leading-relaxed space-y-2">
+                  <p>Goal set to your preference. Tracked automatically via your fitness app.</p>
+                  <p className="font-bold text-[#C9A84C]">Miss it — your whole team loses points.</p>
+                </div>
+              </div>
             </div>
+
             {/* Card 4 */}
-            <div className="bg-[#161616] border border-[#2A2A2A] rounded-[8px] p-5 space-y-4">
-              <div className="font-barlow font-extrabold text-[32px] text-[#C9A84C] leading-none">04</div>
-              <h4 className="font-barlow font-extrabold text-[20px] text-[#F2F0EB] uppercase">WIN OR LOSE TOGETHER</h4>
-              <p className="font-sans font-normal text-[13px] text-[#8A8880] leading-relaxed">
-                The team that shows up consistently beats the team that doesn't. Consistency becomes the competition.
-              </p>
+            <div className="bg-[#161616] border border-[#2A2A2A] rounded-[8px] p-6 hover:border-[#C9A84C] transition-all duration-300 group">
+              <div className="space-y-4">
+                <div className="font-barlow font-extrabold text-[32px] text-[#C9A84C] leading-none group-hover:scale-105 transition-transform duration-300 origin-left">04</div>
+                <h4 className="font-barlow font-extrabold text-[20px] text-[#F2F0EB] uppercase tracking-wide">
+                  WIN OR LOSE TOGETHER
+                </h4>
+                <div className="font-sans font-normal text-[13px] text-[#8A8880] leading-relaxed space-y-2">
+                  <p>Consistent teams earn from teams that didn't show up.</p>
+                  <p className="font-bold text-[#F2F0EB]">The money moves. Every season.</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -186,70 +211,128 @@ export default function LandingPage() {
 
       {/* Stakes Callout Section */}
       <section className="bg-[#C9A84C] py-16 px-8 text-center border-b border-[#2A2A2A]">
-        <div className="max-w-4xl mx-auto space-y-4">
+        <div className="max-w-3xl mx-auto space-y-6">
           <h2 className="font-barlow font-extrabold text-[36px] sm:text-[48px] text-[#0D0D0D] tracking-tight leading-none uppercase">
-            WHEN YOU SKIP, YOUR ENTIRE TEAM FEELS IT.
+            NOBODY WANTS TO LET THEIR TEAM DOWN.
           </h2>
-          <p className="font-sans font-normal text-sm sm:text-base text-[#5A4A1A] leading-relaxed max-w-2xl mx-auto">
-            Not a reminder. Not a notification. Your team loses ground — and everyone knows why. For the first time, your consistency has real consequences beyond yourself.
-          </p>
+          <div className="font-sans font-semibold text-sm sm:text-base text-[#0D0D0D]/90 leading-relaxed max-w-xl mx-auto space-y-2">
+            <p>You already know how to work out.</p>
+            <p>You already know what to eat.</p>
+            <p className="text-[#0D0D0D]/60 font-normal">The problem was never information.</p>
+            <p>The problem was that quitting had no consequences.</p>
+            <p className="font-barlow font-black text-lg sm:text-xl text-[#0D0D0D] uppercase mt-6 tracking-wide">
+              The League changes that.
+            </p>
+          </div>
         </div>
       </section>
 
       {/* Archetypes Section */}
       <section className="bg-[#0D0D0D] py-16 md:py-24 px-6 sm:px-12 border-b border-[#2A2A2A]">
-        <div className="max-w-7xl mx-auto space-y-12">
-          <div className="space-y-3">
+        <div className="max-w-7xl mx-auto space-y-16">
+          <div className="space-y-4 max-w-3xl">
             <div className="font-sans font-medium text-[11px] tracking-[3px] text-[#C9A84C] uppercase">
-              YOUR ARCHETYPE
+              THE DIAGNOSIS
             </div>
-            <h2 className="font-barlow font-extrabold text-[36px] sm:text-[40px] text-[#F2F0EB] uppercase leading-none">
-              WHICH ONE ARE YOU?
+            <h2 className="font-barlow font-extrabold text-[36px] sm:text-[48px] text-[#F2F0EB] uppercase leading-tight tracking-tight">
+              EVERYONE QUITS DIFFERENTLY.
             </h2>
-            <p className="font-sans font-normal text-[15px] text-[#8A8880] max-w-[560px] text-center mx-auto mb-8 mt-2 leading-relaxed">
-              Every person has a consistency pattern. Knowing yours tells us exactly where you'll struggle — and how your team should be structured to catch you before you quit.
+            <div className="font-sans font-normal text-[16px] sm:text-[18px] text-[#8A8880] leading-relaxed space-y-1">
+              <p>Most people don't fail because they're lazy.</p>
+              <p>They fail in predictable patterns.</p>
+              <p className="font-medium text-[#C9A84C]">Find yours before you repeat it again.</p>
+            </div>
+            <p className="font-sans font-medium text-[16px] sm:text-[18px] text-[#F2F0EB] leading-relaxed pt-2">
+              You probably saw yourself in one of these. The assessment tells you exactly which pattern is yours.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Warrior */}
-            <div className="bg-[#161616] border border-[#2A2A2A] rounded-[8px] p-5 space-y-4">
-              <h3 className="font-barlow font-extrabold text-[28px] text-[#C9A84C] leading-none uppercase">Warrior</h3>
-              <p className="font-sans font-normal text-[13px] text-[#8A8880] leading-relaxed">
-                Strong discipline. Risk: burns out and disappears for 3 weeks.
-              </p>
-              <div className="font-sans font-normal text-[12px] text-[#555] border-t border-[#2A2A2A] pt-3">
-                Watch for &rarr; All-or-nothing thinking.
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Card 1 - Warrior */}
+            <div className="bg-[#161616] border border-[#2A2A2A] hover:border-[#C9A84C]/50 transition-all duration-500 rounded-[8px] p-6 flex flex-col justify-between md:h-[230px] group">
+              <div className="space-y-2">
+                <h3 className="font-barlow font-black text-[24px] sm:text-[28px] text-[#C9A84C] leading-none uppercase tracking-wide">
+                  WARRIOR
+                </h3>
+                <p className="font-sans font-normal text-[14px] text-[#F2F0EB]/90 leading-relaxed">
+                  You go all in, push harder than everyone, then disappear.
+                </p>
+              </div>
+              <div className="border-t border-[#2A2A2A] pt-4 space-y-1.5 font-sans text-[13px]">
+                <div className="flex justify-between items-baseline gap-2">
+                  <span className="text-[11px] tracking-[1.5px] font-semibold text-[#555] uppercase">Risk:</span>
+                  <span className="font-medium text-[#F2F0EB] text-right">Trying to do too much, too fast.</span>
+                </div>
+                <div className="flex justify-between items-baseline gap-2">
+                  <span className="text-[11px] tracking-[1.5px] font-semibold text-[#C9A84C] uppercase">Watch for:</span>
+                  <span className="font-medium text-[#C9A84C] group-hover:text-[#F2F0EB] transition-colors duration-300 text-right">All-or-nothing thinking.</span>
+                </div>
               </div>
             </div>
-            {/* Creator */}
-            <div className="bg-[#161616] border border-[#2A2A2A] rounded-[8px] p-5 space-y-4">
-              <h3 className="font-barlow font-extrabold text-[28px] text-[#C9A84C] leading-none uppercase">Creator</h3>
-              <p className="font-sans font-normal text-[13px] text-[#8A8880] leading-relaxed">
-                Strong enthusiasm. Risk: loses interest when novelty fades.
-              </p>
-              <div className="font-sans font-normal text-[12px] text-[#555] border-t border-[#2A2A2A] pt-3">
-                Watch for &rarr; Motivation dependency.
+
+            {/* Card 2 - Creator */}
+            <div className="bg-[#161616] border border-[#2A2A2A] hover:border-[#C9A84C]/50 transition-all duration-500 rounded-[8px] p-6 flex flex-col justify-between md:h-[230px] group">
+              <div className="space-y-2">
+                <h3 className="font-barlow font-black text-[24px] sm:text-[28px] text-[#C9A84C] leading-none uppercase tracking-wide">
+                  CREATOR
+                </h3>
+                <p className="font-sans font-normal text-[14px] text-[#F2F0EB]/90 leading-relaxed">
+                  You love the rush of new plans, but quit once excitement fades.
+                </p>
+              </div>
+              <div className="border-t border-[#2A2A2A] pt-4 space-y-1.5 font-sans text-[13px]">
+                <div className="flex justify-between items-baseline gap-2">
+                  <span className="text-[11px] tracking-[1.5px] font-semibold text-[#555] uppercase">Risk:</span>
+                  <span className="font-medium text-[#F2F0EB] text-right">Relying on motivation instead of structure.</span>
+                </div>
+                <div className="flex justify-between items-baseline gap-2">
+                  <span className="text-[11px] tracking-[1.5px] font-semibold text-[#C9A84C] uppercase">Watch for:</span>
+                  <span className="font-medium text-[#C9A84C] group-hover:text-[#F2F0EB] transition-colors duration-300 text-right">Starting over every month.</span>
+                </div>
               </div>
             </div>
-            {/* Thinker */}
-            <div className="bg-[#161616] border border-[#2A2A2A] rounded-[8px] p-5 space-y-4">
-              <h3 className="font-barlow font-extrabold text-[28px] text-[#C9A84C] leading-none uppercase">Thinker</h3>
-              <p className="font-sans font-normal text-[13px] text-[#8A8880] leading-relaxed">
-                Strong planning. Risk: plans forever, never starts.
-              </p>
-              <div className="font-sans font-normal text-[12px] text-[#555] border-t border-[#2A2A2A] pt-3">
-                Watch for &rarr; Analysis paralysis.
+
+            {/* Card 3 - Thinker */}
+            <div className="bg-[#161616] border border-[#2A2A2A] hover:border-[#C9A84C]/50 transition-all duration-500 rounded-[8px] p-6 flex flex-col justify-between md:h-[230px] group">
+              <div className="space-y-2">
+                <h3 className="font-barlow font-black text-[24px] sm:text-[28px] text-[#C9A84C] leading-none uppercase tracking-wide">
+                  THINKER
+                </h3>
+                <p className="font-sans font-normal text-[14px] text-[#F2F0EB]/90 leading-relaxed">
+                  You know exactly what to do, but wait for the perfect time.
+                </p>
+              </div>
+              <div className="border-t border-[#2A2A2A] pt-4 space-y-1.5 font-sans text-[13px]">
+                <div className="flex justify-between items-baseline gap-2">
+                  <span className="text-[11px] tracking-[1.5px] font-semibold text-[#555] uppercase">Risk:</span>
+                  <span className="font-medium text-[#F2F0EB] text-right">Preparation becoming procrastination.</span>
+                </div>
+                <div className="flex justify-between items-baseline gap-2">
+                  <span className="text-[11px] tracking-[1.5px] font-semibold text-[#C9A84C] uppercase">Watch for:</span>
+                  <span className="font-medium text-[#C9A84C] group-hover:text-[#F2F0EB] transition-colors duration-300 text-right">Analysis paralysis.</span>
+                </div>
               </div>
             </div>
-            {/* Connector */}
-            <div className="bg-[#161616] border border-[#2A2A2A] rounded-[8px] p-5 space-y-4">
-              <h3 className="font-barlow font-extrabold text-[28px] text-[#C9A84C] leading-none uppercase">Connector</h3>
-              <p className="font-sans font-normal text-[13px] text-[#8A8880] leading-relaxed">
-                Thrives in groups. Risk: stops when the group goes quiet.
-              </p>
-              <div className="font-sans font-normal text-[12px] text-[#555] border-t border-[#2A2A2A] pt-3">
-                Watch for &rarr; External motivation trap.
+
+            {/* Card 4 - Connector */}
+            <div className="bg-[#161616] border border-[#2A2A2A] hover:border-[#C9A84C]/50 transition-all duration-500 rounded-[8px] p-6 flex flex-col justify-between md:h-[230px] group">
+              <div className="space-y-2">
+                <h3 className="font-barlow font-black text-[24px] sm:text-[28px] text-[#C9A84C] leading-none uppercase tracking-wide">
+                  CONNECTOR
+                </h3>
+                <p className="font-sans font-normal text-[14px] text-[#F2F0EB]/90 leading-relaxed">
+                  You do your best work in groups, but slowly disappear when alone.
+                </p>
+              </div>
+              <div className="border-t border-[#2A2A2A] pt-4 space-y-1.5 font-sans text-[13px]">
+                <div className="flex justify-between items-baseline gap-2">
+                  <span className="text-[11px] tracking-[1.5px] font-semibold text-[#555] uppercase">Risk:</span>
+                  <span className="font-medium text-[#F2F0EB] text-right">Fading away when the group goes quiet.</span>
+                </div>
+                <div className="flex justify-between items-baseline gap-2">
+                  <span className="text-[11px] tracking-[1.5px] font-semibold text-[#C9A84C] uppercase">Watch for:</span>
+                  <span className="font-medium text-[#C9A84C] group-hover:text-[#F2F0EB] transition-colors duration-300 text-right">Trying to stay disciplined alone.</span>
+                </div>
               </div>
             </div>
           </div>

@@ -22,6 +22,7 @@ export interface Assessment {
   completion_seconds: number | null;
   accuracy_rating: number | null;
   league_readiness: string | null; // Stored as 'READY', 'ALMOST READY', 'NEEDS WORK'
+  preferredActivity?: string | null;
   version: string;
   created_at: string;
   updated_at: string;

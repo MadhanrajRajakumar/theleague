@@ -158,7 +158,8 @@ export default function AssessmentPage() {
         email: email.trim().toLowerCase(),
         instagram: instagram.trim() ? instagram.trim().replace('@', '') : undefined,
         reasonForJoining: reasonForJoining,
-        primaryGoal: primaryGoalInput.trim()
+        primaryGoal: primaryGoalInput.trim(),
+        preferredActivity: results.preferredActivity
       });
 
       sessionStorage.setItem('the_league_results', JSON.stringify({
@@ -252,7 +253,7 @@ export default function AssessmentPage() {
 
                 {/* Scenario details title (Introspective, raw text) */}
                 <div className="py-2">
-                  <h2 className="font-barlow font-extrabold text-2xl sm:text-3xl leading-snug text-[#F2F0EB] uppercase">
+                  <h2 className="font-barlow font-extrabold text-2xl sm:text-3xl leading-snug text-[#F2F0EB] uppercase whitespace-pre-line">
                     {currentQuestion.text}
                   </h2>
                 </div>

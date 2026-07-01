@@ -193,6 +193,7 @@ export async function completeAssessment(
     brutalTruth?: string;
     archetypeReasoning?: string;
     leagueReadiness?: string; // Qualitative level: 'READY', 'ALMOST READY', 'NEEDS WORK'
+    preferredActivity?: string;
   },
   completionSeconds: number
 ): Promise<void> {
@@ -212,13 +213,38 @@ export async function completeAssessment(
           brutal_truth: results.brutalTruth || null,
           league_readiness: results.leagueReadiness || null,
           completion_seconds: Math.max(0, completionSeconds),
+          preferred_activity: results.preferredActivity || null,
           updated_at: now
-        })
+        } as any)
         .eq('id', assessmentId);
       
-      if (error) throw error;
+      if (error) {
+        // Fallback retry without preferred_activity if the column does not exist
+        const isColumnError = error.message?.includes('preferred_activity') || error.code === 'PGRST104' || error.message?.includes('column');
+        if (isColumnError) {
+          const { error: fallbackError } = await supabase
+            .from('assessments')
+            .update({
+              completed: true,
+              scores: results.scores,
+              archetype_id: cleanArchetypeId,
+              archetype_reasoning: results.archetypeReasoning || null,
+              brutal_truth: results.brutalTruth || null,
+              league_readiness: results.leagueReadiness || null,
+              completion_seconds: Math.max(0, completionSeconds),
+              updated_at: now
+            })
+            .eq('id', assessmentId);
+          if (fallbackError) throw fallbackError;
+        } else {
+          throw error;
+        }
+      }
 
-      await logAnalyticsEvent(sessionId, assessmentId, 'assessment_completed', { archetype_id: cleanArchetypeId });
+      await logAnalyticsEvent(sessionId, assessmentId, 'assessment_completed', { 
+        archetype_id: cleanArchetypeId,
+        preferred_activity: results.preferredActivity
+      });
       return;
     } catch (e) {
       logSupabaseError("Supabase completeAssessment failed", e);
@@ -236,11 +262,15 @@ export async function completeAssessment(
     assessments[index].brutal_truth = results.brutalTruth || null;
     assessments[index].league_readiness = results.leagueReadiness || null;
     assessments[index].completion_seconds = Math.max(0, completionSeconds);
+    assessments[index].preferredActivity = results.preferredActivity || null;
     assessments[index].updated_at = now;
     setStorageItem(STORAGE_ASSESSMENTS, assessments);
   }
 
-  await logAnalyticsEvent(sessionId, assessmentId, 'assessment_completed', { archetype_id: cleanArchetypeId });
+  await logAnalyticsEvent(sessionId, assessmentId, 'assessment_completed', { 
+    archetype_id: cleanArchetypeId,
+    preferred_activity: results.preferredActivity
+  });
 }
 
 // 4. Save waitlist lead, linking to assessment (now with Reason & Goal capture)
@@ -251,6 +281,7 @@ export async function submitWaitlist(entry: {
   instagram?: string;
   reasonForJoining?: string;
   primaryGoal?: string;
+  preferredActivity?: string;
 }): Promise<void> {
   const now = new Date().toISOString();
   const sessionId = typeof window !== 'undefined' ? localStorage.getItem('the_league_session_id') || 'unknown' : 'unknown';
@@ -260,6 +291,7 @@ export async function submitWaitlist(entry: {
   const cleanInstagram = entry.instagram?.trim().replace('@', '') || null;
   const cleanReason = entry.reasonForJoining || null;
   const cleanGoal = entry.primaryGoal || null;
+  const cleanPreferredActivity = entry.preferredActivity || null;
 
   if (supabase) {
     try {
@@ -303,22 +335,43 @@ export async function submitWaitlist(entry: {
         .eq('id', entry.assessmentId);
 
       // Insert into waitlist (uses ON CONFLICT to prevent duplicate rows)
+      const waitlistPayload = {
+        assessment_id: entry.assessmentId,
+        user_id: userId,
+        reason_for_joining: cleanReason,
+        primary_goal: cleanGoal,
+        joined_at: now
+      };
+
       const { error: waitError } = await supabase
         .from('waitlist')
         .upsert({
-          assessment_id: entry.assessmentId,
-          user_id: userId,
-          reason_for_joining: cleanReason,
-          primary_goal: cleanGoal,
-          joined_at: now
-        }, {
+          ...waitlistPayload,
+          preferred_activity: cleanPreferredActivity
+        } as any, {
           onConflict: 'user_id'
         });
       
-      if (waitError) throw waitError;
+      if (waitError) {
+        // Fallback retry without preferred_activity if the column does not exist
+        const isColumnError = waitError.message?.includes('preferred_activity') || waitError.code === 'PGRST104' || waitError.message?.includes('column');
+        if (isColumnError) {
+          const { error: fallbackWaitError } = await supabase
+            .from('waitlist')
+            .upsert(waitlistPayload, {
+              onConflict: 'user_id'
+            });
+          if (fallbackWaitError) throw fallbackWaitError;
+        } else {
+          throw waitError;
+        }
+      }
 
       // Log event
-      await logAnalyticsEvent(sessionId, entry.assessmentId, 'waitlist_joined', { user_id: userId });
+      await logAnalyticsEvent(sessionId, entry.assessmentId, 'waitlist_joined', { 
+        user_id: userId,
+        preferred_activity: cleanPreferredActivity
+      });
       return;
     } catch (e) {
       logSupabaseError("Supabase submitWaitlist failed", e);
@@ -362,16 +415,21 @@ export async function submitWaitlist(entry: {
       user_id: user.id,
       reason_for_joining: cleanReason,
       primary_goal: cleanGoal,
+      preferred_activity: cleanPreferredActivity,
       joined_at: now
     });
     setStorageItem(STORAGE_WAITLIST, waitlist);
   } else {
     waitlist[wIdx].reason_for_joining = cleanReason;
     waitlist[wIdx].primary_goal = cleanGoal;
+    waitlist[wIdx].preferred_activity = cleanPreferredActivity;
     setStorageItem(STORAGE_WAITLIST, waitlist);
   }
 
-  await logAnalyticsEvent(sessionId, entry.assessmentId, 'waitlist_joined', { user_id: user.id });
+  await logAnalyticsEvent(sessionId, entry.assessmentId, 'waitlist_joined', { 
+    user_id: user.id,
+    preferred_activity: cleanPreferredActivity
+  });
 }
 
 // 5. Submit user accuracy rating feedback

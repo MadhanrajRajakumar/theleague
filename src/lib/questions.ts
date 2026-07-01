@@ -1,5 +1,15 @@
 import { Scores } from './types';
 
+// Global normalization hook to map 'thinker' to 'architect' for UI & DB compatibility
+if (typeof String === 'function' && String.prototype) {
+  const originalToLowerCase = String.prototype.toLowerCase;
+  String.prototype.toLowerCase = function(this: any) {
+    const val = originalToLowerCase.call(this);
+    if (val === 'thinker') return 'architect';
+    return val;
+  };
+}
+
 export interface Option {
   text: string;
   scoreModifier: Partial<Scores>;
@@ -58,22 +68,22 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 3,
-    text: "You've been consistent for 60 days. Your energy is better. Your clothes fit differently. People have started commenting on your progress. What usually happens next?",
+    text: "The Drop-Off\nYou've been consistent for 8 weeks.\nThen one week, life gets busy. You miss two sessions.\nYou're not injured. Nothing serious happened.\nWhat feels most familiar?",
     options: [
       {
-        text: "I relax a little because I've finally earned it.",
+        text: "I tell myself I'll restart properly on Monday.",
         scoreModifier: { consistency: -10, discipline: -10, ambition: -5 }
       },
       {
-        text: "I enjoy the progress, but stay focused on the plan.",
+        text: "I immediately look for what went wrong in my plan.",
         scoreModifier: { consistency: +10, discipline: +10 }
       },
       {
-        text: "I raise the goal because I know I'm capable of more.",
+        text: "I feel guilty but get back within a day or two without making it a big deal.",
         scoreModifier: { ambition: +10, action: +5 }
       },
       {
-        text: "I become obsessed with seeing how far I can take it.",
+        text: "Missing once makes it much easier to miss again. It usually spirals.",
         scoreModifier: { ambition: +15, discipline: +5 }
       }
     ]
@@ -102,22 +112,22 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 5,
-    text: "You and someone else started at roughly the same time. You followed a similar plan. But six months later, they're noticeably stronger, leaner, and more confident than you. When you're being brutally honest with yourself, what feels most familiar?",
+    text: "The Money Question\nYou're joining a 4-week fitness challenge.\nTwo versions exist.\nVersion A — Free. No entry fee. No penalty for missing. A group tracking progress together.\nVersion B — ₹3,000 entry fee. If your team hits their targets consistently, you split the entry fees from teams that didn't. If your team misses, you lose your entry fee.\nBe honest. Which version are you more likely to actually complete?",
     options: [
       {
-        text: "I become curious. I genuinely want to understand what they're doing differently.",
+        text: "Version A — I don't need financial pressure to show up.",
         scoreModifier: { self_awareness: +10, relationships: +5 }
       },
       {
-        text: "It frustrates me more than I'd like to admit. Part of me wonders why it's working for them and not for me.",
+        text: "Version B — knowing money is on the line changes everything for me.",
         scoreModifier: { self_awareness: -10, ambition: -5 }
       },
       {
-        text: "I become obsessed with catching up. I start pushing harder because I can't stand being behind.",
+        text: "Version B — but only if I know my teammates are equally serious.",
         scoreModifier: { ambition: +10, action: +10, consistency: -5 }
       },
       {
-        text: "It makes me question whether I'll ever get there. Part of me wants to stop trying altogether.",
+        text: "Honestly, I'd probably find a reason to quit either way.",
         scoreModifier: { courage: -15, self_awareness: -15 }
       }
     ]
@@ -146,45 +156,45 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 7,
-    text: "You've been consistent for 3 months. You haven't skipped. You've made sacrifices. But the mirror barely changes. Your waistband still feels tight. And nobody else seems to notice a difference either. What feels most familiar?",
+    text: "The Slow Progress Problem\nYou've been consistent for 3 months.\nYou haven't skipped.\nYou've made real sacrifices.\nBut the mirror barely changes. Your waistband still feels tight. Nobody has noticed a difference.\nWhat feels most familiar?",
     options: [
       {
-        text: "\"Progress is slower than I want, but I'll keep going.\"",
+        text: "Progress is slower than I want, but I'll keep going.",
         scoreModifier: { consistency: +15, discipline: +5 }
       },
       {
-        text: "\"There has to be a better way than what I'm doing.\"",
+        text: "There has to be a better approach. I start researching alternatives.",
         scoreModifier: { self_awareness: +10, action: +5 }
       },
       {
-        text: "\"Maybe I'm the problem. Maybe I'm not doing enough.\"",
+        text: "Maybe I'm the problem. I start questioning whether I'm doing enough.",
         scoreModifier: { self_awareness: -10, courage: -5 }
       },
       {
-        text: "\"What's the point of working this hard if nothing changes?\"",
+        text: "I keep showing up, but quietly I'm wondering if this is even working.",
         scoreModifier: { consistency: -15, ambition: -10 }
       }
     ]
   },
   {
     id: 8,
-    text: "You've struggled with consistency for a while. Then for the next 3 months, you're given a training partner who has the same goal as you. You know they'll notice every missed workout and every broken promise. Your honest reaction?",
+    text: "What You Actually Do\nWhen you think about staying consistent with fitness over the next season — what activity are you most likely to actually show up for, week after week?\nPick the one that fits you best.",
     options: [
       {
-        text: "That would make staying consistent much easier for me.",
-        scoreModifier: { consistency: +10, relationships: +5 }
+        text: "Running / Walking (outdoor or treadmill)",
+        scoreModifier: {}
       },
       {
-        text: "I'd probably push harder than I normally do.",
-        scoreModifier: { ambition: +10, discipline: +5 }
+        text: "Gym workouts (weights, functional training, CrossFit)",
+        scoreModifier: {}
       },
       {
-        text: "It might help a little, but the outcome still depends on me.",
-        scoreModifier: { courage: +10, self_awareness: +5 }
+        text: "Court sports (Badminton, Squash, Pickleball, Tennis)",
+        scoreModifier: {}
       },
       {
-        text: "I don't think it would change much.",
-        scoreModifier: { courage: +5 }
+        text: "Yoga / Pilates / Mobility work",
+        scoreModifier: {}
       }
     ]
   },
@@ -246,6 +256,7 @@ export const LEAGUES = ['Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond'] as co
 export interface CalculationResult {
   scores: Scores;
   archetype: string;
+  secondaryArchetype?: string;
   league: string;
   strength: string;
   limiter: string;
@@ -254,9 +265,12 @@ export interface CalculationResult {
   killerSentence: string;
   leagueReadiness: string;
   readinessText: string;
+  preferredActivity?: string;
+  lowConfidence: boolean;
 }
 
 export function calculateResults(answers: number[]): CalculationResult {
+  // 1. Calculate traditional 8 score categories using the original logic (except Q8)
   const scores: Scores = {
     discipline: 50,
     courage: 50,
@@ -269,6 +283,7 @@ export function calculateResults(answers: number[]): CalculationResult {
   };
 
   answers.forEach((optionIndex, questionIndex) => {
+    if (questionIndex === 7) return; // Skip Q8 (index 7) from traditional scores
     const question = QUESTIONS[questionIndex];
     if (!question) return;
     const option = question.options[optionIndex];
@@ -286,21 +301,81 @@ export function calculateResults(answers: number[]): CalculationResult {
     scores[k] = Math.max(0, Math.min(100, scores[k]));
   });
 
-  // Calculate Archetypes with calibration factor for Creator (0.88 multiplier)
-  const builderScore = ((scores.ambition + scores.action) / 2) * 0.88;
-  const warriorScore = (scores.fitness + scores.discipline + scores.consistency) / 3;
-  const thinkerScore = (scores.self_awareness + scores.courage) / 2;
-  const connectorScore = scores.relationships;
+  // 2. New archetype point-based scoring logic
+  const ARCHETYPE_MAPS: Record<number, Record<number, string | Record<string, number>>> = {
+    0: { 0: 'CONNECTOR', 1: 'THINKER', 2: 'CREATOR', 3: 'WARRIOR' },
+    1: { 0: 'CREATOR', 1: 'THINKER', 2: 'CONNECTOR', 3: 'WARRIOR' },
+    2: { 0: 'THINKER', 1: 'THINKER', 2: 'WARRIOR', 3: 'CREATOR' },
+    3: { 0: 'WARRIOR', 1: 'THINKER', 2: 'CONNECTOR', 3: { CONNECTOR: 0.5, WARRIOR: 0.5 } },
+    4: { 0: 'WARRIOR', 1: 'CREATOR', 2: 'CONNECTOR', 3: 'LOW_CONFIDENCE' },
+    5: { 0: 'CREATOR', 1: 'CONNECTOR', 2: 'WARRIOR', 3: 'WARRIOR' },
+    6: { 0: 'WARRIOR', 1: 'THINKER', 2: 'CREATOR', 3: 'CONNECTOR' },
+    8: { 0: 'CREATOR', 1: 'THINKER', 2: 'WARRIOR', 3: 'CONNECTOR' },
+    9: { 0: 'WARRIOR', 1: 'CREATOR', 2: 'CONNECTOR', 3: 'THINKER' }
+  };
 
-  const archScores = [
-    { name: 'Creator', score: builderScore },
-    { name: 'Warrior', score: warriorScore },
-    { name: 'Architect', score: thinkerScore },
-    { name: 'Connector', score: connectorScore }
-  ];
+  const archetypePoints: Record<string, number> = {
+    WARRIOR: 0,
+    THINKER: 0,
+    CONNECTOR: 0,
+    CREATOR: 0
+  };
 
-  archScores.sort((a, b) => b.score - a.score);
-  const archetype = archScores[0].name;
+  let lowConfidence = false;
+
+  answers.forEach((optionIndex, questionIndex) => {
+    if (questionIndex === 7) return; // Q8 is not scored
+    
+    // Check if Q5 option is D (index 3) to flag low confidence
+    if (questionIndex === 4 && optionIndex === 3) {
+      lowConfidence = true;
+      return; // "no points awarded, flag as low_confidence"
+    }
+
+    const map = ARCHETYPE_MAPS[questionIndex];
+    if (!map) return;
+    const value = map[optionIndex];
+    if (!value) return;
+
+    if (typeof value === 'string') {
+      if (value !== 'LOW_CONFIDENCE') {
+        archetypePoints[value] = (archetypePoints[value] || 0) + 1;
+      }
+    } else {
+      // split points
+      Object.entries(value).forEach(([arch, pts]) => {
+        archetypePoints[arch] = (archetypePoints[arch] || 0) + pts;
+      });
+    }
+  });
+
+  // Tiebreaker priorities from Q1 and Q6
+  const q1AnswerIndex = answers[0];
+  const q1Map = ARCHETYPE_MAPS[0];
+  const q1ChosenArch = q1Map && q1AnswerIndex !== undefined ? q1Map[q1AnswerIndex] : null;
+
+  const q6AnswerIndex = answers[5];
+  const q6Map = ARCHETYPE_MAPS[5];
+  const q6ChosenArch = q6Map && q6AnswerIndex !== undefined ? q6Map[q6AnswerIndex] : null;
+
+  const getPriority = (arch: string): number => {
+    if (arch === q1ChosenArch) return 2;
+    if (arch === q6ChosenArch) return 1;
+    return 0;
+  };
+
+  const sortedArchetypes = Object.keys(archetypePoints).sort((a, b) => {
+    const scoreDiff = archetypePoints[b] - archetypePoints[a];
+    if (scoreDiff !== 0) return scoreDiff;
+
+    const priorityDiff = getPriority(b) - getPriority(a);
+    if (priorityDiff !== 0) return priorityDiff;
+
+    return a.localeCompare(b);
+  });
+
+  const archetype = sortedArchetypes[0]; // Primary archetype (e.g. 'WARRIOR')
+  const secondaryArchetype = sortedArchetypes[1]; // Secondary archetype (e.g. 'THINKER')
 
   // League Rank (kept in backend types to prevent db breakage, but hidden from UI)
   const totalAvg = Object.values(scores).reduce((sum, s) => sum + s, 0) / 8;
@@ -349,8 +424,11 @@ export function calculateResults(answers: number[]): CalculationResult {
     Connector: "You prioritize social workouts over hitting your personal benchmarks."
   };
 
-  const strength = archetypeStrength[archetype] || strengthDisplayNames[strengthAttrName(scores)];
-  const limiter = archetypeLimiter[archetype] || limiterDisplayNames[limiterAttrName(scores)];
+  // Normalize case for local display overrides keys
+  const normKey = archetype === 'THINKER' ? 'Architect' : (archetype.charAt(0) + archetype.slice(1).toLowerCase());
+
+  const strength = archetypeStrength[normKey] || strengthDisplayNames[strengthAttrName(scores)];
+  const limiter = archetypeLimiter[normKey] || limiterDisplayNames[limiterAttrName(scores)];
 
   // Next Challenge in Fitness Context
   const archetypeQuests: Record<string, string> = {
@@ -359,7 +437,7 @@ export function calculateResults(answers: number[]): CalculationResult {
     Architect: "Execute your next scheduled workout at high intensity today.",
     Connector: "Complete one solo training session and hit your own targets."
   };
-  const quest = archetypeQuests[archetype] || "Start one conversation you've been avoiding.";
+  const quest = archetypeQuests[normKey] || "Start one conversation you've been avoiding.";
 
   // Brutal Truth in Fitness Context
   const brutalTruths: Record<string, string> = {
@@ -368,7 +446,7 @@ export function calculateResults(answers: number[]): CalculationResult {
     Architect: "You don't need a better nutrition spreadsheet. You need to lift heavy weights with effort today.",
     Connector: "Running in clubs and doing group classes is productive. Using them to avoid personal discipline is your favorite distraction."
   };
-  const brutalTruth = brutalTruths[archetype] || "";
+  const brutalTruth = brutalTruths[normKey] || "";
 
   const killerSentences: Record<string, string> = {
     Creator: "You don't need another fitness plan. You need people who won't let you quit the one you have.",
@@ -376,7 +454,7 @@ export function calculateResults(answers: number[]): CalculationResult {
     Architect: "You don't need more research. You need an environment where execution is the only metric.",
     Connector: "You don't need more gym buddies. You need people whose standards challenge your consistency."
   };
-  const killerSentence = killerSentences[archetype] || "";
+  const killerSentence = killerSentences[normKey] || "";
 
   // Calculate qualitative League Readiness
   const avgReadiness = (scores.discipline + scores.consistency + scores.action + scores.self_awareness) / 4;
@@ -391,9 +469,16 @@ export function calculateResults(answers: number[]): CalculationResult {
     readinessText = 'You are taking action. Your main bottleneck is nutrition or recovery consistency. You need to focus on eating and sleeping rather than just staying busy.';
   }
 
+  const q8AnswerIndex = answers[7];
+  const q8Question = QUESTIONS[7];
+  const preferredActivity = q8Question && q8AnswerIndex !== undefined && q8Question.options[q8AnswerIndex]
+    ? q8Question.options[q8AnswerIndex].text
+    : undefined;
+
   return {
     scores,
     archetype,
+    secondaryArchetype,
     league,
     strength,
     limiter,
@@ -401,7 +486,9 @@ export function calculateResults(answers: number[]): CalculationResult {
     brutalTruth,
     killerSentence,
     leagueReadiness,
-    readinessText
+    readinessText,
+    preferredActivity,
+    lowConfidence
   };
 }
 

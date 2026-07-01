@@ -24,6 +24,7 @@ interface ResultData {
   readinessText?: string;
   assessmentId?: string;
   feedbackSubmitted?: boolean;
+  preferredActivity?: string;
 }
 
 const archetypeRedesignData = {
