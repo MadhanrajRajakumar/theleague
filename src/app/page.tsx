@@ -10,10 +10,19 @@ export default function LandingPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative w-full border-b border-[#2A2A2A] overflow-hidden flex flex-col md:flex-row items-stretch">
-        {/* Left Text Panel (45% on desktop) */}
-        <div className="w-full md:w-[45%] bg-[#0D0D0D] py-16 md:py-24 pl-16 md:pl-[64px] pr-12 md:pr-[48px] flex flex-col justify-center">
-          <div className="max-w-[480px] flex flex-col gap-6">
+      <section className="relative w-full border-b border-[#2A2A2A] overflow-hidden flex flex-col lg:flex-row items-stretch lg:min-h-screen">
+        {/* Image on Mobile/Tablet */}
+        <div className="block lg:hidden w-full h-64 relative overflow-hidden">
+          <img
+            src="/images/marine_drive_runners.png"
+            alt="Group of five runners on Marine Drive Mumbai at pre-dawn supporting each other"
+            className="w-full h-full object-cover object-[70%_center] filter grayscale contrast-125"
+          />
+        </div>
+
+        {/* Left Column (holds text content) */}
+        <div className="w-full lg:w-1/2 bg-[#0a0a0a] py-12 px-6 lg:py-24 lg:px-12 xl:px-20 flex flex-col justify-center">
+          <div className="max-w-[480px] flex flex-col gap-6 w-full">
             {/* Overline Label */}
             <div className="font-sans font-medium text-[11px] tracking-[3px] text-[#C9A84C] uppercase">
               • PRIVATE FITNESS ACCOUNTABILITY NETWORK
@@ -45,17 +54,17 @@ export default function LandingPage() {
             </p>
 
             {/* CTA and link */}
-            <div className="flex flex-col items-start gap-6">
+            <div className="flex flex-col items-start gap-6 w-full">
               <Link
                 href="/assessment"
-                className="inline-flex items-center justify-center font-sans font-medium text-[14px] text-[#0D0D0D] bg-[#C9A84C] hover:bg-[#b0913c] rounded-[6px] px-8 py-3.5 transition-colors cursor-pointer"
+                className="w-full lg:w-auto inline-flex items-center justify-center font-sans font-medium text-[14px] text-[#0D0D0D] bg-[#C9A84C] hover:bg-[#b0913c] rounded-[6px] px-8 py-3.5 transition-colors cursor-pointer"
               >
                 Apply For Founding Cohort &rarr;
               </Link>
               
               <button
                 onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
-                className="font-sans font-normal text-[13px] text-[#8A8880] hover:text-[#F2F0EB] transition-colors cursor-pointer border-0 bg-transparent p-0 outline-none"
+                className="w-full lg:w-auto text-center lg:text-left font-sans font-normal text-[13px] text-[#8A8880] hover:text-[#F2F0EB] transition-colors cursor-pointer border-0 bg-transparent p-0 outline-none block mt-6 lg:mt-0"
               >
                 How it works &darr;
               </button>
@@ -63,15 +72,15 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* Right Image Panel (55% on desktop) */}
-        <div className="w-full md:w-[55%] relative min-h-[350px] md:min-h-auto">
+        {/* Right Column (Image on Desktop) */}
+        <div className="hidden lg:block lg:w-1/2 relative overflow-hidden border-l border-[#2a2a2a]">
           <img
             src="/images/marine_drive_runners.png"
             alt="Group of five runners on Marine Drive Mumbai at pre-dawn supporting each other"
-            className="w-full h-full object-cover filter grayscale contrast-125"
+            className="w-full h-full object-cover object-[70%_center] absolute inset-0 filter grayscale contrast-125"
           />
           {/* Gradient fade from left edge of image to transparent */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0D0D0D] via-[#0D0D0D]/60 to-transparent z-10 pointer-events-none" />
+          <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#0a0a0a] to-transparent z-10 pointer-events-none" />
         </div>
       </section>
 
