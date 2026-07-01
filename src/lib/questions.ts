@@ -27,19 +27,19 @@ export const QUESTIONS: Question[] = [
     text: "You and a friend decide to get back in shape together. The first workout is tomorrow morning. Ten minutes before bed, your friend messages: \"I'm not coming tomorrow. Let's start next week instead.\" The alarm rings the next morning. What feels most familiar?",
     options: [
       {
-        text: "\"Starting alone feels pointless. I'll wait until we're both ready.\"",
+        text: "Starting alone feels pointless. I'll wait until we're both ready.",
         scoreModifier: { consistency: -10, fitness: -5, action: -10 }
       },
       {
-        text: "\"I'll use the extra time to figure out a better plan first.\"",
+        text: "I'll use the extra time to figure out a better plan first.",
         scoreModifier: { action: -5, self_awareness: +5 }
       },
       {
-        text: "\"I'll probably go, but part of me already feels less motivated.\"",
+        text: "I'll probably go, but part of me already feels less motivated.",
         scoreModifier: { consistency: +5, discipline: +5, fitness: +5 }
       },
       {
-        text: "\"I go anyway. The commitment was to myself, not my friend.\"",
+        text: "I go anyway. The commitment was to myself, not my friend.",
         scoreModifier: { discipline: +10, fitness: +10, consistency: +10 }
       }
     ]
@@ -68,7 +68,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 3,
-    text: "The Drop-Off\nYou've been consistent for 8 weeks.\nThen one week, life gets busy. You miss two sessions.\nYou're not injured. Nothing serious happened.\nWhat feels most familiar?",
+    text: "You've been consistent for 8 weeks.\nThen one week, life gets busy. You miss two sessions.\nYou're not injured. Nothing serious happened.\nWhat feels most familiar?",
     options: [
       {
         text: "I tell myself I'll restart properly on Monday.",
@@ -112,18 +112,18 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 5,
-    text: "The Money Question\nYou're joining a 4-week fitness challenge.\nTwo versions exist.\nVersion A — Free. No entry fee. No penalty for missing. A group tracking progress together.\nVersion B — ₹3,000 entry fee. If your team hits their targets consistently, you split the entry fees from teams that didn't. If your team misses, you lose your entry fee.\nBe honest. Which version are you more likely to actually complete?",
+    text: "You're joining a 4-week fitness challenge.\nTwo versions exist.\nVersion A — Free. No entry fee. No penalty for missing. A group tracking progress together.\nVersion B — ₹3,000 entry fee. If your team hits their targets consistently, you split the entry fees from teams that didn't. If your team misses, you lose your entry fee.\nBe honest. Which version are you more likely to actually complete?",
     options: [
       {
-        text: "Version A — I don't need financial pressure to show up.",
+        text: "I don't need financial pressure to show up.",
         scoreModifier: { self_awareness: +10, relationships: +5 }
       },
       {
-        text: "Version B — knowing money is on the line changes everything for me.",
+        text: "knowing money is on the line changes everything for me.",
         scoreModifier: { self_awareness: -10, ambition: -5 }
       },
       {
-        text: "Version B — but only if I know my teammates are equally serious.",
+        text: "but only if I know my teammates are equally serious.",
         scoreModifier: { ambition: +10, action: +10, consistency: -5 }
       },
       {
@@ -156,7 +156,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 7,
-    text: "The Slow Progress Problem\nYou've been consistent for 3 months.\nYou haven't skipped.\nYou've made real sacrifices.\nBut the mirror barely changes. Your waistband still feels tight. Nobody has noticed a difference.\nWhat feels most familiar?",
+    text: "You've been consistent for 3 months.\nYou haven't skipped.\nYou've made real sacrifices.\nBut the mirror barely changes. Your waistband still feels tight. Nobody has noticed a difference.\nWhat feels most familiar?",
     options: [
       {
         text: "Progress is slower than I want, but I'll keep going.",
@@ -178,7 +178,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 8,
-    text: "What You Actually Do\nWhen you think about staying consistent with fitness over the next season — what activity are you most likely to actually show up for, week after week?\nPick the one that fits you best.",
+    text: "When you think about staying consistent with fitness over the next season — what activity are you most likely to actually show up for, week after week?\nPick the one that fits you best.",
     options: [
       {
         text: "Running / Walking (outdoor or treadmill)",
